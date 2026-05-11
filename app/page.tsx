@@ -9,8 +9,6 @@ const MATCHES = [
   { home:'USA',         hf:'🇺🇸', away:'Paraguay',     af:'🇵🇾', group:'Group D', venue:'SoFi Stadium, Los Angeles',      utcMs:Date.UTC(2026,5,13,0,0),  homeP:55, drawP:23, awayP:22 },
   { home:'Brazil',      hf:'🇧🇷', away:'Morocco',      af:'🇲🇦', group:'Group C', venue:'MetLife Stadium, New Jersey',    utcMs:Date.UTC(2026,5,13,22,0), homeP:54, drawP:24, awayP:22 },
   { home:'France',      hf:'🇫🇷', away:'Senegal',      af:'🇸🇳', group:'Group I', venue:'MetLife Stadium, New Jersey',    utcMs:Date.UTC(2026,5,15,19,0), homeP:62, drawP:22, awayP:16 },
-  { home:'Iraq',        hf:'🇮🇶', away:'Norway',       af:'🇳🇴', group:'Group I', venue:'Gillette Stadium, Boston',       utcMs:Date.UTC(2026,5,15,22,0), homeP:28, drawP:26, awayP:46 },
-  { home:'Argentina',   hf:'🇦🇷', away:'Algeria',      af:'🇩🇿', group:'Group J', venue:'Arrowhead Stadium, Kansas City', utcMs:Date.UTC(2026,5,16,1,0),  homeP:72, drawP:17, awayP:11 },
 ]
 
 const NEWS = [
@@ -42,18 +40,8 @@ function fmtDateTime(utcMs: number, tz: number) {
   const d = new Date(utcMs + tz * 3_600_000)
   return {
     time: `${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}`,
-    date: `${DAYS[d.getUTCDay()]}, ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} 2026`,
+    date: `${DAYS[d.getUTCDay()]} ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}`,
   }
-}
-
-function groupByDate(tz: number) {
-  const map: Record<string, typeof MATCHES> = {}
-  MATCHES.forEach(m => {
-    const { date } = fmtDateTime(m.utcMs, tz)
-    if (!map[date]) map[date] = []
-    map[date].push(m)
-  })
-  return map
 }
 
 export default function HomePage() {
@@ -65,8 +53,6 @@ export default function HomePage() {
     setToast(true)
     setTimeout(() => setToast(false), 2800)
   }
-
-  const grouped = groupByDate(tz)
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
@@ -81,11 +67,11 @@ export default function HomePage() {
       {/* TWINT MODAL */}
       {twintOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setTwintOpen(false)}>
-          <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center" onClick={e => e.stopPropagation()}>
-            <button onClick={() => setTwintOpen(false)} className="absolute top-4 right-5 text-gray-300 hover:text-gray-600 text-xl font-light">✕</button>
+          <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center relative" onClick={e => e.stopPropagation()}>
+            <button onClick={() => setTwintOpen(false)} className="absolute top-4 right-5 text-gray-300 hover:text-gray-600 text-xl font-light border-none bg-transparent cursor-pointer">✕</button>
             <div className="text-4xl mb-4">📱</div>
             <h2 className="text-xl font-bold text-gray-900 mb-2">Pay entry fee via Twint</h2>
-            <p className="text-gray-400 text-sm mb-5 leading-relaxed">Scan the QR code with your Twint app. Your account will be activated within 24h after payment.</p>
+            <p className="text-gray-400 text-sm mb-5 leading-relaxed">Scan the QR code with your Twint app. Your account will be activated within 24h.</p>
             <div className="text-3xl font-black text-gray-900 mb-1">CHF 20.00</div>
             <p className="text-xs text-gray-300 mb-6">One-time entry · Non-refundable</p>
             <div className="w-44 h-44 mx-auto mb-6 rounded-2xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center gap-2 bg-gray-50">
@@ -100,7 +86,7 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <Link href="/register" className="block w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-700 transition-colors">
+            <Link href="/register" className="block w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-700 transition-colors text-sm">
               Register first →
             </Link>
             <p className="text-xs text-gray-300 mt-3">Questions? tippspiel@micci.ch</p>
@@ -115,8 +101,8 @@ export default function HomePage() {
             <span className="font-black text-xl tracking-tight text-gray-900">mic<span className="text-yellow-500">ci</span></span>
             <span className="text-xs font-semibold text-gray-300 uppercase tracking-widest border-l border-gray-200 pl-3 hidden sm:block">World Cup 2026</span>
           </div>
-          <div className="flex items-center gap-1 flex-shrink-0">
-            <span className="text-xs text-gray-400 font-medium hidden md:block mr-1">Timezone</span>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <span className="text-xs text-gray-400 font-medium hidden md:block">Timezone</span>
             <select
               value={tz}
               onChange={e => setTz(Number(e.target.value))}
@@ -124,10 +110,7 @@ export default function HomePage() {
             >
               {TZ_OPTIONS.map(o => <option key={o.offset} value={o.offset}>{o.label}</option>)}
             </select>
-            <button
-              onClick={() => setTwintOpen(true)}
-              className="ml-2 bg-gray-900 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
-            >
+            <button onClick={() => setTwintOpen(true)} className="ml-1 bg-gray-900 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
               Join · CHF 20
             </button>
           </div>
@@ -159,10 +142,10 @@ export default function HomePage() {
           </div>
           <div className="flex flex-wrap gap-3 justify-center">
             {[
-              { icon:'⚡', text:'Live leaderboard', sub:'Updates with every goal' },
+              { icon:'⚡', text:'Live leaderboard',      sub:'Updates with every goal' },
               { icon:'⚽', text:'104 matches to predict', sub:'Group stage through Final' },
-              { icon:'🏆', text:'Real prize pool', sub:'CHF 20 entry · top 3 win' },
-              { icon:'🎯', text:'Equal points per game', sub:'Final = same as opener' },
+              { icon:'🏆', text:'Real prize pool',        sub:'CHF 20 entry · top 3 win' },
+              { icon:'🎯', text:'Up to 10 pts per game',  sub:'Exact score = max points' },
             ].map(p => (
               <div key={p.text} className="flex items-center gap-2.5 bg-gray-50 border border-gray-100 rounded-full px-4 py-2">
                 <span className="text-base">{p.icon}</span>
@@ -196,89 +179,105 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* UPCOMING MATCHES */}
+        {/* POINTS SYSTEM */}
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-base font-bold text-gray-900">⚽ Upcoming Matches</h2>
-          <Link href="/games" className="text-xs text-gray-400 hover:text-gray-700 font-medium">Full schedule →</Link>
+          <h2 className="text-base font-bold text-gray-900">🎯 Points System</h2>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
+          {[
+            { pts:'5 pts', label:'Correct winner / draw',       sub:'Right outcome',          color:'text-yellow-500', bg:'bg-yellow-50', border:'border-yellow-100' },
+            { pts:'3 pts', label:'Correct goal difference',     sub:'e.g. both predict 2–0',  color:'text-orange-500', bg:'bg-orange-50', border:'border-orange-100' },
+            { pts:'1 pt',  label:'Correct goals per team',      sub:'1 pt each side',         color:'text-blue-500',   bg:'bg-blue-50',   border:'border-blue-100' },
+            { pts:'20 pts',label:'Bonus questions',             sub:'Winner & top scorer',    color:'text-green-600',  bg:'bg-green-50',  border:'border-green-100' },
+          ].map(s => (
+            <div key={s.label} className={`${s.bg} border ${s.border} rounded-2xl p-4 text-center`}>
+              <div className={`text-xl font-black ${s.color} mb-1`}>{s.pts}</div>
+              <div className="text-xs font-semibold text-gray-700 leading-snug">{s.label}</div>
+              <div className="text-xs text-gray-400 mt-0.5">{s.sub}</div>
+            </div>
+          ))}
         </div>
 
-        {Object.entries(grouped).map(([date, dayMatches]) => (
-          <div key={date}>
-            <div className="flex items-center gap-3 text-xs font-bold text-gray-400 uppercase tracking-widest my-4">
-              {date}
-              <div className="flex-1 h-px bg-gray-100" />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-2">
-              {dayMatches.map((m, i) => {
-                const { time } = fmtDateTime(m.utcMs, tz)
-                return (
-                  <div key={i} className="bg-white border border-gray-100 rounded-2xl p-4 hover:shadow-md hover:border-gray-200 transition-all">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <div className="text-xs font-bold text-gray-300 uppercase tracking-wide">{m.group}</div>
-                        <div className="text-xs text-gray-300 mt-0.5 truncate max-w-[160px]">📍 {m.venue}</div>
-                      </div>
-                      <span className="bg-blue-50 text-blue-500 text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0">{time}</span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="flex-1 text-center">
-                        <div className="text-2xl mb-1">{m.hf}</div>
-                        <div className="text-xs font-semibold text-gray-700">{m.home}</div>
-                        <div className="text-xs text-gray-300 mt-0.5">{m.homeP}% win</div>
-                      </div>
-                      <div className="text-center min-w-[48px]">
-                        <div className="text-gray-200 font-light text-sm">vs</div>
-                      </div>
-                      <div className="flex-1 text-center">
-                        <div className="text-2xl mb-1">{m.af}</div>
-                        <div className="text-xs font-semibold text-gray-700">{m.away}</div>
-                        <div className="text-xs text-gray-300 mt-0.5">{m.awayP}% win</div>
-                      </div>
-                    </div>
-                    {/* probability bar */}
-                    <div className="flex h-1 rounded-full overflow-hidden mb-2">
-                      <div className="bg-gray-800" style={{ width:`${m.homeP}%` }} />
-                      <div className="bg-gray-200" style={{ width:`${m.drawP}%` }} />
-                      <div className="bg-yellow-400" style={{ width:`${m.awayP}%` }} />
-                    </div>
-                    <div className="flex justify-between text-xs text-gray-300 mb-3">
-                      <span>{m.hf} {m.homeP}%</span>
-                      <span>Draw {m.drawP}%</span>
-                      <span>{m.af} {m.awayP}%</span>
-                    </div>
-                    {/* tip row */}
-                    <div className="border-t border-gray-50 pt-3 flex items-center gap-2">
-                      <span className="text-xs text-gray-300 flex-1">Your prediction:</span>
-                      <input onFocus={showToast} type="number" min={0} max={20} placeholder="0"
-                        className="w-8 h-7 border border-gray-200 rounded-lg text-center text-xs font-bold text-gray-900 bg-gray-50 focus:outline-none focus:border-gray-400" />
-                      <span className="text-gray-200 text-xs">:</span>
-                      <input onFocus={showToast} type="number" min={0} max={20} placeholder="0"
-                        className="w-8 h-7 border border-gray-200 rounded-lg text-center text-xs font-bold text-gray-900 bg-gray-50 focus:outline-none focus:border-gray-400" />
-                      <button onClick={showToast} className="bg-gray-900 text-white text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-gray-700 transition-colors">
-                        Save
-                      </button>
-                    </div>
+        {/* UPCOMING MATCHES — next 6, 3 per row, date inline */}
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="text-base font-bold text-gray-900">⚽ Next Matches</h2>
+          <Link href="/games" className="text-xs text-gray-400 hover:text-gray-700 font-medium">Full schedule →</Link>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-10">
+          {MATCHES.map((m, i) => {
+            const { time, date } = fmtDateTime(m.utcMs, tz)
+            return (
+              <div key={i} className="bg-white border border-gray-100 rounded-2xl p-4 hover:shadow-md hover:border-gray-200 transition-all">
+                {/* top row: group + date/time */}
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-bold text-gray-300 uppercase tracking-wide">{m.group}</span>
+                  <span className="text-xs font-bold text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full whitespace-nowrap">
+                    {date} · {time}
+                  </span>
+                </div>
+                {/* venue */}
+                <div className="text-xs text-gray-300 mb-3 truncate">📍 {m.venue}</div>
+                {/* teams */}
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="flex-1 text-center">
+                    <div className="text-2xl mb-1">{m.hf}</div>
+                    <div className="text-xs font-semibold text-gray-700">{m.home}</div>
+                    <div className="text-xs text-gray-300 mt-0.5">{m.homeP}% win</div>
                   </div>
-                )
-              })}
-            </div>
-          </div>
-        ))}
+                  <div className="text-gray-200 font-light text-sm min-w-[32px] text-center">vs</div>
+                  <div className="flex-1 text-center">
+                    <div className="text-2xl mb-1">{m.af}</div>
+                    <div className="text-xs font-semibold text-gray-700">{m.away}</div>
+                    <div className="text-xs text-gray-300 mt-0.5">{m.awayP}% win</div>
+                  </div>
+                </div>
+                {/* probability bar */}
+                <div className="flex h-1 rounded-full overflow-hidden mb-1.5">
+                  <div className="bg-gray-800" style={{ width:`${m.homeP}%` }} />
+                  <div className="bg-gray-200" style={{ width:`${m.drawP}%` }} />
+                  <div className="bg-yellow-400" style={{ width:`${m.awayP}%` }} />
+                </div>
+                <div className="flex justify-between text-xs text-gray-300 mb-3">
+                  <span>{m.hf} {m.homeP}%</span>
+                  <span>Draw {m.drawP}%</span>
+                  <span>{m.af} {m.awayP}%</span>
+                </div>
+                {/* tip row */}
+                <div className="border-t border-gray-50 pt-3 flex items-center gap-2">
+                  <span className="text-xs text-gray-300 flex-1">Your tip:</span>
+                  <input onFocus={showToast} type="number" min={0} max={20} placeholder="0"
+                    className="w-8 h-7 border border-gray-200 rounded-lg text-center text-xs font-bold text-gray-900 bg-gray-50 focus:outline-none focus:border-gray-400" />
+                  <span className="text-gray-200 text-xs">:</span>
+                  <input onFocus={showToast} type="number" min={0} max={20} placeholder="0"
+                    className="w-8 h-7 border border-gray-200 rounded-lg text-center text-xs font-bold text-gray-900 bg-gray-50 focus:outline-none focus:border-gray-400" />
+                  <button onClick={showToast} className="bg-gray-900 text-white text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-gray-700 transition-colors">
+                    Save
+                  </button>
+                </div>
+              </div>
+            )
+          })}
+        </div>
 
         {/* SPECIAL PREDICTIONS */}
-        <div className="flex items-center justify-between mt-10 mb-5">
+        <div className="flex items-center justify-between mb-5">
           <h2 className="text-base font-bold text-gray-900">🏆 Special Predictions</h2>
           <span className="text-xs text-yellow-500 font-bold">⏳ Locks June 11 at kickoff</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
           {[
-            { icon:'🥇', title:'Tournament Winner', sub:'Which country lifts the trophy at MetLife Stadium on July 19? Bonus +10 pts if correct.' },
-            { icon:'👟', title:"Top Scorer's Nationality", sub:'Which country will the Golden Boot winner come from? Bonus +5 pts if correct.' },
+            { icon:'🥇', title:'Tournament Winner',       sub:'Which country lifts the trophy at MetLife Stadium on July 19?' },
+            { icon:'👟', title:"Top Scorer's Nationality", sub:'Which country will the Golden Boot winner come from?' },
           ].map(s => (
             <div key={s.title} className="bg-white border border-gray-100 rounded-2xl p-5">
-              <div className="text-2xl mb-2">{s.icon}</div>
-              <div className="text-sm font-bold text-gray-900 mb-1">{s.title}</div>
-              <div className="text-xs text-gray-400 mb-4 leading-relaxed">{s.sub}</div>
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <div className="text-2xl mb-1">{s.icon}</div>
+                  <div className="text-sm font-bold text-gray-900">{s.title}</div>
+                  <div className="text-xs text-gray-400 mt-1 leading-relaxed">{s.sub}</div>
+                </div>
+                <span className="bg-green-50 border border-green-100 text-green-600 text-xs font-black px-2.5 py-1 rounded-full ml-3 flex-shrink-0">20 pts</span>
+              </div>
               <select onFocus={showToast} className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm font-medium text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-yellow-400 cursor-pointer">
                 <option value="">— Select a team —</option>
                 {['🇫🇷 France','🇧🇷 Brazil','🇦🇷 Argentina','🇩🇪 Germany','🇪🇸 Spain','🇵🇹 Portugal','🏴󠁧󠁢󠁥󠁮󠁧󠁿 England','🇳🇱 Netherlands','🇺🇸 USA','🇲🇽 Mexico','🇯🇵 Japan','🇰🇷 South Korea','🇧🇪 Belgium','🇳🇴 Norway'].map(t => <option key={t}>{t}</option>)}
@@ -302,11 +301,11 @@ export default function HomePage() {
             </span>
           </div>
           {[
-            { rank:'🥇', av:'MR', bg:'#fef3c7', fg:'#d97706', name:'Marco R.',   pts:58, delta:'+2', prize:'CHF 144', pct:'60%', prizeColor:'text-yellow-500' },
-            { rank:'🥈', av:'JK', bg:'#f0fdf4', fg:'#16a34a', name:'Julia K.',   pts:51, delta:'+1', prize:'CHF 60',  pct:'25%', prizeColor:'text-gray-400' },
-            { rank:'🥉', av:'AX', bg:'#eff6ff', fg:'#2563eb', name:'You (Alex)', pts:42, delta:'+3', prize:'CHF 36',  pct:'15%', prizeColor:'text-amber-600', me:true },
-            { rank:'4',  av:'SM', bg:'#fdf4ff', fg:'#9333ea', name:'Stefan M.',  pts:40, delta:'—',  prize:'—',       pct:'',    prizeColor:'text-gray-200' },
-            { rank:'5',  av:'LB', bg:'#fff1f2', fg:'#e11d48', name:'Lisa B.',    pts:37, delta:'—',  prize:'—',       pct:'',    prizeColor:'text-gray-200' },
+            { rank:'🥇', av:'MR', bg:'#fef3c7', fg:'#d97706', name:'Marco R.',   pts:142, delta:'+5',  prize:'CHF 144', pct:'60%', prizeColor:'text-yellow-500' },
+            { rank:'🥈', av:'JK', bg:'#f0fdf4', fg:'#16a34a', name:'Julia K.',   pts:128, delta:'+3',  prize:'CHF 60',  pct:'25%', prizeColor:'text-gray-400' },
+            { rank:'🥉', av:'AX', bg:'#eff6ff', fg:'#2563eb', name:'You (Alex)', pts:105, delta:'+8',  prize:'CHF 36',  pct:'15%', prizeColor:'text-amber-600', me:true },
+            { rank:'4',  av:'SM', bg:'#fdf4ff', fg:'#9333ea', name:'Stefan M.',  pts:98,  delta:'—',   prize:'—',       pct:'',    prizeColor:'text-gray-200' },
+            { rank:'5',  av:'LB', bg:'#fff1f2', fg:'#e11d48', name:'Lisa B.',    pts:87,  delta:'—',   prize:'—',       pct:'',    prizeColor:'text-gray-200' },
           ].map((p, i) => (
             <div key={i} className={`flex items-center gap-3 px-5 py-3 border-b border-gray-50 last:border-0 ${p.me ? 'bg-yellow-50' : ''}`}>
               <div className="text-sm font-bold w-6 text-center">{p.rank}</div>
@@ -315,7 +314,9 @@ export default function HomePage() {
                 {p.name}{p.me && <span className="text-yellow-500 text-xs font-bold ml-1.5 uppercase tracking-wide">you</span>}
               </div>
               <div className="text-xs font-bold bg-yellow-50 text-yellow-600 border border-yellow-200 px-2 py-0.5 rounded-lg">{p.pts} pts</div>
-              <div className={`text-xs font-bold w-12 text-right ${p.delta !== '—' ? 'text-green-500' : 'text-gray-200'}`}>{p.delta !== '—' ? `+${p.delta.replace('+','')} live` : '—'}</div>
+              <div className={`text-xs font-bold w-14 text-right ${p.delta !== '—' ? 'text-green-500' : 'text-gray-200'}`}>
+                {p.delta !== '—' ? `${p.delta} live` : '—'}
+              </div>
               <div className="text-right min-w-[72px]">
                 <div className={`text-xs font-bold ${p.prizeColor}`}>{p.prize}</div>
                 {p.pct && <div className="text-xs text-gray-300">{p.pct}</div>}
@@ -332,7 +333,7 @@ export default function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {NEWS.map((n, i) => (
             <a key={i} href="https://www.fifa.com" target="_blank" rel="noreferrer"
-              className="bg-white border border-gray-100 rounded-2xl p-4 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer">
+              className="bg-white border border-gray-100 rounded-2xl p-4 hover:shadow-md hover:border-gray-200 transition-all cursor-pointer block">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-xs font-bold text-yellow-500 uppercase tracking-widest">FIFA.com</span>
                 <span className="bg-yellow-50 border border-yellow-200 text-yellow-600 text-xs font-bold px-2 py-0.5 rounded-full">{n.tag}</span>
