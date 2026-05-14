@@ -49,7 +49,7 @@ export default function AdminPage() {
   return (
     <div style={{background:'var(--bg)',minHeight:'100vh'}}>
       <Navbar userEmail={userEmail} displayName={displayName}/>
-      <div style={{maxWidth:1400,margin:'0 auto',padding:'48px 32px'}}>
+      <div className="page-wrap">
 
         <div style={{marginBottom:40}}>
           <h1 style={{fontFamily:'Bebas Neue',fontSize:'clamp(56px,7vw,96px)',lineHeight:0.9,color:'var(--text)'}}>
@@ -59,7 +59,7 @@ export default function AdminPage() {
         </div>
 
         {/* Stats */}
-        <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:16,marginBottom:40}}>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:12,marginBottom:40}}>
           {[
             {label:'Total registered',val:stats.total,color:'var(--text)'},
             {label:'Active (paid)',val:stats.active,color:'#4a7a3a'},
@@ -74,7 +74,7 @@ export default function AdminPage() {
         </div>
 
         {/* Prize breakdown */}
-        <div style={{background:'var(--text)',borderRadius:20,padding:'32px 40px',marginBottom:40,display:'flex',flexWrap:'wrap',gap:24,alignItems:'center',position:'relative',overflow:'hidden'}}>
+        <div style={{background:'var(--text)',borderRadius:20,padding:'24px 20px',marginBottom:40,display:'flex',flexWrap:'wrap',gap:24,alignItems:'center',position:'relative',overflow:'hidden'}}>
           <div style={{position:'absolute',top:'-60px',right:'-60px',width:280,height:280,background:'radial-gradient(circle,rgba(212,193,154,0.15) 0%,transparent 60%)',pointerEvents:'none'}}/>
           <div style={{flex:1}}>
             <div style={{fontSize:11,fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'0.15em',marginBottom:6}}>Current Prize Pool</div>

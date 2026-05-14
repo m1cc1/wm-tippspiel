@@ -105,7 +105,7 @@ export default function GamesPage() {
 
       <Navbar userEmail={userEmail} displayName={displayName}/>
 
-      <div style={{maxWidth:1400,margin:'0 auto',padding:'48px 32px'}}>
+      <div className="page-wrap">
         <div style={{display:'flex',alignItems:'flex-end',justifyContent:'space-between',marginBottom:32,flexWrap:'wrap',gap:16}}>
           <div>
             <h1 style={{fontFamily:'Bebas Neue',fontSize:'clamp(56px,7vw,96px)',lineHeight:0.9,color:'var(--text)'}}>
@@ -125,7 +125,7 @@ export default function GamesPage() {
         </div>
 
         {/* Points reminder */}
-        <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:16,overflow:'hidden',marginBottom:40}}>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:16,overflow:'hidden',marginBottom:40}}>
           {[{n:'5',l:'Correct winner'},{n:'3',l:'Goal difference'},{n:'1',l:'Goals per team'},{n:'10',l:'Max per game',dark:true}].map((c,i)=>(
             <div key={i} style={{padding:'20px 24px',borderRight:i<3?'1px solid var(--border)':'none',background:c.dark?'var(--text)':'transparent',textAlign:'center'}}>
               <div style={{fontFamily:'Bebas Neue',fontSize:44,lineHeight:1,color:c.dark?'var(--highlight)':'var(--text)',marginBottom:4}}>{c.n}</div>

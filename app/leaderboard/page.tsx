@@ -59,7 +59,7 @@ export default function LeaderboardPage() {
     <div style={{background:'var(--bg)',minHeight:'100vh'}}>
       <Navbar userEmail={userEmail} displayName={displayName}/>
 
-      <div style={{maxWidth:1400,margin:'0 auto',padding:'48px 32px'}}>
+      <div className="page-wrap">
         {/* Header */}
         <div style={{display:'flex',alignItems:'flex-end',justifyContent:'space-between',marginBottom:32,flexWrap:'wrap',gap:16}}>
           <div>
@@ -75,7 +75,7 @@ export default function LeaderboardPage() {
         </div>
 
         {/* Prize pool */}
-        <div style={{background:'var(--text)',borderRadius:20,padding:'32px 40px',marginBottom:48,display:'flex',flexWrap:'wrap',gap:32,alignItems:'center',position:'relative',overflow:'hidden'}}>
+        <div style={{background:'var(--text)',borderRadius:20,padding:'24px 20px',marginBottom:32,display:'flex',flexWrap:'wrap',gap:32,alignItems:'center',position:'relative',overflow:'hidden'}}>
           <div style={{position:'absolute',top:'-80px',right:'-80px',width:320,height:320,background:'radial-gradient(circle,rgba(212,193,154,0.15) 0%,transparent 60%)',pointerEvents:'none'}}/>
           <div style={{flex:1,minWidth:200}}>
             <div style={{fontSize:11,fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'0.15em',marginBottom:8}}>💰 Prize Pool</div>
@@ -109,8 +109,8 @@ export default function LeaderboardPage() {
 
         {/* Table */}
         <div style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:20,overflow:'hidden'}}>
-          <div style={{display:'grid',gridTemplateColumns:'60px 1fr 100px 100px 100px 140px',gap:16,padding:'16px 28px',borderBottom:'1px solid var(--border)',fontSize:11,textTransform:'uppercase',letterSpacing:'0.1em',color:'var(--text-faint)',fontWeight:600,background:'var(--bg-card-2)'}}>
-            <div>Rank</div><div>Player</div><div>Points</div><div>Exact</div><div>Δ Live</div><div style={{textAlign:'right'}}>Prize</div>
+          <div style={{display:'grid',gridTemplateColumns:'44px 1fr 80px 80px',gap:16,padding:'16px 28px',borderBottom:'1px solid var(--border)',fontSize:11,textTransform:'uppercase',letterSpacing:'0.1em',color:'var(--text-faint)',fontWeight:600,background:'var(--bg-card-2)'}}>
+            <div>#</div><div>Player</div><div>Pts</div><div style={{textAlign:'right'}}>Prize</div>
           </div>
           {entries.map((e,i)=>{
             const rank=Number(e.rank)
@@ -119,7 +119,7 @@ export default function LeaderboardPage() {
             const rankColor=rank===1?'var(--text)':rank===2?'var(--beige-deep)':rank===3?'var(--beige-mid)':'var(--text-faint)'
             const prizeColor=rank===1?'var(--text)':rank===2?'var(--beige-deep)':rank===3?'var(--beige-mid)':'var(--text-faint)'
             return (
-              <div key={e.id} style={{display:'grid',gridTemplateColumns:'60px 1fr 100px 100px 100px 140px',gap:16,padding:'20px 28px',alignItems:'center',borderBottom:'1px solid var(--border)',background:isMe?'linear-gradient(90deg,rgba(26,24,20,0.04) 0%,transparent 100%)':'transparent',position:'relative',transition:'background 0.2s'}}>
+              <div key={e.id} style={{display:'grid',gridTemplateColumns:'44px 1fr 80px 80px',gap:16,padding:'20px 28px',alignItems:'center',borderBottom:'1px solid var(--border)',background:isMe?'linear-gradient(90deg,rgba(26,24,20,0.04) 0%,transparent 100%)':'transparent',position:'relative',transition:'background 0.2s'}}>
                 {isMe && <div style={{position:'absolute',left:0,top:0,bottom:0,width:3,background:'var(--text)'}}/>}
                 <div style={{fontFamily:'Bebas Neue',fontSize:32,color:rankColor}}>{String(rank).padStart(2,'0')}</div>
                 <div style={{display:'flex',alignItems:'center',gap:14}}>
@@ -132,8 +132,8 @@ export default function LeaderboardPage() {
                   </div>
                 </div>
                 <div style={{fontFamily:'JetBrains Mono',fontWeight:700,fontSize:18,color:'var(--text)'}}>{e.total_points}</div>
-                <div style={{fontFamily:'JetBrains Mono',fontSize:13,color:'var(--text-dim)'}}>{e.exact_count}</div>
-                <div style={{fontFamily:'JetBrains Mono',fontSize:13,color:e.delta>0?'var(--warn)':'var(--text-faint)',fontWeight:e.delta>0?700:400}}>{e.delta>0?`+${e.delta}`:'—'}</div>
+                
+                
                 <div style={{textAlign:'right',fontWeight:700,fontSize:15,color:prizeColor}}>{prize!=null?`CHF ${prize}`:'—'}</div>
               </div>
             )
