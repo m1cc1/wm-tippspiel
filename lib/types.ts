@@ -4,13 +4,14 @@ export interface Game {
   away_team: string
   home_flag: string
   away_flag: string
-  kickoff: string          // ISO datetime
-  group_stage: string      // e.g. "Group A", "Round of 16"
+  kickoff: string
+  group_stage: string
+  venue: string
   status: 'scheduled' | 'live' | 'finished'
   home_score: number | null
   away_score: number | null
   minute: number | null
-  external_id: number | null  // football-data.org match ID
+  external_id: number | null
 }
 
 export interface Tip {
@@ -25,6 +26,7 @@ export interface Tip {
 export interface Profile {
   id: string
   display_name: string
+  status: string
   total_points: number
   exact_count: number
   tendency_count: number
@@ -32,5 +34,5 @@ export interface Profile {
 
 export interface LeaderboardEntry extends Profile {
   rank: number
-  delta: number   // live points change from ongoing games
+  delta: number
 }
