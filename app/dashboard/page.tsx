@@ -7,12 +7,13 @@ import Link from 'next/link'
 export default function DashboardPage() {
   const supabase = createBrowserClient()
   const [profile, setProfile] = useState<any>(null)
-  const [stats, setStats] = useState({ total: 0, exact: 0, tendency: 0, missed: 0, pending: 0 })
+  const [stats, setStats] = useState({ total: 0, exact: 0, tendency: 0, pending: 0 })
   const [rank, setRank] = useState<number | null>(null)
   const [totalPlayers, setTotalPlayers] = useState(0)
   const [pool, setPool] = useState(0)
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [isPending, setIsPending] = useState(false)
+  const [profileLoaded, setProfileLoaded] = useState(false)
 
   useEffect(() => {
     supabase.auth.getUser().then(async ({ data }) => {
@@ -28,14 +29,14 @@ export default function DashboardPage() {
 
       setProfile(prof)
       setIsPending(prof?.status === 'pending')
+      setProfileLoaded(true)
       setPool((count ?? 0) * 20)
 
       const finishedTips = (tips ?? []).filter((t: any) => t.games?.status === 'finished')
       const exact = finishedTips.filter((t: any) => t.points === 10).length
       const tendency = finishedTips.filter((t: any) => t.points !== null && t.points > 0 && t.points < 10).length
-      const missed = finishedTips.filter((t: any) => t.points === 0).length
       const pending = (tips ?? []).filter((t: any) => t.games?.status !== 'finished').length
-      setStats({ total: finishedTips.length, exact, tendency, missed, pending })
+      setStats({ total: finishedTips.length, exact, tendency, pending })
 
       if (lb) {
         setTotalPlayers(lb.length)
@@ -57,7 +58,7 @@ export default function DashboardPage() {
             <div>
               <div className="font-bold text-yellow-800 text-sm">Payment pending activation</div>
               <div className="text-yellow-700 text-xs mt-1 leading-relaxed">
-                Your account is waiting for payment confirmation. Once micci activates your account you can start predicting. Questions? tippspiel@micci.ch
+                Send CHF 20 via Twint to <strong>+41 79 425 64 77</strong> with message <strong>WC2026</strong>. Your account will be activated within 24h.
               </div>
             </div>
           </div>
@@ -66,13 +67,15 @@ export default function DashboardPage() {
         {/* Profile header */}
         <div className="bg-white border border-gray-100 rounded-2xl p-6 mb-6 shadow-sm flex items-center gap-4">
           <div className="w-14 h-14 rounded-full bg-yellow-50 border border-yellow-200 flex items-center justify-center text-xl font-black text-yellow-600 flex-shrink-0">
-            {profile?.display_name?.charAt(0) ?? '?'}
+            {profileLoaded ? (profile?.display_name?.charAt(0) ?? '?') : '…'}
           </div>
           <div className="flex-1">
-            <div className="text-xl font-bold text-gray-900">{profile?.display_name ?? 'Loading…'}</div>
+            <div className="text-xl font-bold text-gray-900">
+              {profileLoaded ? (profile?.display_name ?? 'Unknown') : '…'}
+            </div>
             <div className="text-sm text-gray-400">{userEmail}</div>
             <div className={`inline-flex items-center gap-1.5 mt-1.5 text-xs font-bold px-2.5 py-1 rounded-full ${isPending ? 'bg-yellow-50 text-yellow-600 border border-yellow-200' : 'bg-green-50 text-green-600 border border-green-200'}`}>
-              {isPending ? '⏳ Pending activation' : '✓ Active'}
+              {!profileLoaded ? '…' : isPending ? '⏳ Pending activation' : '✓ Active'}
             </div>
           </div>
           {rank && !isPending && (
@@ -84,14 +87,14 @@ export default function DashboardPage() {
         </div>
 
         {/* Prize pool */}
-        {!isPending && (
+        {!isPending && profileLoaded && (
           <div className="bg-gray-900 rounded-2xl p-5 mb-6 flex flex-wrap gap-4 items-center">
             <div className="flex-1">
               <div className="text-xs font-bold text-yellow-500 uppercase tracking-widest mb-1">💰 Current Prize Pool</div>
               <div className="text-2xl font-black text-white">CHF {pool}</div>
               <div className="text-gray-500 text-xs mt-1">60% · 25% · 15% for top 3</div>
             </div>
-            {[['🥇','60%', Math.round(pool*0.6)],['🥈','25%',Math.round(pool*0.25)],['🥉','15%',Math.round(pool*0.15)]].map(([m,p,a]) => (
+            {[['🥇','60%',Math.round(pool*0.6)],['🥈','25%',Math.round(pool*0.25)],['🥉','15%',Math.round(pool*0.15)]].map(([m,p,a]) => (
               <div key={String(m)} className="bg-white/10 rounded-xl px-4 py-2.5 text-center">
                 <div className="text-base mb-0.5">{m}</div>
                 <div className="text-white font-bold text-sm">CHF {a}</div>
@@ -102,14 +105,14 @@ export default function DashboardPage() {
         )}
 
         {/* Stats */}
-        {!isPending && (
+        {!isPending && profileLoaded && (
           <>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
               {[
-                { val: profile?.total_points ?? 0, label:'Total points',    color:'text-yellow-500' },
-                { val: stats.exact,                 label:'Exact scores',    color:'text-green-500'  },
-                { val: stats.tendency,              label:'Partial points',  color:'text-blue-500'   },
-                { val: stats.pending,               label:'Tips pending',    color:'text-gray-400'   },
+                { val: profile?.total_points ?? 0, label:'Total points',   color:'text-yellow-500' },
+                { val: stats.exact,                 label:'Exact scores',   color:'text-green-500'  },
+                { val: stats.tendency,              label:'Partial points', color:'text-blue-500'   },
+                { val: stats.pending,               label:'Tips pending',   color:'text-gray-400'   },
               ].map(s => (
                 <div key={s.label} className="bg-white border border-gray-100 rounded-2xl p-4 text-center shadow-sm">
                   <div className={`text-2xl font-bold ${s.color}`}>{s.val}</div>
@@ -118,48 +121,27 @@ export default function DashboardPage() {
               ))}
             </div>
 
-            {/* Points system reminder */}
+            {/* Points system */}
             <div className="bg-white border border-gray-100 rounded-2xl p-5 mb-6 shadow-sm">
               <div className="text-sm font-bold text-gray-900 mb-3">🎯 Points per game (max 10)</div>
               <div className="grid grid-cols-2 gap-2">
                 {[
-                  { pts:'5 pts', label:'Correct winner / draw' },
-                  { pts:'3 pts', label:'Correct goal difference' },
-                  { pts:'1 pt',  label:'Right goals home team' },
-                  { pts:'1 pt',  label:'Right goals away team' },
+                  { pts:'5 pts', label:'Correct winner / draw',  color:'text-yellow-500' },
+                  { pts:'3 pts', label:'Correct goal difference', color:'text-orange-500' },
+                  { pts:'1 pt',  label:'Right goals home team',  color:'text-blue-500'   },
+                  { pts:'1 pt',  label:'Right goals away team',  color:'text-blue-500'   },
                 ].map(s => (
-                  <div key={s.label} className="flex items-center gap-2 text-sm">
-                    <span className="font-bold text-yellow-500 min-w-[40px]">{s.pts}</span>
-                    <span className="text-gray-500 text-xs">{s.label}</span>
+                  <div key={s.label} className="flex items-center gap-2">
+                    <span className={`font-bold text-sm min-w-[44px] ${s.color}`}>{s.pts}</span>
+                    <span className="text-gray-400 text-xs">{s.label}</span>
                   </div>
                 ))}
               </div>
-              <div className="border-t border-gray-50 mt-3 pt-3 flex items-center gap-2 text-sm">
-                <span className="font-bold text-green-600 min-w-[40px]">20 pts</span>
-                <span className="text-gray-500 text-xs">Each bonus question (tournament winner + top scorer)</span>
+              <div className="border-t border-gray-50 mt-3 pt-3 flex items-center gap-2">
+                <span className="font-bold text-sm text-green-600 min-w-[44px]">20 pts</span>
+                <span className="text-gray-400 text-xs">Each bonus question (tournament winner + top scorer)</span>
               </div>
             </div>
-
-            {/* Accuracy bar */}
-            {stats.total > 0 && (
-              <div className="bg-white border border-gray-100 rounded-2xl p-5 mb-6 shadow-sm">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-bold text-gray-900">Accuracy</span>
-                  <span className="text-sm font-bold text-gray-700">
-                    {Math.round(((stats.exact + stats.tendency) / stats.total) * 100)}%
-                  </span>
-                </div>
-                <div className="h-2 bg-gray-100 rounded-full overflow-hidden flex">
-                  <div className="bg-green-400 h-full transition-all" style={{ width:`${(stats.exact/stats.total)*100}%` }} />
-                  <div className="bg-blue-300 h-full transition-all"  style={{ width:`${(stats.tendency/stats.total)*100}%` }} />
-                </div>
-                <div className="flex gap-4 mt-2 text-xs text-gray-400">
-                  <span className="flex items-center gap-1"><span className="w-2 h-2 bg-green-400 rounded-full inline-block"></span>Exact</span>
-                  <span className="flex items-center gap-1"><span className="w-2 h-2 bg-blue-300 rounded-full inline-block"></span>Partial</span>
-                  <span className="flex items-center gap-1"><span className="w-2 h-2 bg-gray-200 rounded-full inline-block"></span>Missed</span>
-                </div>
-              </div>
-            )}
           </>
         )}
 

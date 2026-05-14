@@ -110,7 +110,10 @@ export default function HomePage() {
             >
               {TZ_OPTIONS.map(o => <option key={o.offset} value={o.offset}>{o.label}</option>)}
             </select>
-            <button onClick={() => setTwintOpen(true)} className="ml-1 bg-gray-900 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+            <Link href="/login" className="text-xs font-semibold text-gray-500 hover:text-gray-900 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+              Sign in
+            </Link>
+            <button onClick={() => setTwintOpen(true)} className="bg-gray-900 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
               Join · CHF 20
             </button>
           </div>

@@ -47,10 +47,11 @@ export default function RegisterPage() {
 
     if (data.user) {
       const displayName = `${firstName.trim()} ${lastName.trim().charAt(0).toUpperCase()}.`
+      const isAdmin = email.toLowerCase() === 'miro.harasic@gmail.com'
       await supabase.from('profiles').insert({
         id: data.user.id,
         display_name: displayName,
-        status: 'pending',
+        status: isAdmin ? 'active' : 'pending',
         invite_code: code.trim().toUpperCase(),
       })
     }
