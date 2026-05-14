@@ -125,7 +125,7 @@ export default function DashboardPage() {
     if(specialPick?.locked){showToast('🔒 Bonus picks are locked since June 11');return}
     setSavingSpecial(true)
     const updated={...specialPick,user_id:uid,[field]:value}
-    await supabase.from('special_picks').upsert({user_id:uid,...updated},{onConflict:'user_id'})
+    await supabase.from('special_picks').upsert(updated,{onConflict:'user_id'})
     setSpecialPick(updated as any)
     setSavingSpecial(false);setSpecialSaved(true)
     setTimeout(()=>setSpecialSaved(false),2000)
