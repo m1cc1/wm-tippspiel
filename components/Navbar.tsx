@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 const ADMIN_EMAIL = 'miro.harasic@gmail.com'
 
-export default function Navbar({ userEmail }: { userEmail?: string | null }) {
+export default function Navbar({ userEmail, displayName }: { userEmail?: string | null, displayName?: string | null }) {
   const pathname = usePathname()
   const router = useRouter()
   const supabase = createBrowserClient()
@@ -14,10 +14,10 @@ export default function Navbar({ userEmail }: { userEmail?: string | null }) {
   const isAdmin = userEmail === ADMIN_EMAIL
 
   const nav = [
-    { href: '/leaderboard', label: '🏆 Leaderboard' },
-    { href: '/games',       label: '⚽ Games' },
-    { href: '/dashboard',   label: '📋 My Tips' },
-    ...(isAdmin ? [{ href: '/admin', label: '⚙️ Admin' }] : []),
+    { href: '/dashboard',   label: 'Dashboard' },
+    { href: '/leaderboard', label: 'Leaderboard' },
+    { href: '/games',       label: 'All Matches' },
+    ...(isAdmin ? [{ href: '/admin', label: 'Admin', warn: true }] : []),
   ]
 
   async function signOut() {
@@ -27,45 +27,31 @@ export default function Navbar({ userEmail }: { userEmail?: string | null }) {
   }
 
   return (
-    <nav className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
-      <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
-        <Link href="/leaderboard" className="flex items-center gap-2.5">
-          <span className="font-black text-lg tracking-tight text-gray-900">mic<span className="text-yellow-500">ci</span></span>
-          <span className="text-xs font-semibold text-gray-300 uppercase tracking-widest border-l border-gray-200 pl-2.5 hidden sm:block">WC 2026</span>
+    <nav style={{position:'sticky',top:0,zIndex:50,backdropFilter:'blur(20px)',background:'rgba(245,240,230,0.85)',borderBottom:'1px solid var(--border)'}}>
+      <div style={{maxWidth:1400,margin:'0 auto',padding:'18px 32px',display:'flex',alignItems:'center',justifyContent:'space-between',gap:16}}>
+        <Link href="/dashboard" style={{fontFamily:'Bebas Neue',fontSize:28,letterSpacing:'0.04em',display:'flex',alignItems:'center',gap:10,textDecoration:'none',color:'var(--text)'}}>
+          <div style={{width:10,height:10,background:'var(--text)',borderRadius:'50%',animation:'pulse 2s infinite'}}/>
+          MICCI <span style={{color:'var(--text-faint)',fontSize:13,fontWeight:500,fontFamily:'Inter Tight',letterSpacing:'0.05em',marginLeft:4}}>/ WC26</span>
         </Link>
 
-        <div className="hidden sm:flex items-center gap-1">
+        <div className="hidden sm:flex" style={{display:'flex',gap:4}}>
           {nav.map(n => (
             <Link key={n.href} href={n.href}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
-                pathname === n.href ? 'bg-gray-900 text-white' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
-              }`}>
+              style={{fontSize:13,fontWeight:500,color:n.warn?'var(--warn)':pathname===n.href?'var(--text)':'var(--text-dim)',textDecoration:'none',padding:'8px 14px',borderRadius:100,letterSpacing:'0.05em',textTransform:'uppercase',background:pathname===n.href?'var(--bg-elev)':'transparent',transition:'all 0.2s'}}>
               {n.label}
             </Link>
           ))}
         </div>
 
-        <div className="hidden sm:flex items-center gap-3">
-          <span className="text-gray-300 text-xs truncate max-w-[180px]">{userEmail}</span>
-          <button onClick={signOut} className="text-xs font-semibold text-gray-500 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg transition-colors">
-            Sign out
+        <div style={{display:'flex',alignItems:'center',gap:12}}>
+          <button onClick={signOut}
+            style={{display:'flex',alignItems:'center',gap:8,background:'var(--text)',color:'var(--bg)',border:'none',padding:'10px 20px',borderRadius:100,fontWeight:700,fontSize:13,cursor:'pointer',transition:'all 0.2s'}}>
+            <span style={{width:6,height:6,background:'var(--highlight)',borderRadius:'50%'}}/>
+            {displayName || userEmail?.split('@')[0] || '…'}
           </button>
         </div>
-
-        <button className="sm:hidden text-gray-400 p-1" onClick={() => setMenuOpen(!menuOpen)}>☰</button>
       </div>
-
-      {menuOpen && (
-        <div className="sm:hidden bg-white border-t border-gray-100 px-4 pb-4 pt-2 flex flex-col gap-1">
-          {nav.map(n => (
-            <Link key={n.href} href={n.href} className="text-gray-600 py-2 text-sm font-medium" onClick={() => setMenuOpen(false)}>
-              {n.label}
-            </Link>
-          ))}
-          <div className="text-xs text-gray-300 py-1">{userEmail}</div>
-          <button onClick={signOut} className="text-left text-gray-400 py-2 text-sm">Sign out</button>
-        </div>
-      )}
+      <style>{`@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }`}</style>
     </nav>
   )
 }
