@@ -9,7 +9,7 @@ export default function Navbar({ userEmail }: { userEmail?: string | null }) {
   const router = useRouter()
   const supabase = createBrowserClient()
   const [menuOpen, setMenuOpen] = useState(false)
-  const isAdmin = userEmail === 'admin@micci.ch' // change to your email
+  const isAdmin = userEmail === 'miro.harasic@gmail.com' // change to your email
 
   const nav = [
     { href: '/leaderboard', label: '🏆 Leaderboard' },
