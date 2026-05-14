@@ -26,9 +26,9 @@ export default function LoginPage() {
     <div style={{background:'var(--bg)',minHeight:'100vh',display:'flex',flexDirection:'column'}}>
       <nav style={{position:'sticky',top:0,zIndex:50,backdropFilter:'blur(20px)',background:'rgba(245,240,230,0.92)',borderBottom:'1px solid var(--border)'}}>
         <div style={{maxWidth:1400,margin:'0 auto',padding:'0 20px',height:54,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-          <Link href="/" style={{fontFamily:'Bebas Neue',fontSize:22,letterSpacing:'0.04em',display:'flex',alignItems:'center',gap:8,textDecoration:'none',color:'var(--text)'}}>
-            <div style={{width:8,height:8,background:'var(--text)',borderRadius:'50%'}}/>
-            MICCI
+          <Link href="/" style={{textDecoration:'none',color:'var(--text)'}}>
+            <div style={{fontFamily:'Bebas Neue',fontSize:22,letterSpacing:'0.04em',lineHeight:1}}>WC2026</div>
+            <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',marginTop:2}}>Betting game by M11</div>
           </Link>
           <Link href="/" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em'}}>← Back</Link>
         </div>

@@ -31,10 +31,9 @@ export default function Navbar({ userEmail, displayName }: { userEmail?: string 
       <nav style={{position:'sticky',top:0,zIndex:50,backdropFilter:'blur(20px)',background:'rgba(245,240,230,0.92)',borderBottom:'1px solid var(--border)'}}>
         <div style={{maxWidth:1400,margin:'0 auto',padding:'0 20px',height:56,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
           {/* Logo */}
-          <Link href="/dashboard" style={{fontFamily:'Bebas Neue',fontSize:24,letterSpacing:'0.04em',display:'flex',alignItems:'center',gap:8,textDecoration:'none',color:'var(--text)',flexShrink:0}}>
-            <div style={{width:8,height:8,background:'var(--text)',borderRadius:'50%',animation:'pulse 2s infinite'}}/>
-            MICCI
-            <span style={{color:'var(--text-faint)',fontSize:12,fontWeight:500,fontFamily:'Inter Tight',letterSpacing:'0.05em'}} className="hide-mobile">/ WC26</span>
+          <Link href="/dashboard" style={{textDecoration:'none',color:'var(--text)',flexShrink:0,display:'flex',flexDirection:'column',gap:1}}>
+            <div style={{fontFamily:'Bebas Neue',fontSize:24,letterSpacing:'0.04em',lineHeight:1}}>WC2026</div>
+            <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase'}}>Betting game by M11</div>
           </Link>
 
           {/* Desktop nav */}

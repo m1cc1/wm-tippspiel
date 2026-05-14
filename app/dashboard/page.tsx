@@ -110,9 +110,9 @@ export default function DashboardPage() {
       {/* NAV */}
       <nav style={{position:'sticky',top:0,zIndex:50,backdropFilter:'blur(20px)',background:'rgba(245,240,230,0.92)',borderBottom:'1px solid var(--border)'}}>
         <div style={{maxWidth:1400,margin:'0 auto',padding:'0 20px',height:54,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
-          <div style={{fontFamily:'Bebas Neue',fontSize:22,letterSpacing:'0.04em',display:'flex',alignItems:'center',gap:8,flexShrink:0}}>
-            <div style={{width:8,height:8,background:'var(--text)',borderRadius:'50%',animation:'pulse 2s infinite'}}/>
-            MICCI
+          <div style={{flexShrink:0}}>
+            <div style={{fontFamily:'Bebas Neue',fontSize:22,letterSpacing:'0.04em',lineHeight:1}}>WC2026</div>
+            <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',marginTop:2}}>Betting game by M11</div>
           </div>
           {/* Desktop links */}
           <div style={{display:'flex',gap:2}} className="hide-mobile">
@@ -303,23 +303,25 @@ export default function DashboardPage() {
             {leaderboard.slice(0,6).map((e,i)=>{
               const rank=Number(e.rank)
               const isMe=e.id===profile?.id
-              const prize=rank<=3?prizes[rank-1]:null
-              const rankColor=rank===1?'var(--text)':rank===2?'var(--beige-deep)':rank===3?'var(--beige-mid)':'var(--text-faint)'
+              const isPending=e.status==='pending'
+              const prize=!isPending&&rank<=3?prizes[rank-1]:null
+              const rankColor=isPending?'var(--text-faint)':rank===1?'var(--text)':rank===2?'var(--beige-deep)':rank===3?'var(--beige-mid)':'var(--text-faint)'
               const prizeColor=rank===1?'var(--text)':rank===2?'var(--beige-deep)':rank===3?'var(--beige-mid)':'var(--text-faint)'
               return(
-                <div key={e.id} style={{display:'grid',gridTemplateColumns:'44px 1fr 80px 80px',gap:8,padding:'14px 16px',alignItems:'center',borderBottom:'1px solid var(--border)',background:isMe?'linear-gradient(90deg,rgba(26,24,20,0.04) 0%,transparent 100%)':'transparent',position:'relative'}}>
+                <div key={e.id} style={{display:'grid',gridTemplateColumns:'44px 1fr 80px 80px',gap:8,padding:'14px 16px',alignItems:'center',borderBottom:'1px solid var(--border)',background:isMe?'linear-gradient(90deg,rgba(26,24,20,0.04) 0%,transparent 100%)':isPending?'var(--bg-card-2)':'transparent',position:'relative',opacity:isPending?0.55:1}}>
                   {isMe&&<div style={{position:'absolute',left:0,top:0,bottom:0,width:3,background:'var(--text)'}}/>}
-                  <div style={{fontFamily:'Bebas Neue',fontSize:24,color:rankColor}}>{String(rank).padStart(2,'0')}</div>
+                  <div style={{fontFamily:'Bebas Neue',fontSize:22,color:rankColor}}>{isPending?'—':String(rank).padStart(2,'0')}</div>
                   <div style={{display:'flex',alignItems:'center',gap:10}}>
-                    <div style={{width:34,height:34,borderRadius:'50%',background:isMe?'var(--text)':'var(--bg-elev)',border:`1px solid ${isMe?'var(--text)':'var(--border)'}`,display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,fontSize:12,color:isMe?'var(--bg)':'var(--text-dim)',flexShrink:0}}>
+                    <div style={{width:32,height:32,borderRadius:'50%',background:isMe?'var(--text)':isPending?'var(--border)':'var(--bg-elev)',border:`1px solid ${isMe?'var(--text)':'var(--border)'}`,display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,fontSize:12,color:isMe?'var(--bg)':'var(--text-dim)',flexShrink:0}}>
                       {e.display_name.substring(0,2).toUpperCase()}
                     </div>
-                    <div style={{fontWeight:600,fontSize:13,color:'var(--text)',display:'flex',alignItems:'center',gap:5,minWidth:0}}>
+                    <div style={{fontWeight:600,fontSize:13,color:isPending?'var(--text-dim)':'var(--text)',display:'flex',alignItems:'center',gap:5,flexWrap:'wrap',minWidth:0}}>
                       <span style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{e.display_name}</span>
                       {isMe&&<span style={{fontSize:9,background:'var(--text)',color:'var(--bg)',padding:'1px 5px',borderRadius:4,fontWeight:700,flexShrink:0}}>YOU</span>}
+                      {isPending&&<span style={{fontSize:9,background:'var(--border)',color:'var(--text-faint)',padding:'1px 5px',borderRadius:4,fontWeight:700,flexShrink:0,textTransform:'uppercase'}}>Pending</span>}
                     </div>
                   </div>
-                  <div style={{fontFamily:'JetBrains Mono',fontWeight:700,fontSize:15,color:'var(--text)'}}>{e.total_points}{e.delta>0&&<span style={{fontSize:10,color:'var(--warn)',marginLeft:3}}>+{e.delta}</span>}</div>
+                  <div style={{fontFamily:'JetBrains Mono',fontWeight:700,fontSize:14,color:isPending?'var(--text-faint)':'var(--text)'}}>{isPending?'—':e.total_points}{!isPending&&e.delta>0&&<span style={{fontSize:10,color:'var(--warn)',marginLeft:3}}>+{e.delta}</span>}</div>
                   <div style={{textAlign:'right',fontWeight:700,fontSize:13,color:prizeColor}}>{prize!=null?`CHF ${prize}`:'—'}</div>
                 </div>
               )
@@ -444,7 +446,8 @@ export default function DashboardPage() {
       </div>
 
       <footer style={{borderTop:'1px solid var(--border)',padding:'24px 20px',display:'flex',flexDirection:'column',alignItems:'center',gap:10,fontSize:12,color:'var(--text-faint)',textAlign:'center'}}>
-        <div style={{fontFamily:'Bebas Neue',fontSize:18,color:'var(--text)'}}>MICCI / WC26</div>
+        <div style={{fontFamily:'Bebas Neue',fontSize:18,color:'var(--text)'}}>WC2026</div>
+        <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase'}}>Betting game by M11</div>
         <div>CHF {pool} pool · {totalActive} players</div>
         <div style={{display:'flex',gap:20,flexWrap:'wrap',justifyContent:'center'}}>
           {['About','Rules','Privacy'].map(l=><a key={l} href="#" style={{color:'var(--text-faint)',textDecoration:'none'}}>{l}</a>)}

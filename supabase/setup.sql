@@ -178,7 +178,8 @@ begin
       t.user_id,
       sum(
         case
-          when t.tip_home = g.home_score and t.tip_away = g.away_score then 3
+          when t.tip_home = g.home_score and t.tip_away = g.away_score then 10
+          when (t.tip_home - t.tip_away) = (g.home_score - g.away_score) then 8
           when (
             case when t.tip_home > t.tip_away then 'home'
                  when t.tip_home < t.tip_away then 'away'
@@ -187,7 +188,7 @@ begin
             case when g.home_score > g.away_score then 'home'
                  when g.home_score < g.away_score then 'away'
                  else 'draw' end
-          ) then 1
+          ) then 5
           else 0
         end
       )::integer as delta_pts
@@ -203,14 +204,18 @@ begin
     p.total_points,
     p.exact_count,
     p.tendency_count,
+    -- pending users always rank last, active users ranked by points
     rank() over (
-      order by (p.total_points + coalesce(ld.delta_pts, 0)) desc
+      order by
+        case when p.status = 'active' then 0 else 1 end,
+        (p.total_points + coalesce(ld.delta_pts, 0)) desc
     ),
     coalesce(ld.delta_pts, 0)::integer
   from public.profiles p
   left join live_delta ld on ld.user_id = p.id
-  where p.status = 'active'
-  order by (p.total_points + coalesce(ld.delta_pts, 0)) desc;
+  order by
+    case when p.status = 'active' then 0 else 1 end,
+    (p.total_points + coalesce(ld.delta_pts, 0)) desc;
 end;
 $$;
 
@@ -218,3 +223,18 @@ $$;
 alter publication supabase_realtime add table public.tips;
 alter publication supabase_realtime add table public.games;
 alter publication supabase_realtime add table public.profiles;
+
+-- ── ADMIN: allow active users to update any profile status ──────────────
+drop policy if exists "Users can update their own profile" on public.profiles;
+drop policy if exists "Admin can update any profile status" on public.profiles;
+
+create policy "Users can update their own profile"
+  on public.profiles for update using (auth.uid() = id);
+
+create policy "Admin can update any profile status"
+  on public.profiles for update using (
+    exists (
+      select 1 from public.profiles
+      where id = auth.uid() and status = 'active'
+    )
+  );
