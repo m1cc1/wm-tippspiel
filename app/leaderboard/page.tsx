@@ -122,13 +122,13 @@ export default function LeaderboardPage() {
         <div style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:20,overflow:'hidden',marginBottom:16}}>
 
           {/* Column headers */}
-          <div style={{display:'grid',gridTemplateColumns:'44px 1fr 72px 72px 56px 100px',gap:8,padding:'12px 20px',borderBottom:'1px solid var(--border)',fontSize:10,textTransform:'uppercase',letterSpacing:'0.1em',color:'var(--text-faint)',fontWeight:700,background:'var(--bg-card-2)'}}>
+          <div style={{display:'grid',gridTemplateColumns:'44px 1fr 80px 80px 56px',gap:8,padding:'12px 20px',borderBottom:'1px solid var(--border)',fontSize:10,textTransform:'uppercase',letterSpacing:'0.1em',color:'var(--text-faint)',fontWeight:700,background:'var(--bg-card-2)'}}>
             <div>#</div>
             <div>Player</div>
             <div style={{textAlign:'right'}}>Pts</div>
             <div style={{textAlign:'right'}} className="hide-mobile">Live Δ</div>
             <div style={{textAlign:'center'}} className="hide-mobile">Move</div>
-            <div style={{textAlign:'right'}}>Prize</div>
+            
           </div>
 
           {/* Active players */}
@@ -142,7 +142,7 @@ export default function LeaderboardPage() {
             const isLiveGaining = e.delta > 0 && liveCount > 0
 
             return (
-              <div key={e.id} style={{display:'grid',gridTemplateColumns:'44px 1fr 72px 72px 56px 100px',gap:8,padding:'16px 20px',alignItems:'center',borderBottom:'1px solid var(--border)',background:isMe?'linear-gradient(90deg,rgba(26,24,20,0.04) 0%,transparent 100%)':'transparent',position:'relative',transition:'background 0.3s'}}>
+              <div key={e.id} style={{display:'grid',gridTemplateColumns:'44px 1fr 80px 80px 56px',gap:8,padding:'16px 20px',alignItems:'center',borderBottom:'1px solid var(--border)',background:isMe?'linear-gradient(90deg,rgba(26,24,20,0.04) 0%,transparent 100%)':'transparent',position:'relative',transition:'background 0.3s'}}>
                 {isMe && <div style={{position:'absolute',left:0,top:0,bottom:0,width:3,background:'var(--text)'}}/>}
 
                 {/* Rank */}
@@ -186,10 +186,7 @@ export default function LeaderboardPage() {
                   )}
                 </div>
 
-                {/* Prize */}
-                <div style={{textAlign:'right',fontWeight:700,fontSize:13,color:prizeColor}}>
-                  {prize != null ? `CHF ${prize}` : '—'}
-                </div>
+
               </div>
             )
           })}
@@ -203,7 +200,7 @@ export default function LeaderboardPage() {
               {pendingEntries.map(e => {
                 const isMe = e.id === currentUserId
                 return (
-                  <div key={e.id} style={{display:'grid',gridTemplateColumns:'44px 1fr 72px 72px 56px 100px',gap:8,padding:'14px 20px',alignItems:'center',borderBottom:'1px solid var(--border)',background:isMe?'linear-gradient(90deg,rgba(26,24,20,0.03) 0%,transparent 100%)':'var(--bg-card-2)',opacity:0.5,position:'relative'}}>
+                  <div key={e.id} style={{display:'grid',gridTemplateColumns:'44px 1fr 80px 80px 56px',gap:8,padding:'14px 20px',alignItems:'center',borderBottom:'1px solid var(--border)',background:isMe?'linear-gradient(90deg,rgba(26,24,20,0.03) 0%,transparent 100%)':'var(--bg-card-2)',opacity:0.5,position:'relative'}}>
                     {isMe && <div style={{position:'absolute',left:0,top:0,bottom:0,width:3,background:'var(--text-faint)'}}/>}
                     <div style={{fontFamily:'Bebas Neue',fontSize:22,color:'var(--text-faint)'}}>—</div>
                     <div style={{display:'flex',alignItems:'center',gap:10,minWidth:0}}>
@@ -218,7 +215,7 @@ export default function LeaderboardPage() {
                     <div style={{textAlign:'right',fontSize:12,color:'var(--text-faint)',fontFamily:'JetBrains Mono'}} className="hide-mobile">—</div>
                     <div className="hide-mobile"/>
                     <div className="hide-mobile"/>
-                    <div style={{textAlign:'right',fontSize:12,color:'var(--text-faint)'}}>—</div>
+  
                   </div>
                 )
               })}
