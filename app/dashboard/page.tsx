@@ -128,12 +128,18 @@ export default function DashboardPage() {
               style={{fontSize:11,border:'1px solid var(--border)',borderRadius:100,padding:'6px 10px',background:'transparent',color:'var(--text-dim)',cursor:'pointer',fontFamily:'Inter Tight',fontWeight:500}}>
               {TZ_OPTIONS.map(o=><option key={o.offset} value={o.offset}>{o.label}</option>)}
             </select>
-            {/* User pill desktop */}
-            <button onClick={signOut} className="hide-mobile"
-              style={{display:'flex',alignItems:'center',gap:6,background:'var(--text)',color:'var(--bg)',border:'none',padding:'8px 16px',borderRadius:100,fontWeight:700,fontSize:12,cursor:'pointer'}}>
-              <span style={{width:5,height:5,background:'var(--highlight)',borderRadius:'50%'}}/>
-              {profileLoaded?profile?.display_name:'…'}
-            </button>
+            {/* Greeting + sign out desktop */}
+            <div className="hide-mobile" style={{display:'flex',alignItems:'center',gap:10}}>
+              {profileLoaded && profile?.display_name && (
+                <div style={{fontSize:13,fontWeight:600,color:'var(--text-dim)'}}>
+                  Hi, <span style={{color:'var(--text)'}}>{profile.display_name.split(' ')[0]}</span>
+                </div>
+              )}
+              <button onClick={signOut}
+                style={{fontSize:11,fontWeight:700,color:'var(--text-faint)',background:'none',border:'1px solid var(--border)',padding:'6px 14px',borderRadius:100,cursor:'pointer',textTransform:'uppercase',letterSpacing:'0.08em'}}>
+                Sign out
+              </button>
+            </div>
             {/* Hamburger mobile */}
             <button onClick={()=>setMenuOpen(!menuOpen)}
               style={{background:'var(--bg-elev)',border:'1px solid var(--border)',borderRadius:10,padding:'8px 10px',cursor:'pointer',fontSize:16,lineHeight:1}} className="show-mobile">
@@ -151,12 +157,16 @@ export default function DashboardPage() {
               </Link>
             ))}
             <div style={{borderTop:'1px solid var(--border)',marginTop:8,paddingTop:8}}>
-              <div style={{fontSize:12,color:'var(--text-faint)',padding:'4px 16px',marginBottom:4}}>{userEmail}</div>
               <select value={tz} onChange={e=>setTz(Number(e.target.value))}
                 style={{width:'100%',fontSize:13,border:'1px solid var(--border)',borderRadius:12,padding:'10px 12px',background:'var(--bg-card-2)',color:'var(--text-dim)',cursor:'pointer',fontFamily:'Inter Tight',fontWeight:500,marginBottom:4}}>
                 {TZ_OPTIONS.map(o=><option key={o.offset} value={o.offset}>{o.label}</option>)}
               </select>
-              <button onClick={signOut} style={{width:'100%',textAlign:'left',background:'none',border:'none',color:'var(--text-dim)',fontSize:14,fontWeight:600,padding:'12px 16px',cursor:'pointer',borderRadius:12}}>Sign out</button>
+              <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'8px 4px'}}>
+                <div style={{fontSize:13,color:'var(--text-dim)'}}>
+                  {profileLoaded&&profile?.display_name&&<>Hi, <strong style={{color:'var(--text)'}}>{profile.display_name.split(' ')[0]}</strong></>}
+                </div>
+                <button onClick={signOut} style={{background:'none',border:'1px solid var(--border)',color:'var(--text-faint)',fontSize:12,fontWeight:700,padding:'6px 14px',borderRadius:100,cursor:'pointer',textTransform:'uppercase',letterSpacing:'0.08em'}}>Sign out</button>
+              </div>
             </div>
           </div>
         )}
@@ -214,8 +224,8 @@ export default function DashboardPage() {
           {/* Stats row */}
           <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16,paddingBottom:20,borderBottom:'1px solid rgba(245,240,230,0.1)',marginBottom:20}}>
             {[
-              {val:`+${myDelta}`,label:'Live pts',dim:myDelta===0},
-              {val:`${ptsBehind||0}`,label:'Pts to top',dim:!above},
+              {val:myDelta>0?`+${myDelta}`:'N/A',label:'Live pts',dim:myDelta===0},
+              {val:above?`${ptsBehind}`:'N/A',label:'Pts to top',dim:!above},
               {val:profile?.total_points??0,label:'Total pts'},
             ].map((s,i)=>(
               <div key={i}>
@@ -256,7 +266,7 @@ export default function DashboardPage() {
             <div style={{background:'rgba(245,240,230,0.04)',border:'1px solid rgba(245,240,230,0.08)',borderRadius:14,padding:'14px'}}>
               <div style={{fontSize:10,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--text-faint)',marginBottom:10,fontWeight:600}}>Accuracy</div>
               <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(24px,6vw,40px)',color:'var(--highlight)',lineHeight:1,marginBottom:4}}>
-                {(profile?.exact_count??0)>0?`${Math.round(profile.exact_count/(profile.exact_count+profile.tendency_count)*100)}%`:'—'}
+                {(profile?.exact_count??0)>0?`${Math.round(profile.exact_count/(profile.exact_count+profile.tendency_count)*100)}%`:'N/A'}
               </div>
               <div style={{fontSize:11,color:'var(--text-faint)'}}>{profile?.exact_count??0} exact · {profile?.tendency_count??0} partial</div>
             </div>
@@ -411,11 +421,58 @@ export default function DashboardPage() {
                   <div key={i}>
                     <div style={{fontFamily:'Bebas Neue',fontSize:18,color:'var(--text)',marginBottom:4}}>{b.label}</div>
                     <div style={{fontSize:12,color:'var(--text-dim)',marginBottom:8}}>{b.q}</div>
-                    <div style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:10,padding:'12px 14px',display:'flex',alignItems:'center',gap:10,cursor:'pointer'}}>
-                      <span style={{fontSize:20}}>?</span>
-                      <span style={{color:'var(--text-faint)',fontSize:13}}>Pick a country</span>
-                      <span style={{marginLeft:'auto',fontSize:10,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'0.1em',fontWeight:600}}>20 pts</span>
-                    </div>
+                    <select disabled={isPending} style={{width:'100%',background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:10,padding:'10px 12px',fontSize:13,fontWeight:500,color:'var(--text)',cursor:isPending?'not-allowed':'pointer',fontFamily:'Inter Tight',opacity:isPending?0.5:1}}>
+                      <option value="">— Select a country —</option>
+                <option>🇲🇽 Mexico</option>
+                <option>🇿🇦 South Africa</option>
+                <option>🇰🇷 South Korea</option>
+                <option>🇨🇿 Czechia</option>
+                <option>🇨🇦 Canada</option>
+                <option>🇧🇦 Bosnia & Herz.</option>
+                <option>🇵🇹 Portugal</option>
+                <option>🇨🇩 DR Congo</option>
+                <option>🇧🇷 Brazil</option>
+                <option>🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland</option>
+                <option>🇲🇦 Morocco</option>
+                <option>🇭🇹 Haiti</option>
+                <option>🇺🇸 USA</option>
+                <option>🇵🇾 Paraguay</option>
+                <option>🇹🇷 Türkiye</option>
+                <option>🇦🇺 Australia</option>
+                <option>🇪🇸 Spain</option>
+                <option>🇪🇬 Egypt</option>
+                <option>🇦🇹 Austria</option>
+                <option>🇯🇴 Jordan</option>
+                <option>🇯🇵 Japan</option>
+                <option>🇹🇳 Tunisia</option>
+                <option>🇨🇴 Colombia</option>
+                <option>🇨🇮 Ivory Coast</option>
+                <option>🇩🇪 Germany</option>
+                <option>🇸🇦 Saudi Arabia</option>
+                <option>🇸🇪 Sweden</option>
+                <option>🇳🇿 New Zealand</option>
+                <option>🇳🇱 Netherlands</option>
+                <option>🇸🇳 Senegal</option>
+                <option>🇮🇷 Iran</option>
+                <option>🇪🇨 Ecuador</option>
+                <option>🇫🇷 France</option>
+                <option>🇳🇴 Norway</option>
+                <option>🇮🇶 Iraq</option>
+                <option>🇩🇿 Algeria</option>
+                <option>🇦🇷 Argentina</option>
+                <option>🇶🇦 Qatar</option>
+                <option>🇬🇭 Ghana</option>
+                <option>🇺🇿 Uzbekistan</option>
+                <option>🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</option>
+                <option>🇭🇷 Croatia</option>
+                <option>🇵🇦 Panama</option>
+                <option>🇧🇪 Belgium</option>
+                <option>🇺🇾 Uruguay</option>
+                <option>🇨🇻 Cape Verde</option>
+                <option>🇨🇼 Curaçao</option>
+                <option>🇨🇭 Switzerland</option>
+                    </select>
+                    <div style={{fontSize:11,color:'var(--text-faint)',marginTop:4}}>+20 pts if correct · locks June 11</div>
                   </div>
                 ))}
               </div>

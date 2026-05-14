@@ -371,6 +371,143 @@ export default function HomePage() {
           </div>
         </div>
 
+
+        {/* SPECIAL PREDICTIONS */}
+        <div style={{marginBottom:40}}>
+          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
+            <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(36px,6vw,64px)',lineHeight:0.9,color:'var(--text)'}}>
+              Bonus <span style={{color:'var(--beige-deep)'}}>predictions</span>
+            </div>
+            <span style={{fontSize:11,color:'var(--warn)',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.08em'}}>⏳ Locks June 11</span>
+          </div>
+          <div style={{display:'flex',flexDirection:'column',gap:10}}>
+            <div style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:14,padding:'16px 18px'}}>
+              <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',marginBottom:10}}>
+                <div>
+                  <div style={{fontWeight:700,fontSize:14,color:'var(--text)',marginBottom:3}}>🏆 Tournament Winner</div>
+                  <div style={{fontSize:12,color:'var(--text-faint)'}}>Which country lifts the trophy on July 19?</div>
+                </div>
+                <span style={{background:'rgba(74,122,58,0.12)',border:'1px solid rgba(74,122,58,0.25)',color:'#2d5a1b',fontSize:11,fontWeight:700,padding:'3px 10px',borderRadius:100,flexShrink:0,marginLeft:12}}>+20 pts</span>
+              </div>
+              <select onFocus={()=>showToast('👋 Sign in to enter predictions')}
+                style={{width:'100%',background:'var(--bg-card-2)',border:'1px solid var(--border)',borderRadius:10,padding:'10px 12px',fontSize:13,fontWeight:500,color:'var(--text)',cursor:'pointer',fontFamily:'Inter Tight'}}>
+                <option value="">— Select a team —</option>
+                <option key="🇲🇽 Mexico" value="🇲🇽 Mexico">🇲🇽 Mexico</option>
+                  <option key="🇿🇦 South Africa" value="🇿🇦 South Africa">🇿🇦 South Africa</option>
+                  <option key="🇰🇷 South Korea" value="🇰🇷 South Korea">🇰🇷 South Korea</option>
+                  <option key="🇨🇿 Czechia" value="🇨🇿 Czechia">🇨🇿 Czechia</option>
+                  <option key="🇨🇦 Canada" value="🇨🇦 Canada">🇨🇦 Canada</option>
+                  <option key="🇧🇦 Bosnia & Herz." value="🇧🇦 Bosnia & Herz.">🇧🇦 Bosnia & Herz.</option>
+                  <option key="🇵🇹 Portugal" value="🇵🇹 Portugal">🇵🇹 Portugal</option>
+                  <option key="🇨🇩 DR Congo" value="🇨🇩 DR Congo">🇨🇩 DR Congo</option>
+                  <option key="🇧🇷 Brazil" value="🇧🇷 Brazil">🇧🇷 Brazil</option>
+                  <option key="🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland" value="🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland">🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland</option>
+                  <option key="🇲🇦 Morocco" value="🇲🇦 Morocco">🇲🇦 Morocco</option>
+                  <option key="🇭🇹 Haiti" value="🇭🇹 Haiti">🇭🇹 Haiti</option>
+                  <option key="🇺🇸 USA" value="🇺🇸 USA">🇺🇸 USA</option>
+                  <option key="🇵🇾 Paraguay" value="🇵🇾 Paraguay">🇵🇾 Paraguay</option>
+                  <option key="🇹🇷 Türkiye" value="🇹🇷 Türkiye">🇹🇷 Türkiye</option>
+                  <option key="🇦🇺 Australia" value="🇦🇺 Australia">🇦🇺 Australia</option>
+                  <option key="🇪🇸 Spain" value="🇪🇸 Spain">🇪🇸 Spain</option>
+                  <option key="🇪🇬 Egypt" value="🇪🇬 Egypt">🇪🇬 Egypt</option>
+                  <option key="🇦🇹 Austria" value="🇦🇹 Austria">🇦🇹 Austria</option>
+                  <option key="🇯🇴 Jordan" value="🇯🇴 Jordan">🇯🇴 Jordan</option>
+                  <option key="🇯🇵 Japan" value="🇯🇵 Japan">🇯🇵 Japan</option>
+                  <option key="🇹🇳 Tunisia" value="🇹🇳 Tunisia">🇹🇳 Tunisia</option>
+                  <option key="🇨🇴 Colombia" value="🇨🇴 Colombia">🇨🇴 Colombia</option>
+                  <option key="🇨🇮 Ivory Coast" value="🇨🇮 Ivory Coast">🇨🇮 Ivory Coast</option>
+                  <option key="🇩🇪 Germany" value="🇩🇪 Germany">🇩🇪 Germany</option>
+                  <option key="🇸🇦 Saudi Arabia" value="🇸🇦 Saudi Arabia">🇸🇦 Saudi Arabia</option>
+                  <option key="🇸🇪 Sweden" value="🇸🇪 Sweden">🇸🇪 Sweden</option>
+                  <option key="🇳🇿 New Zealand" value="🇳🇿 New Zealand">🇳🇿 New Zealand</option>
+                  <option key="🇳🇱 Netherlands" value="🇳🇱 Netherlands">🇳🇱 Netherlands</option>
+                  <option key="🇸🇳 Senegal" value="🇸🇳 Senegal">🇸🇳 Senegal</option>
+                  <option key="🇮🇷 Iran" value="🇮🇷 Iran">🇮🇷 Iran</option>
+                  <option key="🇪🇨 Ecuador" value="🇪🇨 Ecuador">🇪🇨 Ecuador</option>
+                  <option key="🇫🇷 France" value="🇫🇷 France">🇫🇷 France</option>
+                  <option key="🇳🇴 Norway" value="🇳🇴 Norway">🇳🇴 Norway</option>
+                  <option key="🇮🇶 Iraq" value="🇮🇶 Iraq">🇮🇶 Iraq</option>
+                  <option key="🇩🇿 Algeria" value="🇩🇿 Algeria">🇩🇿 Algeria</option>
+                  <option key="🇦🇷 Argentina" value="🇦🇷 Argentina">🇦🇷 Argentina</option>
+                  <option key="🇶🇦 Qatar" value="🇶🇦 Qatar">🇶🇦 Qatar</option>
+                  <option key="🇬🇭 Ghana" value="🇬🇭 Ghana">🇬🇭 Ghana</option>
+                  <option key="🇺🇿 Uzbekistan" value="🇺🇿 Uzbekistan">🇺🇿 Uzbekistan</option>
+                  <option key="🏴󠁧󠁢󠁥󠁮󠁧󠁿 England" value="🏴󠁧󠁢󠁥󠁮󠁧󠁿 England">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</option>
+                  <option key="🇭🇷 Croatia" value="🇭🇷 Croatia">🇭🇷 Croatia</option>
+                  <option key="🇵🇦 Panama" value="🇵🇦 Panama">🇵🇦 Panama</option>
+                  <option key="🇧🇪 Belgium" value="🇧🇪 Belgium">🇧🇪 Belgium</option>
+                  <option key="🇺🇾 Uruguay" value="🇺🇾 Uruguay">🇺🇾 Uruguay</option>
+                  <option key="🇨🇻 Cape Verde" value="🇨🇻 Cape Verde">🇨🇻 Cape Verde</option>
+                  <option key="🇨🇼 Curaçao" value="🇨🇼 Curaçao">🇨🇼 Curaçao</option>
+                  <option key="🇨🇭 Switzerland" value="🇨🇭 Switzerland">🇨🇭 Switzerland</option>
+              </select>
+              <div style={{fontSize:11,color:'var(--text-faint)',marginTop:6}}>🔒 Changeable until June 11, 2026</div>
+            </div>
+            <div style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:14,padding:'16px 18px'}}>
+              <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',marginBottom:10}}>
+                <div>
+                  <div style={{fontWeight:700,fontSize:14,color:'var(--text)',marginBottom:3}}>👟 Top Scorer's Nationality</div>
+                  <div style={{fontSize:12,color:'var(--text-faint)'}}>Which country will the Golden Boot winner come from?</div>
+                </div>
+                <span style={{background:'rgba(74,122,58,0.12)',border:'1px solid rgba(74,122,58,0.25)',color:'#2d5a1b',fontSize:11,fontWeight:700,padding:'3px 10px',borderRadius:100,flexShrink:0,marginLeft:12}}>+20 pts</span>
+              </div>
+              <select onFocus={()=>showToast('👋 Sign in to enter predictions')}
+                style={{width:'100%',background:'var(--bg-card-2)',border:'1px solid var(--border)',borderRadius:10,padding:'10px 12px',fontSize:13,fontWeight:500,color:'var(--text)',cursor:'pointer',fontFamily:'Inter Tight'}}>
+                <option value="">— Select a country —</option>
+                <option key="🇲🇽 Mexico" value="🇲🇽 Mexico">🇲🇽 Mexico</option>
+                  <option key="🇿🇦 South Africa" value="🇿🇦 South Africa">🇿🇦 South Africa</option>
+                  <option key="🇰🇷 South Korea" value="🇰🇷 South Korea">🇰🇷 South Korea</option>
+                  <option key="🇨🇿 Czechia" value="🇨🇿 Czechia">🇨🇿 Czechia</option>
+                  <option key="🇨🇦 Canada" value="🇨🇦 Canada">🇨🇦 Canada</option>
+                  <option key="🇧🇦 Bosnia & Herz." value="🇧🇦 Bosnia & Herz.">🇧🇦 Bosnia & Herz.</option>
+                  <option key="🇵🇹 Portugal" value="🇵🇹 Portugal">🇵🇹 Portugal</option>
+                  <option key="🇨🇩 DR Congo" value="🇨🇩 DR Congo">🇨🇩 DR Congo</option>
+                  <option key="🇧🇷 Brazil" value="🇧🇷 Brazil">🇧🇷 Brazil</option>
+                  <option key="🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland" value="🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland">🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland</option>
+                  <option key="🇲🇦 Morocco" value="🇲🇦 Morocco">🇲🇦 Morocco</option>
+                  <option key="🇭🇹 Haiti" value="🇭🇹 Haiti">🇭🇹 Haiti</option>
+                  <option key="🇺🇸 USA" value="🇺🇸 USA">🇺🇸 USA</option>
+                  <option key="🇵🇾 Paraguay" value="🇵🇾 Paraguay">🇵🇾 Paraguay</option>
+                  <option key="🇹🇷 Türkiye" value="🇹🇷 Türkiye">🇹🇷 Türkiye</option>
+                  <option key="🇦🇺 Australia" value="🇦🇺 Australia">🇦🇺 Australia</option>
+                  <option key="🇪🇸 Spain" value="🇪🇸 Spain">🇪🇸 Spain</option>
+                  <option key="🇪🇬 Egypt" value="🇪🇬 Egypt">🇪🇬 Egypt</option>
+                  <option key="🇦🇹 Austria" value="🇦🇹 Austria">🇦🇹 Austria</option>
+                  <option key="🇯🇴 Jordan" value="🇯🇴 Jordan">🇯🇴 Jordan</option>
+                  <option key="🇯🇵 Japan" value="🇯🇵 Japan">🇯🇵 Japan</option>
+                  <option key="🇹🇳 Tunisia" value="🇹🇳 Tunisia">🇹🇳 Tunisia</option>
+                  <option key="🇨🇴 Colombia" value="🇨🇴 Colombia">🇨🇴 Colombia</option>
+                  <option key="🇨🇮 Ivory Coast" value="🇨🇮 Ivory Coast">🇨🇮 Ivory Coast</option>
+                  <option key="🇩🇪 Germany" value="🇩🇪 Germany">🇩🇪 Germany</option>
+                  <option key="🇸🇦 Saudi Arabia" value="🇸🇦 Saudi Arabia">🇸🇦 Saudi Arabia</option>
+                  <option key="🇸🇪 Sweden" value="🇸🇪 Sweden">🇸🇪 Sweden</option>
+                  <option key="🇳🇿 New Zealand" value="🇳🇿 New Zealand">🇳🇿 New Zealand</option>
+                  <option key="🇳🇱 Netherlands" value="🇳🇱 Netherlands">🇳🇱 Netherlands</option>
+                  <option key="🇸🇳 Senegal" value="🇸🇳 Senegal">🇸🇳 Senegal</option>
+                  <option key="🇮🇷 Iran" value="🇮🇷 Iran">🇮🇷 Iran</option>
+                  <option key="🇪🇨 Ecuador" value="🇪🇨 Ecuador">🇪🇨 Ecuador</option>
+                  <option key="🇫🇷 France" value="🇫🇷 France">🇫🇷 France</option>
+                  <option key="🇳🇴 Norway" value="🇳🇴 Norway">🇳🇴 Norway</option>
+                  <option key="🇮🇶 Iraq" value="🇮🇶 Iraq">🇮🇶 Iraq</option>
+                  <option key="🇩🇿 Algeria" value="🇩🇿 Algeria">🇩🇿 Algeria</option>
+                  <option key="🇦🇷 Argentina" value="🇦🇷 Argentina">🇦🇷 Argentina</option>
+                  <option key="🇶🇦 Qatar" value="🇶🇦 Qatar">🇶🇦 Qatar</option>
+                  <option key="🇬🇭 Ghana" value="🇬🇭 Ghana">🇬🇭 Ghana</option>
+                  <option key="🇺🇿 Uzbekistan" value="🇺🇿 Uzbekistan">🇺🇿 Uzbekistan</option>
+                  <option key="🏴󠁧󠁢󠁥󠁮󠁧󠁿 England" value="🏴󠁧󠁢󠁥󠁮󠁧󠁿 England">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</option>
+                  <option key="🇭🇷 Croatia" value="🇭🇷 Croatia">🇭🇷 Croatia</option>
+                  <option key="🇵🇦 Panama" value="🇵🇦 Panama">🇵🇦 Panama</option>
+                  <option key="🇧🇪 Belgium" value="🇧🇪 Belgium">🇧🇪 Belgium</option>
+                  <option key="🇺🇾 Uruguay" value="🇺🇾 Uruguay">🇺🇾 Uruguay</option>
+                  <option key="🇨🇻 Cape Verde" value="🇨🇻 Cape Verde">🇨🇻 Cape Verde</option>
+                  <option key="🇨🇼 Curaçao" value="🇨🇼 Curaçao">🇨🇼 Curaçao</option>
+                  <option key="🇨🇭 Switzerland" value="🇨🇭 Switzerland">🇨🇭 Switzerland</option>
+              </select>
+              <div style={{fontSize:11,color:'var(--text-faint)',marginTop:6}}>🔒 Changeable until June 11, 2026</div>
+            </div>
+          </div>
+        </div>
+
         {/* NEWS */}
         <div style={{marginBottom:40}}>
           <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:20,flexWrap:'wrap',gap:8}}>
