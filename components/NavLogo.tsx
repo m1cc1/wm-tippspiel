@@ -12,7 +12,13 @@ function LogoContent() {
       }}>
         World Cup 2026
       </div>
-      <div style={{display:'flex',alignItems:'center',gap:6,marginTop:3,lineHeight:1}}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 5,
+        marginTop: 3,
+        lineHeight: 1,
+      }}>
         <span style={{
           fontSize: 8,
           fontWeight: 600,
@@ -23,13 +29,15 @@ function LogoContent() {
         }}>
           prediction game by
         </span>
+        {/* m1c1 logo — transparent PNG, same visual weight as label text */}
         <img
           src="/m1c1-logo.png"
           alt="m1c1"
           style={{
-            height: 13,
+            height: 11,
             width: 'auto',
             display: 'block',
+            opacity: 1,
           }}
         />
       </div>
