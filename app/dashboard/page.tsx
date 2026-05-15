@@ -550,7 +550,7 @@ export default function DashboardPage() {
             <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(32px,7vw,60px)',lineHeight:0.9,color:'var(--text)'}}>
               WC <span style={{color:'var(--beige-deep)'}}>news</span>
             </div>
-            <a href={n.link||"https://www.fifa.com"} target="_blank" rel="noreferrer" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em',borderBottom:'1px solid var(--border)',paddingBottom:1}}>FIFA.com →</a>
+            <a href="https://www.fifa.com" target="_blank" rel="noreferrer" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em',borderBottom:'1px solid var(--border)',paddingBottom:1}}>FIFA.com →</a>
           </div>
           <div style={{display:'flex',flexDirection:'column',gap:8}}>
             {(news.length>0?news:[
