@@ -289,9 +289,12 @@ export default function HomePage() {
       {/* NAV */}
       <nav style={{position:'sticky',top:0,zIndex:50,backdropFilter:'blur(20px)',background:'rgba(245,240,230,0.92)',borderBottom:'1px solid var(--border)'}}>
         <div style={{maxWidth:1400,margin:'0 auto',padding:'0 20px',height:54,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
-          <div style={{flexShrink:0,display:'flex',flexDirection:'column',gap:1}}>
-            <div style={{fontFamily:'Bebas Neue',fontSize:22,letterSpacing:'0.04em',lineHeight:1,color:'var(--text)'}}>WC26</div>
-            <div style={{fontSize:9,color:'var(--text-faint)',letterSpacing:'0.05em',marginTop:1,fontFamily:'Inter Tight, sans-serif',fontWeight:300}}>betting game by m1c1</div>
+          <div style={{flexShrink:0,display:'flex',flexDirection:'column',gap:0}}>
+            <div style={{fontFamily:'Bebas Neue',fontSize:20,letterSpacing:'0.05em',lineHeight:1,color:'var(--text)'}}>World Cup 2026</div>
+            <div style={{display:'flex',alignItems:'center',gap:5,marginTop:2}}>
+              <span style={{fontSize:8,fontWeight:500,color:'var(--text-faint)',letterSpacing:'0.08em',textTransform:'uppercase',whiteSpace:'nowrap'}}>prediction game by</span>
+              <img src="/m1c1-logo.jpg" alt="m1c1" style={{height:14,width:'auto',display:'block',mixBlendMode:'multiply',opacity:0.85}}/>
+            </div>
           </div>
           <div style={{display:'flex',alignItems:'center',gap:8}}>
             <select value={tz} onChange={e=>setTz(Number(e.target.value))}
