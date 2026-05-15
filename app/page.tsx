@@ -164,8 +164,25 @@ export default function HomePage() {
 
               {/* ── JOIN STEP INDICATORS ── */}
               {isJoinFlow&&(
-                <div style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:"'Inter Tight',sans-serif",whiteSpace:'nowrap'}}>prediction game by M1C1</div>
-                  </div>
+                <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8,marginBottom:20}}>
+                  {['Code','Details','Payment'].map((s,i)=>{
+                    const n=i+1
+                    return(
+                      <div key={s} style={{display:'flex',alignItems:'center',gap:8}}>
+                        <div style={{width:26,height:26,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,fontWeight:700,background:n<stepNum?'#4a7a3a':n===stepNum?'var(--text)':'var(--border)',color:n<stepNum?'white':n===stepNum?'var(--bg)':'var(--text-faint)',transition:'all 0.2s'}}>
+                          {n<stepNum?'✓':n}
+                        </div>
+                        <span style={{fontSize:11,fontWeight:600,color:n===stepNum?'var(--text)':'var(--text-faint)',textTransform:'uppercase',letterSpacing:'0.08em'}}>{s}</span>
+                        {i<2&&<div style={{width:16,height:1,background:'var(--border)'}}/>}
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+
+              {/* ── JOIN STEP 1: CODE ── */}
+              {modal==='join-code'&&(
+                <>
                   <form onSubmit={checkCode} style={{display:'flex',flexDirection:'column',gap:12}}>
                     <input type="text" value={code} onChange={e=>setCode(e.target.value)} placeholder="CODE" required
                       style={{width:'100%',background:'var(--bg-card-2)',border:'1px solid var(--border)',borderRadius:14,padding:'16px',fontSize:22,fontFamily:'JetBrains Mono',fontWeight:700,letterSpacing:'0.2em',textTransform:'uppercase',textAlign:'center',color:'var(--text)',outline:'none',boxSizing:'border-box'}}
