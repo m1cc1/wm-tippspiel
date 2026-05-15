@@ -164,28 +164,7 @@ export default function HomePage() {
 
               {/* ── JOIN STEP INDICATORS ── */}
               {isJoinFlow&&(
-                <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8,marginBottom:20}}>
-                  {['Code','Details','Payment'].map((s,i)=>{
-                    const n=i+1
-                    return(
-                      <div key={s} style={{display:'flex',alignItems:'center',gap:8}}>
-                        <div style={{width:26,height:26,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,fontWeight:700,background:n<stepNum?'#4a7a3a':n===stepNum?'var(--text)':'var(--border)',color:n<stepNum?'white':n===stepNum?'var(--bg)':'var(--text-faint)',transition:'all 0.2s'}}>
-                          {n<stepNum?'✓':n}
-                        </div>
-                        <span style={{fontSize:11,fontWeight:600,color:n===stepNum?'var(--text)':'var(--text-faint)',textTransform:'uppercase',letterSpacing:'0.08em'}}>{s}</span>
-                        {i<2&&<div style={{width:16,height:1,background:'var(--border)'}}/>}
-                      </div>
-                    )
-                  })}
-                </div>
-              )}
-
-              {/* ── JOIN STEP 1: CODE ── */}
-              {modal==='join-code'&&(
-                <>
-                  <div style={{textAlign:'center',marginBottom:20}}>
-                    <div style={{fontFamily:'Bebas Neue',fontSize:26,color:'var(--text)',marginBottom:4}}>Enter invite code</div>
-                    <div style={{fontSize:13,color:'var(--text-dim)'}}>Private game — you need a code from m1c1 to join.</div>
+                <div style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:"'Inter Tight',sans-serif",whiteSpace:'nowrap'}}>prediction game by M1C1</div>
                   </div>
                   <form onSubmit={checkCode} style={{display:'flex',flexDirection:'column',gap:12}}>
                     <input type="text" value={code} onChange={e=>setCode(e.target.value)} placeholder="CODE" required
@@ -291,10 +270,7 @@ export default function HomePage() {
         <div style={{maxWidth:1400,margin:'0 auto',padding:'0 20px',height:54,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
           <div style={{flexShrink:0,display:'flex',flexDirection:'column',gap:3}}>
             <div style={{fontFamily:"'Bebas Neue', sans-serif",fontSize:22,letterSpacing:'0.05em',lineHeight:1,color:'var(--text)'}}>World Cup 2026</div>
-            <div style={{display:'flex',alignItems:'center',gap:6,marginTop:3,lineHeight:1}}>
-              <span style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',whiteSpace:'nowrap'}}>prediction game by</span>
-              <span style={{fontSize:9,fontWeight:300,letterSpacing:'0.05em',fontFamily:"'Outfit','Nunito','Inter Tight',sans-serif",color:'var(--text-faint)',lineHeight:1}}>m<span style={{fontSize:6.5,verticalAlign:'-0.5px'}}>1</span>c<span style={{fontSize:6.5,verticalAlign:'-0.5px'}}>1</span></span>
-            </div>
+            <div style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:"'Inter Tight',sans-serif",whiteSpace:'nowrap',marginTop:3}}>prediction game by M1C1</div>
           </div>
           <div style={{display:'flex',alignItems:'center',gap:8}}>
             <select value={tz} onChange={e=>setTz(Number(e.target.value))}
@@ -608,7 +584,7 @@ export default function HomePage() {
 
       {/* FOOTER */}
       <footer style={{borderTop:'1px solid var(--border)',padding:'24px 20px',display:'flex',flexDirection:'column',alignItems:'center',gap:8,fontSize:12,color:'var(--text-faint)',textAlign:'center'}}>
-        <span style={{fontSize:22,fontWeight:300,letterSpacing:'0.06em',fontFamily:"'Outfit','Nunito','Inter Tight',sans-serif",color:'var(--text)',lineHeight:1}}>m<span style={{fontSize:16,verticalAlign:'-1px'}}>1</span>c<span style={{fontSize:16,verticalAlign:'-1px'}}>1</span></span>
+        <span style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',fontFamily:"'Inter Tight',sans-serif"}}>m1c1</span>
         <div style={{fontSize:8,fontWeight:600,letterSpacing:'0.12em',textTransform:'uppercase',color:'var(--text-faint)'}}>World Cup 2026 · Betting game</div>
         <div style={{display:'flex',gap:20,flexWrap:'wrap',justifyContent:'center',marginTop:4}}>
           {['About','Rules','Privacy'].map(l=><a key={l} href="#" style={{color:'var(--text-faint)',textDecoration:'none'}}>{l}</a>)}
