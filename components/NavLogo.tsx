@@ -30,16 +30,7 @@ function LogoContent() {
           prediction game by
         </span>
         {/* m1c1 logo — transparent PNG, same visual weight as label text */}
-        <img
-          src="/m1c1-logo.png"
-          alt="m1c1"
-          style={{
-            height: 7,
-            width: 'auto',
-            display: 'block',
-            opacity: 1,
-          }}
-        />
+        <span style={{fontSize:9,fontWeight:300,letterSpacing:'0.05em',fontFamily:"'Outfit','Nunito','Inter Tight',sans-serif",color:'var(--text-faint)',lineHeight:1}}>m<span style={{fontSize:6.5,verticalAlign:'-0.5px'}}>1</span>c<span style={{fontSize:6.5,verticalAlign:'-0.5px'}}>1</span></span>
       </div>
     </>
   )
