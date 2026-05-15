@@ -162,11 +162,11 @@ export default function DashboardPage() {
       {/* NAV */}
       <nav style={{position:'sticky',top:0,zIndex:50,backdropFilter:'blur(20px)',background:'rgba(245,240,230,0.92)',borderBottom:'1px solid var(--border)'}}>
         <div style={{maxWidth:1400,margin:'0 auto',padding:'0 20px',height:54,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
-          <Link href="/dashboard" style={{textDecoration:'none',color:'var(--text)',flexShrink:0,display:'flex',flexDirection:'column',gap:0}}>
-            <div style={{fontFamily:'Bebas Neue',fontSize:20,letterSpacing:'0.05em',lineHeight:1,color:'var(--text)'}}>World Cup 2026</div>
-            <div style={{display:'flex',alignItems:'center',gap:5,marginTop:2}}>
-              <span style={{fontSize:8,fontWeight:500,color:'var(--text-faint)',letterSpacing:'0.08em',textTransform:'uppercase',whiteSpace:'nowrap'}}>prediction game by</span>
-              <img src="/m1c1-logo.jpg" alt="m1c1" style={{height:14,width:'auto',display:'block',mixBlendMode:'multiply',opacity:0.85}}/>
+          <Link href="/dashboard" style={{textDecoration:'none',color:'var(--text)',flexShrink:0,display:'flex',flexDirection:'column',gap:3}}>
+            <div style={{fontFamily:"'Bebas Neue', sans-serif",fontSize:22,letterSpacing:'0.05em',lineHeight:1,color:'var(--text)'}}>World Cup 2026</div>
+            <div style={{display:'flex',alignItems:'center',gap:5,lineHeight:1}}>
+              <span style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',whiteSpace:'nowrap'}}>prediction game by</span>
+              <span style={{fontSize:17,fontWeight:300,letterSpacing:'0.06em',fontFamily:"'Nunito','DM Sans','Inter Tight',sans-serif",color:'var(--text)',lineHeight:1}}>m1c1</span>
             </div>
           </Link>
           <div style={{display:'flex',gap:2}} className="hide-mobile">

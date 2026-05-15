@@ -1,52 +1,70 @@
 import Link from 'next/link'
 
-// The nav logo — used on all logged-in pages via Navbar
-// and inline on homepage/login
+// m1c1 logo — rendered in code, no image file needed
+// Nunito 300 matches the thin geometric sans of the original logo
+const M1C1 = () => (
+  <span style={{
+    fontSize: 17,
+    fontWeight: 300,
+    letterSpacing: '0.06em',
+    fontFamily: "'Nunito', 'DM Sans', 'Inter Tight', sans-serif",
+    color: 'var(--text)',
+    lineHeight: 1,
+    display: 'inline-block',
+  }}>
+    m1c1
+  </span>
+)
+
 export function NavLogo({ href = '/dashboard' }: { href?: string }) {
   return (
-    <Link href={href} style={{textDecoration:'none',color:'var(--text)',flexShrink:0,display:'flex',flexDirection:'column',gap:0}}>
-      {/* World Cup 2026 — Bebas Neue */}
-      <div style={{fontFamily:'Bebas Neue',fontSize:20,letterSpacing:'0.05em',lineHeight:1,color:'var(--text)'}}>
-        World Cup 2026
-      </div>
-      {/* prediction game by m1c1 logo image */}
-      <div style={{display:'flex',alignItems:'center',gap:5,marginTop:2}}>
-        <span style={{fontSize:8,fontWeight:500,color:'var(--text-faint)',letterSpacing:'0.08em',textTransform:'uppercase',whiteSpace:'nowrap'}}>
-          prediction game by
-        </span>
-        <img
-          src="/m1c1-logo.jpg"
-          alt="m1c1"
-          style={{
-            height:14,
-            width:'auto',
-            display:'block',
-            mixBlendMode:'multiply',  // blends white bg of logo with cream page bg
-            opacity:0.85,
-          }}
-        />
-      </div>
+    <Link href={href} style={{textDecoration:'none',color:'var(--text)',flexShrink:0,display:'flex',flexDirection:'column',gap:3}}>
+      <LogoContent />
     </Link>
   )
 }
 
-// Same logo but as a div (not a link) — for homepage nav where we handle click ourselves
-export function NavLogoBrand({ onClick }: { onClick?: () => void }) {
+export function NavLogoBrand() {
   return (
-    <div onClick={onClick} style={{cursor:onClick?'pointer':'default',flexShrink:0,display:'flex',flexDirection:'column',gap:0}}>
-      <div style={{fontFamily:'Bebas Neue',fontSize:20,letterSpacing:'0.05em',lineHeight:1,color:'var(--text)'}}>
+    <div style={{flexShrink:0,display:'flex',flexDirection:'column',gap:3}}>
+      <LogoContent />
+    </div>
+  )
+}
+
+function LogoContent() {
+  return (
+    <>
+      {/* World Cup 2026 — Bebas Neue */}
+      <div style={{
+        fontFamily: 'Bebas Neue, sans-serif',
+        fontSize: 22,
+        letterSpacing: '0.05em',
+        lineHeight: 1,
+        color: 'var(--text)',
+      }}>
         World Cup 2026
       </div>
-      <div style={{display:'flex',alignItems:'center',gap:5,marginTop:2}}>
-        <span style={{fontSize:8,fontWeight:500,color:'var(--text-faint)',letterSpacing:'0.08em',textTransform:'uppercase',whiteSpace:'nowrap'}}>
+      {/* prediction game by m1c1 */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 5,
+        lineHeight: 1,
+      }}>
+        <span style={{
+          fontSize: 8,
+          fontWeight: 600,
+          color: 'var(--text-faint)',
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+          whiteSpace: 'nowrap',
+          lineHeight: 1,
+        }}>
           prediction game by
         </span>
-        <img
-          src="/m1c1-logo.jpg"
-          alt="m1c1"
-          style={{height:14,width:'auto',display:'block',mixBlendMode:'multiply',opacity:0.85}}
-        />
+        <M1C1 />
       </div>
-    </div>
+    </>
   )
 }
