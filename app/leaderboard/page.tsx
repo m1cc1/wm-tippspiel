@@ -99,24 +99,7 @@ export default function LeaderboardPage() {
           </div>
         </div>
 
-        {/* Prize pool banner */}
-        <div style={{background:'var(--text)',borderRadius:20,padding:'24px 28px',marginBottom:32,display:'flex',flexWrap:'wrap',gap:20,alignItems:'center',position:'relative',overflow:'hidden'}}>
-          <div style={{position:'absolute',top:'-60px',right:'-60px',width:240,height:240,background:'radial-gradient(circle,rgba(212,193,154,0.15) 0%,transparent 60%)',pointerEvents:'none'}}/>
-          <div style={{flex:1,minWidth:160}}>
-            <div style={{fontSize:10,fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'0.15em',marginBottom:6}}>💰 Prize Pool</div>
-            <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(40px,8vw,64px)',lineHeight:0.9,background:'linear-gradient(180deg,#f5f0e6 0%,#b8a47e 100%)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>CHF {pool}</div>
-            <div style={{fontSize:12,color:'var(--text-faint)',marginTop:4}}>{participantCount} players × CHF 25 · via Twint · July 19</div>
-          </div>
-          <div style={{display:'flex',gap:10}}>
-            {prizes.map((p,i)=>(
-              <div key={i} style={{background:'rgba(245,240,230,0.06)',border:'1px solid rgba(245,240,230,0.12)',borderRadius:12,padding:'14px 18px',textAlign:'center',minWidth:72}}>
-                <div style={{fontFamily:'Bebas Neue',fontSize:20,marginBottom:2,color:i===0?'var(--bg)':i===1?'var(--highlight)':'var(--beige-mid)'}}>{['1ST','2ND','3RD'][i]}</div>
-                <div style={{fontFamily:'JetBrains Mono',fontWeight:700,fontSize:16,color:'var(--bg)',marginBottom:1}}>CHF {p}</div>
-                <div style={{fontSize:10,color:'var(--text-faint)'}}>{Math.round(SPLITS[i]*100)}%</div>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Prize pool banner — moved below table, see below */}
 
         {/* Table */}
         <div style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:20,overflow:'hidden',marginBottom:16}}>
@@ -241,8 +224,23 @@ export default function LeaderboardPage() {
           ))}
         </div>
 
-        <div style={{fontSize:11,color:'var(--text-faint)',textAlign:'center',marginTop:12}}>
-          Prize pool paid out via Twint after the Final · July 19, 2026
+        {/* Prize pool — full width, centred boxes */}
+        <div style={{background:'var(--text)',borderRadius:20,padding:'28px 24px',marginTop:24,position:'relative',overflow:'hidden'}}>
+          <div style={{position:'absolute',top:'-60px',right:'-60px',width:240,height:240,background:'radial-gradient(circle,rgba(212,193,154,0.15) 0%,transparent 60%)',pointerEvents:'none'}}/>
+          <div style={{textAlign:'center',marginBottom:20}}>
+            <div style={{fontSize:10,fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'0.15em',marginBottom:6}}>💰 Prize Pool</div>
+            <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(48px,10vw,80px)',lineHeight:0.9,background:'linear-gradient(180deg,#f5f0e6 0%,#b8a47e 100%)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>CHF {pool}</div>
+            <div style={{fontSize:12,color:'var(--text-faint)',marginTop:6}}>{participantCount} players × CHF 25 · paid via Twint after the Final · July 19, 2026</div>
+          </div>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:12}}>
+            {prizes.map((p,i)=>(
+              <div key={i} style={{background:'rgba(245,240,230,0.06)',border:'1px solid rgba(245,240,230,0.12)',borderRadius:14,padding:'20px',textAlign:'center'}}>
+                <div style={{fontFamily:'Bebas Neue',fontSize:28,marginBottom:6,color:i===0?'var(--bg)':i===1?'var(--highlight)':'var(--beige-mid)'}}>{['1ST','2ND','3RD'][i]}</div>
+                <div style={{fontFamily:'JetBrains Mono',fontWeight:700,fontSize:22,color:'var(--bg)',marginBottom:4}}>CHF {p}</div>
+                <div style={{fontSize:11,color:'var(--text-faint)'}}>{Math.round(SPLITS[i]*100)}% of pool</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

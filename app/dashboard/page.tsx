@@ -349,11 +349,43 @@ export default function DashboardPage() {
           )}
         </div>
 
+        {/* ── MORNING BRIEFING ── */}
+        <div style={{marginBottom:32}}>
+          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
+            <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(32px,7vw,60px)',lineHeight:0.9,color:'var(--text)'}}>
+              ☀️ Morning <span style={{color:'var(--beige-deep)'}}>briefing</span>
+            </div>
+            <span style={{fontSize:11,color:'var(--text-faint)',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.08em'}}>Updated daily · June 11</span>
+          </div>
+          <div style={{display:'flex',flexDirection:'column',gap:8}}>
+            {[
+              {label:"Yesterday's results",icon:'⚽',value:'France 2–1 Senegal · Brazil 3–0 Scotland · Germany 1–1 Sweden',live:true},
+              {label:"Leaderboard shake-up",icon:'📊',value:'Marco R. moved up 2 spots after France win · you gained 1 place · Lisa B. dropped to 5th',live:true},
+              {label:"Today's matches",icon:'🗓',value:'USA vs Paraguay · 01:00 ZRH · Netherlands vs Iran · 19:00 ZRH · Spain vs Austria · 02:00 ZRH',live:true},
+              {label:"Tip of the day",icon:'💡',value:'France to win vs Senegal is the crowd favourite (62%) — but Morocco at 3–1 odds is the bold call.',live:false},
+            ].map(b=>(
+              <div key={b.label} style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:12,padding:'12px 16px',display:'flex',gap:12,alignItems:'flex-start'}}>
+                <span style={{fontSize:18,flexShrink:0,marginTop:1}}>{b.icon}</span>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontSize:10,fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:3,display:'flex',alignItems:'center',gap:6}}>
+                    {b.label}
+                    {b.live&&<span style={{width:5,height:5,background:'var(--warn)',borderRadius:'50%',display:'inline-block',animation:'pulsewarn 2s infinite'}}/>}
+                  </div>
+                  <div style={{fontSize:13,color:'var(--text)',lineHeight:1.5}}>{b.value}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{background:'rgba(139,122,94,0.1)',border:'1px solid rgba(139,122,94,0.2)',borderRadius:12,padding:'10px 16px',fontSize:12,color:'var(--beige-deep)',marginTop:8}}>
+            🔔 Full briefing unlocks when the tournament starts on June 11 — check back every morning!
+          </div>
+        </div>
+
         {/* ── BONUS PREDICTIONS ── */}
         <div style={{marginBottom:32}}>
           <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
             <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(32px,7vw,64px)',lineHeight:0.9,color:'var(--text)'}}>
-              Bonus <span style={{color:'var(--beige-deep)'}}>predictions</span>
+              Bonus <span style={{color:'var(--beige-deep)'}}>picks</span>
             </div>
             <div style={{display:'flex',alignItems:'center',gap:8}}>
               {specialSaved&&<span style={{fontSize:12,fontWeight:700,color:'#2d5a1b'}}>✓ Saved!</span>}
@@ -383,10 +415,14 @@ export default function DashboardPage() {
                   <option value="">— Select a team —</option>
                   {ALL_48.map(t=><option key={t} value={t}>{t}</option>)}
                 </select>
-                {specialPick?.[b.key]&&(
-                  <div style={{fontSize:11,color:'var(--beige-deep)',marginTop:6,fontWeight:600}}>
-                    ✓ You picked: {specialPick[b.key]}
-                    {!specialPick.locked&&<span style={{color:'var(--text-faint)',fontWeight:400,marginLeft:6}}>· changeable until June 11</span>}
+                {specialPick?.[b.key]?(
+                  <div style={{background:'rgba(74,122,58,0.08)',border:'1px solid rgba(74,122,58,0.2)',borderRadius:8,padding:'8px 12px',marginTop:8,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+                    <span style={{fontSize:13,fontWeight:700,color:'#2d5a1b'}}>✓ {specialPick[b.key]}</span>
+                    {!specialPick.locked&&<span style={{fontSize:10,color:'var(--text-faint)'}}>changeable until June 11</span>}
+                  </div>
+                ):(
+                  <div style={{background:'var(--bg-elev)',border:'1px dashed var(--border)',borderRadius:8,padding:'8px 12px',marginTop:8,fontSize:12,color:'var(--text-faint)',textAlign:'center'}}>
+                    Not set yet — worth 20 pts!
                   </div>
                 )}
               </div>
@@ -398,7 +434,7 @@ export default function DashboardPage() {
         <div style={{marginBottom:32}}>
           <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
             <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(36px,8vw,72px)',lineHeight:0.9,color:'var(--text)'}}>
-              The <span style={{color:'var(--beige-deep)'}}>standings</span>
+              The <span style={{color:'var(--beige-deep)'}}>leaderboard</span>
             </div>
             <Link href="/leaderboard" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em',borderBottom:'1px solid var(--border)',paddingBottom:1}}>View all →</Link>
           </div>
@@ -438,38 +474,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-
-        {/* ── MORNING BRIEFING ── */}
-        <div style={{marginBottom:32}}>
-          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
-            <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(32px,7vw,60px)',lineHeight:0.9,color:'var(--text)'}}>
-              ☀️ Morning <span style={{color:'var(--beige-deep)'}}>briefing</span>
-            </div>
-            <span style={{fontSize:11,color:'var(--text-faint)',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.08em'}}>Updated daily · June 11</span>
-          </div>
-          <div style={{display:'flex',flexDirection:'column',gap:8}}>
-            {[
-              {label:"Yesterday's results",icon:'⚽',value:'France 2–1 Senegal · Brazil 3–0 Scotland · Germany 1–1 Sweden',live:true},
-              {label:"Leaderboard shake-up",icon:'📊',value:'Marco R. moved up 2 spots after France win · you gained 1 place · Lisa B. dropped to 5th',live:true},
-              {label:"Today's matches",icon:'🗓',value:'USA vs Paraguay · 01:00 ZRH · Netherlands vs Iran · 19:00 ZRH · Spain vs Austria · 02:00 ZRH',live:true},
-              {label:"Tip of the day",icon:'💡',value:'France to win vs Senegal is the crowd favourite (62%) — but Morocco at 3–1 odds is the bold call.',live:false},
-            ].map(b=>(
-              <div key={b.label} style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:12,padding:'12px 16px',display:'flex',gap:12,alignItems:'flex-start'}}>
-                <span style={{fontSize:18,flexShrink:0,marginTop:1}}>{b.icon}</span>
-                <div style={{flex:1,minWidth:0}}>
-                  <div style={{fontSize:10,fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:3,display:'flex',alignItems:'center',gap:6}}>
-                    {b.label}
-                    {b.live&&<span style={{width:5,height:5,background:'var(--warn)',borderRadius:'50%',display:'inline-block',animation:'pulsewarn 2s infinite'}}/>}
-                  </div>
-                  <div style={{fontSize:13,color:'var(--text)',lineHeight:1.5}}>{b.value}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div style={{background:'rgba(139,122,94,0.1)',border:'1px solid rgba(139,122,94,0.2)',borderRadius:12,padding:'10px 16px',fontSize:12,color:'var(--beige-deep)',marginTop:8}}>
-            🔔 Full briefing unlocks when the tournament starts on June 11 — check back every morning!
-          </div>
-        </div>
 
         {/* ── FIFA NEWS ── */}
         <div style={{marginBottom:32}}>
