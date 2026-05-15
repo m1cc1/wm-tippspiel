@@ -22,7 +22,7 @@ function LogoContent() {
         whiteSpace: 'nowrap',
         marginTop: 3,
       }}>
-        prediction game by M1C1
+        prediction game by MICI
       </div>
     </>
   )

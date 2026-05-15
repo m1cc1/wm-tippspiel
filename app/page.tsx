@@ -85,7 +85,7 @@ export default function HomePage() {
     e.preventDefault();setCodeErr('');setLoading(true)
     const {data}=await supabase.from('settings').select('value').eq('key','invite_code').single()
     setLoading(false)
-    code.trim().toUpperCase()===data?.value?.toUpperCase()?setModal('join-register'):setCodeErr('Invalid code. Ask m1c1 for the invite code.')
+    code.trim().toUpperCase()===data?.value?.toUpperCase()?setModal('join-register'):setCodeErr('Invalid code. Ask mici for the invite code.')
   }
 
   async function handleRegister(e:React.FormEvent){
@@ -136,7 +136,7 @@ export default function HomePage() {
               {modal==='login'&&(
                 <>
                   <div style={{textAlign:'center',marginBottom:24}}>
-                    <div style={{fontSize:22,fontWeight:300,letterSpacing:'0.05em',color:'var(--text)',lineHeight:1,marginBottom:4,fontFamily:'Inter Tight, sans-serif'}}>m1c1</div>
+                    <div style={{fontSize:22,fontWeight:300,letterSpacing:'0.05em',color:'var(--text)',lineHeight:1,marginBottom:4,fontFamily:'Inter Tight, sans-serif'}}>mici</div>
                     <div style={{fontFamily:'Bebas Neue',fontSize:28,color:'var(--text)',marginBottom:6}}>Welcome back</div>
                     <div style={{fontSize:13,color:'var(--text-dim)'}}>Sign in to your account</div>
                   </div>
@@ -274,7 +274,7 @@ export default function HomePage() {
                   <button onClick={()=>{closeModal();router.push('/dashboard')}} style={{width:'100%',padding:'15px',background:'var(--text)',color:'var(--bg)',border:'none',borderRadius:14,fontWeight:700,fontSize:15,cursor:'pointer'}}>
                     Go to dashboard →
                   </button>
-                  <div style={{textAlign:'center',fontSize:12,color:'var(--text-faint)',marginTop:10}}>Questions? tippspiel@m1c1.ch</div>
+                  <div style={{textAlign:'center',fontSize:12,color:'var(--text-faint)',marginTop:10}}>Questions? tippspiel@mici.ch</div>
                 </>
               )}
             </div>
@@ -287,7 +287,7 @@ export default function HomePage() {
         <div style={{maxWidth:1400,margin:'0 auto',padding:'0 20px',height:54,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
           <div style={{flexShrink:0,display:'flex',flexDirection:'column',gap:3}}>
             <div style={{fontFamily:"'Bebas Neue', sans-serif",fontSize:22,letterSpacing:'0.05em',lineHeight:1,color:'var(--text)'}}>World Cup 2026</div>
-            <div style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:"'Inter Tight',sans-serif",whiteSpace:'nowrap',marginTop:3}}>prediction game by M1C1</div>
+            <div style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:"'Inter Tight',sans-serif",whiteSpace:'nowrap',marginTop:3}}>prediction game by MICI</div>
           </div>
           <div style={{display:'flex',alignItems:'center',gap:8}}>
             <select value={tz} onChange={e=>setTz(Number(e.target.value))}
@@ -601,7 +601,7 @@ export default function HomePage() {
 
       {/* FOOTER */}
       <footer style={{borderTop:'1px solid var(--border)',padding:'24px 20px',display:'flex',flexDirection:'column',alignItems:'center',gap:8,fontSize:12,color:'var(--text-faint)',textAlign:'center'}}>
-        <span style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',fontFamily:"'Inter Tight',sans-serif"}}>m1c1</span>
+        <span style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',fontFamily:"'Inter Tight',sans-serif"}}>mici</span>
         <div style={{fontSize:8,fontWeight:600,letterSpacing:'0.12em',textTransform:'uppercase',color:'var(--text-faint)'}}>World Cup 2026 · Betting game</div>
         <div style={{display:'flex',gap:20,flexWrap:'wrap',justifyContent:'center',marginTop:4}}>
           {['About','Rules','Privacy'].map(l=><a key={l} href="#" style={{color:'var(--text-faint)',textDecoration:'none'}}>{l}</a>)}

@@ -69,6 +69,7 @@ export default function DashboardPage() {
   const [specialPick,setSpecialPick]=useState<{tournament_winner:string,top_scorer_nation:string,locked:boolean}|null>(null)
   const [savingSpecial,setSavingSpecial]=useState(false)
   const [specialSaved,setSpecialSaved]=useState(false)
+  const [news,setNews]=useState<{title:string,link:string,tag:string,time:string}[]>([])
 
   function showToast(msg:string){setToast(msg);setTimeout(()=>setToast(''),2800)}
 
@@ -166,7 +167,7 @@ export default function DashboardPage() {
         <div style={{maxWidth:1400,margin:'0 auto',padding:'0 20px',height:54,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
           <Link href="/dashboard" style={{textDecoration:'none',color:'var(--text)',flexShrink:0,display:'flex',flexDirection:'column',gap:3}}>
             <div style={{fontFamily:"'Bebas Neue', sans-serif",fontSize:22,letterSpacing:'0.05em',lineHeight:1,color:'var(--text)'}}>World Cup 2026</div>
-            <div style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:"'Inter Tight',sans-serif",whiteSpace:'nowrap',marginTop:3}}>prediction game by M1C1</div>
+            <div style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:"'Inter Tight',sans-serif",whiteSpace:'nowrap',marginTop:3}}>prediction game by MICI</div>
           </Link>
           <div style={{display:'flex',gap:2}} className="hide-mobile">
             {nav.map(n=>(
@@ -549,25 +550,25 @@ export default function DashboardPage() {
             <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(32px,7vw,60px)',lineHeight:0.9,color:'var(--text)'}}>
               WC <span style={{color:'var(--beige-deep)'}}>news</span>
             </div>
-            <a href="https://www.fifa.com" target="_blank" rel="noreferrer" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em',borderBottom:'1px solid var(--border)',paddingBottom:1}}>FIFA.com →</a>
+            <a href={n.link||"https://www.fifa.com"} target="_blank" rel="noreferrer" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em',borderBottom:'1px solid var(--border)',paddingBottom:1}}>FIFA.com →</a>
           </div>
           <div style={{display:'flex',flexDirection:'column',gap:8}}>
-            {[
-              {tag:'Preview',  h:'Mexico vs South Africa: The opening match of the biggest World Cup in history', t:'3h ago', feature:true},
-              {tag:'Official', h:'Record 5.8 million tickets sold — WC 2026 set to be the most-watched sporting event ever', t:'6h ago'},
-              {tag:'Team News',h:'France confirm Mbappé in starting XI for opener against Senegal', t:'8h ago'},
-              {tag:'Stadiums', h:'A guide to all 16 World Cup venues — from MetLife to Estadio Azteca', t:'1d ago'},
-            ].map((n,i)=>(
-              <a key={i} href="https://www.fifa.com" target="_blank" rel="noreferrer"
+            {(news.length>0?news:[
+              {tag:'Preview',  title:'Mexico vs South Africa: The opening match of the biggest World Cup in history', time:'3h ago', link:'https://www.fifa.com'},
+              {tag:'Official', title:'Record 5.8 million tickets sold — WC 2026 set to be the most-watched sporting event ever', time:'6h ago', link:'https://www.fifa.com'},
+              {tag:'Team News',title:'France confirm Mbappé in starting XI for opener against Senegal', time:'8h ago', link:'https://www.fifa.com'},
+              {tag:'Stadiums', title:'A guide to all 16 World Cup venues — from MetLife to Estadio Azteca', time:'1d ago', link:'https://www.fifa.com'},
+            ]).map((n,i)=>(
+              <a key={i} href={n.link||"https://www.fifa.com"} target="_blank" rel="noreferrer"
                 style={{background:n.feature?'var(--bg-elev)':'var(--bg-card)',border:'1px solid var(--border)',borderRadius:12,padding:'14px 16px',textDecoration:'none',color:'var(--text)',display:'flex',gap:10,alignItems:'flex-start',transition:'border-color 0.15s'}}
                 onMouseEnter={e=>(e.currentTarget as HTMLAnchorElement).style.borderColor='var(--border-strong)'}
                 onMouseLeave={e=>(e.currentTarget as HTMLAnchorElement).style.borderColor='var(--border)'}>
                 <div style={{flex:1,minWidth:0}}>
                   <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:5}}>
                     <span style={{background:'var(--text)',color:'var(--bg)',fontSize:9,textTransform:'uppercase',letterSpacing:'0.1em',fontWeight:700,padding:'2px 7px',borderRadius:4}}>{n.tag}</span>
-                    <span style={{fontSize:11,color:'var(--text-faint)'}}>{n.t}</span>
+                    <span style={{fontSize:11,color:'var(--text-faint)'}}>{n.time}</span>
                   </div>
-                  <div style={{fontSize:13,fontWeight:600,lineHeight:1.4,color:'var(--text)'}}>{n.h}</div>
+                  <div style={{fontSize:13,fontWeight:600,lineHeight:1.4,color:'var(--text)'}}>{n.title}</div>
                 </div>
               </a>
             ))}
@@ -597,7 +598,7 @@ export default function DashboardPage() {
       </div>
 
       <footer style={{borderTop:'1px solid var(--border)',padding:'24px 20px',display:'flex',flexDirection:'column',alignItems:'center',gap:8,fontSize:12,color:'var(--text-faint)',textAlign:'center'}}>
-        <span style={{fontSize:16,fontWeight:600,color:'var(--text)',letterSpacing:'0.15em',textTransform:'uppercase',fontFamily:"'Inter Tight',sans-serif"}}>M1C1</span>
+        <span style={{fontSize:16,fontWeight:600,color:'var(--text)',letterSpacing:'0.15em',textTransform:'uppercase',fontFamily:"'Inter Tight',sans-serif"}}>MICI</span>
         <div style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase'}}>World Cup 2026</div>
         <div>CHF {pool} pool · {totalActive} players</div>
       </footer>
