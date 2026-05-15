@@ -33,10 +33,8 @@ export default function Navbar({ userEmail, displayName }: { userEmail?: string 
       <nav style={{position:'sticky',top:0,zIndex:50,backdropFilter:'blur(20px)',background:'rgba(245,240,230,0.92)',borderBottom:'1px solid var(--border)'}}>
         <div style={{maxWidth:1400,margin:'0 auto',padding:'0 20px',height:56,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
           <Link href="/dashboard" style={{textDecoration:'none',color:'var(--text)',flexShrink:0,display:'flex',flexDirection:'column',gap:1}}>
-            <div style={{fontFamily:'Bebas Neue',fontSize:24,letterSpacing:'0.04em',lineHeight:1}}>WC2026</div>
-            <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase'}}>
-              Betting game by <span style={{fontWeight:300,letterSpacing:'-0.02em',textTransform:'none',fontSize:10}}>m1c1</span>
-            </div>
+            <div style={{fontFamily:'Bebas Neue',fontSize:24,letterSpacing:'0.04em',lineHeight:1}}>WC26</div>
+            <div style={{fontSize:9,color:'var(--text-faint)',letterSpacing:'0.05em',marginTop:1,fontFamily:'Inter Tight, sans-serif',fontWeight:300}}>betting game by m1c1</div>
           </Link>
 
           {/* Desktop nav */}

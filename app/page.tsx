@@ -136,7 +136,7 @@ export default function HomePage() {
               {modal==='login'&&(
                 <>
                   <div style={{textAlign:'center',marginBottom:24}}>
-                    <div style={{fontSize:22,fontWeight:300,letterSpacing:'-0.02em',color:'var(--text)',lineHeight:1,marginBottom:4}}>m1c1</div>
+                    <div style={{fontSize:22,fontWeight:300,letterSpacing:'0.05em',color:'var(--text)',lineHeight:1,marginBottom:4,fontFamily:'Inter Tight, sans-serif'}}>m1c1</div>
                     <div style={{fontFamily:'Bebas Neue',fontSize:28,color:'var(--text)',marginBottom:6}}>Welcome back</div>
                     <div style={{fontSize:13,color:'var(--text-dim)'}}>Sign in to your account</div>
                   </div>
@@ -188,7 +188,7 @@ export default function HomePage() {
                     <div style={{fontSize:13,color:'var(--text-dim)'}}>Private game — you need a code from m1c1 to join.</div>
                   </div>
                   <form onSubmit={checkCode} style={{display:'flex',flexDirection:'column',gap:12}}>
-                    <input type="text" value={code} onChange={e=>setCode(e.target.value)} placeholder="MICCI2026" required
+                    <input type="text" value={code} onChange={e=>setCode(e.target.value)} placeholder="CODE" required
                       style={{width:'100%',background:'var(--bg-card-2)',border:'1px solid var(--border)',borderRadius:14,padding:'16px',fontSize:22,fontFamily:'JetBrains Mono',fontWeight:700,letterSpacing:'0.2em',textTransform:'uppercase',textAlign:'center',color:'var(--text)',outline:'none',boxSizing:'border-box'}}
                       onFocus={e=>e.target.style.borderColor='var(--text)'} onBlur={e=>e.target.style.borderColor='var(--border)'}/>
                     {codeErr&&<div style={{background:'#fef2f2',border:'1px solid #fecaca',borderRadius:10,padding:'10px 14px',fontSize:13,color:'#991b1b',textAlign:'center'}}>{codeErr}</div>}
@@ -290,8 +290,8 @@ export default function HomePage() {
       <nav style={{position:'sticky',top:0,zIndex:50,backdropFilter:'blur(20px)',background:'rgba(245,240,230,0.92)',borderBottom:'1px solid var(--border)'}}>
         <div style={{maxWidth:1400,margin:'0 auto',padding:'0 20px',height:54,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
           <div style={{flexShrink:0,display:'flex',flexDirection:'column',gap:1}}>
-            <div style={{fontFamily:'Bebas Neue',fontSize:22,letterSpacing:'0.04em',lineHeight:1,color:'var(--text)'}}>WC2026</div>
-            <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase'}}>Betting game by <span style={{fontWeight:300,letterSpacing:'-0.02em',textTransform:'none',fontSize:10}}>m1c1</span></div>
+            <div style={{fontFamily:'Bebas Neue',fontSize:22,letterSpacing:'0.04em',lineHeight:1,color:'var(--text)'}}>WC26</div>
+            <div style={{fontSize:9,color:'var(--text-faint)',letterSpacing:'0.05em',marginTop:1,fontFamily:'Inter Tight, sans-serif',fontWeight:300}}>betting game by m1c1</div>
           </div>
           <div style={{display:'flex',alignItems:'center',gap:8}}>
             <select value={tz} onChange={e=>setTz(Number(e.target.value))}
@@ -305,7 +305,8 @@ export default function HomePage() {
             </button>
             <button onClick={openJoin} style={{display:'flex',alignItems:'center',gap:6,background:'var(--text)',color:'var(--bg)',border:'none',padding:'8px 16px',borderRadius:100,fontWeight:700,fontSize:12,cursor:'pointer',whiteSpace:'nowrap'}}>
               <span style={{width:5,height:5,background:'var(--highlight)',borderRadius:'50%'}}/>
-              Join · CHF 25
+              <span className="join-full">Join · CHF 25</span>
+              <span className="join-short">Join</span>
             </button>
           </div>
         </div>
@@ -427,116 +428,184 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* NEXT MATCHES */}
+        {/* MATCHES + BONUS GRID */}
         <div style={{marginBottom:48}}>
-          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
+          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:20,flexWrap:'wrap',gap:8}}>
             <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(36px,6vw,64px)',lineHeight:0.9,color:'var(--text)'}}>
-              Next <span style={{color:'var(--beige-deep)'}}>matches</span>
+              Tip the <span style={{color:'var(--beige-deep)'}}>matches</span>
             </div>
             <button onClick={openLogin} style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',background:'none',border:'none',cursor:'pointer',textTransform:'uppercase',letterSpacing:'0.08em',borderBottom:'1px solid var(--border)',paddingBottom:1}}>Sign in to tip →</button>
           </div>
-          <div style={{display:'flex',flexDirection:'column',gap:10}}>
-            {MATCHES.map((m,i)=>{
+          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:14}} className="matches-bonus-grid">
+
+            {/* Matches 0–4: first spans 2 cols */}
+            {MATCHES.slice(0,5).map((m,i)=>{
               const{time,short}=fmtDT(m.utcMs,tz)
+              const feat=i===0
               return(
-                <div key={i} onClick={()=>showToast('👋 Sign in to enter predictions')}
-                  style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:14,padding:'14px 18px',cursor:'pointer',transition:'border-color 0.15s'}}
-                  onMouseEnter={e=>(e.currentTarget as HTMLDivElement).style.borderColor='var(--border-strong)'}
-                  onMouseLeave={e=>(e.currentTarget as HTMLDivElement).style.borderColor='var(--border)'}>
-                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10,flexWrap:'wrap',gap:6}}>
-                    <span style={{background:'var(--bg-elev)',padding:'3px 8px',borderRadius:5,fontSize:10,fontWeight:700,color:'var(--text-dim)',textTransform:'uppercase',letterSpacing:'0.06em'}}>{m.group}</span>
-                    <span style={{fontFamily:'JetBrains Mono',fontWeight:700,fontSize:11,color:'var(--text-dim)'}}>{short} · {time} · {m.venue}</span>
+                <div key={i} onClick={()=>showToast('Sign in to enter your predictions')}
+                  style={{gridColumn:feat?'span 2':'span 1',background:feat?'var(--text)':'var(--bg-card)',border:`1px solid ${feat?'var(--text)':'var(--border)'}`,borderRadius:18,padding:feat?24:18,cursor:'pointer',transition:'all 0.2s'}}
+                  onMouseEnter={e=>{(e.currentTarget as HTMLDivElement).style.transform='translateY(-2px)';(e.currentTarget as HTMLDivElement).style.boxShadow='0 8px 24px rgba(26,24,20,0.1)'}}
+                  onMouseLeave={e=>{(e.currentTarget as HTMLDivElement).style.transform='';(e.currentTarget as HTMLDivElement).style.boxShadow=''}}>
+                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14,fontSize:10,textTransform:'uppercase',letterSpacing:'0.08em'}}>
+                    <span style={{background:feat?'rgba(245,240,230,0.1)':'var(--bg-elev)',padding:'3px 9px',borderRadius:5,color:feat?'var(--highlight)':'var(--text-dim)',fontWeight:700}}>{m.group}</span>
+                    <span style={{color:feat?'rgba(245,240,230,0.4)':'var(--text-faint)',fontFamily:'JetBrains Mono',fontWeight:600,fontSize:10}}>{short} · {time}</span>
                   </div>
-                  <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:10}}>
-                    <div style={{flex:1,display:'flex',alignItems:'center',gap:10}}>
-                      <span style={{fontSize:26}}>{m.hf}</span>
+                  <div style={{display:'flex',alignItems:'center',gap:feat?20:12,marginBottom:14}}>
+                    <div style={{flex:1,display:'flex',alignItems:'center',gap:feat?14:10}}>
+                      <span style={{fontSize:feat?38:28}}>{m.hf}</span>
                       <div>
-                        <div style={{fontWeight:700,fontSize:14,color:'var(--text)'}}>{m.home}</div>
-                        <div style={{fontSize:11,color:'var(--text-faint)'}}>{m.homeP}% win</div>
+                        <div style={{fontWeight:700,fontSize:feat?16:13,color:feat?'var(--bg)':'var(--text)'}}>{m.home}</div>
+                        <div style={{fontSize:10,color:feat?'rgba(245,240,230,0.45)':'var(--text-faint)',marginTop:1}}>{m.homeP}% win</div>
                       </div>
                     </div>
-                    <div style={{fontFamily:'Bebas Neue',fontSize:14,color:'var(--text-faint)'}}>VS</div>
-                    <div style={{flex:1,display:'flex',alignItems:'center',gap:10,flexDirection:'row-reverse',textAlign:'right'}}>
-                      <span style={{fontSize:26}}>{m.af}</span>
+                    <div style={{fontFamily:'Bebas Neue',fontSize:feat?18:13,color:feat?'rgba(245,240,230,0.35)':'var(--text-faint)'}}>VS</div>
+                    <div style={{flex:1,display:'flex',alignItems:'center',gap:feat?14:10,flexDirection:'row-reverse',textAlign:'right'}}>
+                      <span style={{fontSize:feat?38:28}}>{m.af}</span>
                       <div>
-                        <div style={{fontWeight:700,fontSize:14,color:'var(--text)'}}>{m.away}</div>
-                        <div style={{fontSize:11,color:'var(--text-faint)'}}>{m.awayP}% win</div>
+                        <div style={{fontWeight:700,fontSize:feat?16:13,color:feat?'var(--bg)':'var(--text)'}}>{m.away}</div>
+                        <div style={{fontSize:10,color:feat?'rgba(245,240,230,0.45)':'var(--text-faint)',marginTop:1}}>{m.awayP}% win</div>
                       </div>
                     </div>
                   </div>
-                  <div style={{height:3,borderRadius:2,overflow:'hidden',display:'flex',background:'var(--border)',marginBottom:8}}>
-                    <div style={{width:`${m.homeP}%`,background:'var(--text)'}}/><div style={{width:`${m.drawP}%`,background:'var(--beige-mid)'}}/><div style={{width:`${m.awayP}%`,background:'var(--beige-deep)'}}/>
+                  <div style={{height:3,borderRadius:2,overflow:'hidden',display:'flex',background:feat?'rgba(245,240,230,0.15)':'var(--border)',marginBottom:6}}>
+                    <div style={{width:`${m.homeP}%`,background:feat?'var(--bg)':'var(--text)'}}/>
+                    <div style={{width:`${m.drawP}%`,background:feat?'var(--highlight)':'var(--beige-mid)'}}/>
+                    <div style={{width:`${m.awayP}%`,background:'var(--beige-deep)'}}/>
                   </div>
-                  <button style={{width:'100%',padding:'9px',background:'var(--text)',color:'var(--bg)',border:'none',borderRadius:10,fontWeight:700,fontSize:11,textTransform:'uppercase',letterSpacing:'0.08em',cursor:'pointer'}}>
+                  <div style={{display:'flex',justifyContent:'space-between',fontSize:10,color:feat?'rgba(245,240,230,0.35)':'var(--text-faint)',marginBottom:12}}>
+                    <span>{m.hf} {m.homeP}%</span><span>Draw {m.drawP}%</span><span>{m.af} {m.awayP}%</span>
+                  </div>
+                  <button style={{width:'100%',padding:'9px',background:feat?'rgba(245,240,230,0.08)':'var(--bg-elev)',color:feat?'rgba(245,240,230,0.6)':'var(--text-dim)',border:`1px solid ${feat?'rgba(245,240,230,0.12)':'var(--border)'}`,borderRadius:10,fontWeight:600,fontSize:11,textTransform:'uppercase',letterSpacing:'0.08em',cursor:'pointer'}}>
                     Sign in to tip
                   </button>
                 </div>
               )
             })}
-          </div>
-        </div>
 
-        {/* BONUS PREDICTIONS */}
-        <div style={{marginBottom:48}}>
-          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
-            <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(36px,6vw,64px)',lineHeight:0.9,color:'var(--text)'}}>
-              Bonus <span style={{color:'var(--beige-deep)'}}>predictions</span>
-            </div>
-            <span style={{fontSize:11,color:'var(--warn)',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.08em'}}>⏳ Locks June 11</span>
-          </div>
-          <div style={{display:'flex',flexDirection:'column',gap:10}}>
-            {[
-              {icon:'🏆',title:'Tournament Winner',sub:'Which country lifts the trophy at MetLife Stadium on July 19?'},
-              {icon:'👟',title:"Top Scorer's Nationality",sub:'Which country will the Golden Boot winner come from?'},
-            ].map(b=>(
-              <div key={b.title} style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:14,padding:'16px 18px'}}>
-                <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',marginBottom:10}}>
-                  <div>
-                    <div style={{fontWeight:700,fontSize:14,color:'var(--text)',marginBottom:3}}>{b.icon} {b.title}</div>
-                    <div style={{fontSize:12,color:'var(--text-faint)',lineHeight:1.5}}>{b.sub}</div>
+            {/* Last match (index 5) — 1 col, left of last row */}
+            {(()=>{
+              const m=MATCHES[5],{time,short}=fmtDT(m.utcMs,tz)
+              return(
+                <div onClick={()=>showToast('Sign in to enter your predictions')}
+                  style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:18,padding:18,cursor:'pointer',transition:'all 0.2s'}}
+                  onMouseEnter={e=>{(e.currentTarget as HTMLDivElement).style.transform='translateY(-2px)';(e.currentTarget as HTMLDivElement).style.boxShadow='0 8px 24px rgba(26,24,20,0.1)'}}
+                  onMouseLeave={e=>{(e.currentTarget as HTMLDivElement).style.transform='';(e.currentTarget as HTMLDivElement).style.boxShadow=''}}>
+                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14,fontSize:10,textTransform:'uppercase',letterSpacing:'0.08em'}}>
+                    <span style={{background:'var(--bg-elev)',padding:'3px 9px',borderRadius:5,color:'var(--text-dim)',fontWeight:700}}>{m.group}</span>
+                    <span style={{color:'var(--text-faint)',fontFamily:'JetBrains Mono',fontWeight:600,fontSize:10}}>{short} · {time}</span>
                   </div>
-                  <span style={{background:'rgba(74,122,58,0.12)',border:'1px solid rgba(74,122,58,0.25)',color:'#2d5a1b',fontSize:11,fontWeight:700,padding:'3px 10px',borderRadius:100,flexShrink:0,marginLeft:12}}>+20 pts</span>
+                  <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:14}}>
+                    <div style={{flex:1,display:'flex',alignItems:'center',gap:10}}>
+                      <span style={{fontSize:28}}>{m.hf}</span>
+                      <div>
+                        <div style={{fontWeight:700,fontSize:13,color:'var(--text)'}}>{m.home}</div>
+                        <div style={{fontSize:10,color:'var(--text-faint)',marginTop:1}}>{m.homeP}% win</div>
+                      </div>
+                    </div>
+                    <div style={{fontFamily:'Bebas Neue',fontSize:13,color:'var(--text-faint)'}}>VS</div>
+                    <div style={{flex:1,display:'flex',alignItems:'center',gap:10,flexDirection:'row-reverse',textAlign:'right'}}>
+                      <span style={{fontSize:28}}>{m.af}</span>
+                      <div>
+                        <div style={{fontWeight:700,fontSize:13,color:'var(--text)'}}>{m.away}</div>
+                        <div style={{fontSize:10,color:'var(--text-faint)',marginTop:1}}>{m.awayP}% win</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{height:3,borderRadius:2,overflow:'hidden',display:'flex',background:'var(--border)',marginBottom:6}}>
+                    <div style={{width:`${m.homeP}%`,background:'var(--text)'}}/>
+                    <div style={{width:`${m.drawP}%`,background:'var(--beige-mid)'}}/>
+                    <div style={{width:`${m.awayP}%`,background:'var(--beige-deep)'}}/>
+                  </div>
+                  <div style={{display:'flex',justifyContent:'space-between',fontSize:10,color:'var(--text-faint)',marginBottom:12}}>
+                    <span>{m.hf} {m.homeP}%</span><span>Draw {m.drawP}%</span><span>{m.af} {m.awayP}%</span>
+                  </div>
+                  <button style={{width:'100%',padding:'9px',background:'var(--bg-elev)',color:'var(--text-dim)',border:'1px solid var(--border)',borderRadius:10,fontWeight:600,fontSize:11,textTransform:'uppercase',letterSpacing:'0.08em',cursor:'pointer'}}>
+                    Sign in to tip
+                  </button>
                 </div>
-                <select onFocus={()=>showToast('👋 Sign in to enter predictions')}
-                  style={{width:'100%',background:'var(--bg-card-2)',border:'1px solid var(--border)',borderRadius:10,padding:'10px 12px',fontSize:13,fontWeight:500,color:'var(--text-faint)',cursor:'pointer',fontFamily:'Inter Tight'}}>
-                  <option value="">— Select a team —</option>
-                  {ALL_48.map(t=><option key={t} value={t}>{t}</option>)}
-                </select>
-                <div style={{fontSize:11,color:'var(--text-faint)',marginTop:6}}>🔒 Changeable until June 11, 2026</div>
+              )
+            })()}
+
+            {/* BONUS PICKS — 2 cols, right side of last row */}
+            <div style={{gridColumn:'span 2',background:'var(--bg-elev)',border:'1px solid var(--border-strong)',borderRadius:18,padding:24}}>
+              <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:20,flexWrap:'wrap',gap:8}}>
+                <div style={{fontFamily:'Bebas Neue',fontSize:24,letterSpacing:'0.02em',color:'var(--text)'}}>Bonus predictions</div>
+                <span style={{fontSize:11,color:'var(--warn)',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.08em'}}>+20 pts each · Locks June 11</span>
               </div>
-            ))}
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:20}}>
+                {[
+                  {icon:'🏆',title:'Tournament Winner',q:'Who lifts the trophy at MetLife Stadium on July 19?'},
+                  {icon:'👟',title:"Top Scorer's Nationality",q:'Which country does the Golden Boot winner come from?'},
+                ].map(b=>(
+                  <div key={b.title}>
+                    <div style={{fontWeight:700,fontSize:13,color:'var(--text)',marginBottom:4}}>{b.icon} {b.title}</div>
+                    <div style={{fontSize:12,color:'var(--text-faint)',marginBottom:10,lineHeight:1.5}}>{b.q}</div>
+                    <select onFocus={()=>showToast('Sign in to enter your predictions')}
+                      style={{width:'100%',background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:10,padding:'10px 12px',fontSize:13,color:'var(--text-faint)',cursor:'pointer',fontFamily:'Inter Tight',fontWeight:500}}>
+                      <option value="">— Select a team —</option>
+                      {ALL_48.map(t=><option key={t} value={t}>{t}</option>)}
+                    </select>
+                    <div style={{fontSize:10,color:'var(--text-faint)',marginTop:6}}>🔒 Changeable until June 11</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </div>
         </div>
 
         {/* NEWS */}
         <div style={{marginBottom:40}}>
-          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
+          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:20,flexWrap:'wrap',gap:8}}>
             <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(36px,6vw,64px)',lineHeight:0.9,color:'var(--text)'}}>
               WC <span style={{color:'var(--beige-deep)'}}>news</span>
             </div>
             <a href="https://www.fifa.com" target="_blank" rel="noreferrer" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em',borderBottom:'1px solid var(--border)',paddingBottom:1}}>FIFA.com →</a>
           </div>
-          <div style={{display:'flex',flexDirection:'column',gap:10}}>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:12}}>
             {NEWS.map((n,i)=>(
               <a key={i} href="https://www.fifa.com" target="_blank" rel="noreferrer"
-                style={{background:i===0?'var(--bg-elev)':'var(--bg-card)',border:'1px solid var(--border)',borderRadius:14,padding:'16px 18px',textDecoration:'none',color:'var(--text)',display:'flex',flexDirection:'column',gap:6,transition:'border-color 0.15s'}}
+                style={{
+                  gridColumn:i===0?'span 2':'span 1',
+                  background:i===0?'var(--bg-elev)':'var(--bg-card)',
+                  border:'1px solid var(--border)',
+                  borderRadius:16,
+                  padding:i===0?'24px':'18px',
+                  textDecoration:'none',
+                  color:'var(--text)',
+                  display:'flex',
+                  flexDirection:'column',
+                  gap:10,
+                  transition:'border-color 0.15s',
+                  minHeight:i===0?'auto':120,
+                }}
                 onMouseEnter={e=>(e.currentTarget as HTMLAnchorElement).style.borderColor='var(--border-strong)'}
                 onMouseLeave={e=>(e.currentTarget as HTMLAnchorElement).style.borderColor='var(--border)'}>
-                <div style={{display:'flex',alignItems:'center',gap:6}}>
-                  <span style={{fontSize:10,fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'0.1em'}}>FIFA.com</span>
+                <div style={{display:'flex',alignItems:'center',gap:6,flexWrap:'wrap'}}>
                   <span style={{background:'var(--text)',color:'var(--bg)',fontSize:9,textTransform:'uppercase',letterSpacing:'0.1em',fontWeight:700,padding:'2px 7px',borderRadius:4}}>{n.tag}</span>
-                  <span style={{fontSize:11,color:'var(--text-faint)',marginLeft:'auto'}}>{n.t}</span>
+                  <span style={{fontSize:11,color:'var(--text-faint)'}}>{n.t}</span>
                 </div>
-                <div style={{fontSize:i===0?16:13,fontWeight:i===0?600:500,lineHeight:1.4,color:'var(--text)'}}>{n.h}</div>
+                <div style={{
+                  fontSize:i===0?20:13,
+                  fontWeight:i===0?400:600,
+                  fontFamily:i===0?'Bebas Neue':'Inter Tight',
+                  letterSpacing:i===0?'-0.005em':'normal',
+                  lineHeight:i===0?1.1:1.4,
+                  color:'var(--text)',
+                  flex:1,
+                }}>{n.h}</div>
+                {i===0&&<div style={{fontSize:12,color:'var(--text-faint)',display:'flex',alignItems:'center',gap:4}}>Read on FIFA.com →</div>}
               </a>
             ))}
           </div>
         </div>
+
       </div>
 
       {/* FOOTER */}
       <footer style={{borderTop:'1px solid var(--border)',padding:'24px 20px',display:'flex',flexDirection:'column',alignItems:'center',gap:8,fontSize:12,color:'var(--text-faint)',textAlign:'center'}}>
-        <div style={{fontSize:16,fontWeight:300,letterSpacing:'-0.02em',color:'var(--text)'}}>m1c1</div>
+        <div style={{fontSize:16,fontWeight:300,letterSpacing:'0.05em',color:'var(--text)',fontFamily:'Inter Tight, sans-serif'}}>m1c1</div>
         <div style={{fontSize:8,fontWeight:600,letterSpacing:'0.12em',textTransform:'uppercase',color:'var(--text-faint)'}}>World Cup 2026 · Betting game</div>
         <div style={{display:'flex',gap:20,flexWrap:'wrap',justifyContent:'center',marginTop:4}}>
           {['About','Rules','Privacy'].map(l=><a key={l} href="#" style={{color:'var(--text-faint)',textDecoration:'none'}}>{l}</a>)}
@@ -548,7 +617,8 @@ export default function HomePage() {
         @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.85)}}
         @keyframes pulsewarn{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(154,74,42,0.5)}50%{opacity:0.9;box-shadow:0 0 0 8px transparent}}
         @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-        @media(max-width:768px){.hide-mobile{display:none!important}.features-grid{grid-template-columns:1fr!important}}
+        @media(max-width:768px){.hide-mobile{display:none!important}.features-grid{grid-template-columns:1fr!important}.matches-bonus-grid{grid-template-columns:1fr!important}.matches-bonus-grid>*{grid-column:span 1!important}.join-full{display:none!important}.join-short{display:inline!important}}
+        @media(min-width:769px){.join-short{display:none!important}.join-full{display:inline!important}}
       `}</style>
     </div>
   )
