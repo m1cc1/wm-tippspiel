@@ -381,62 +381,13 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* ── BONUS PREDICTIONS ── */}
-        <div style={{marginBottom:32}}>
-          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
-            <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(32px,7vw,64px)',lineHeight:0.9,color:'var(--text)'}}>
-              Bonus <span style={{color:'var(--beige-deep)'}}>picks</span>
-            </div>
-            <div style={{display:'flex',alignItems:'center',gap:8}}>
-              {specialSaved&&<span style={{fontSize:12,fontWeight:700,color:'#2d5a1b'}}>✓ Saved!</span>}
-              <span style={{fontSize:11,color:'var(--warn)',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.08em'}}>
-                {specialPick?.locked?'🔒 Locked':'⏳ Locks June 11'}
-              </span>
-            </div>
-          </div>
-          <div style={{display:'flex',flexDirection:'column',gap:10}}>
-            {[
-              {key:'tournament_winner' as const,icon:'🏆',title:'Tournament Winner',sub:'Which country lifts the trophy at MetLife Stadium on July 19?'},
-              {key:'top_scorer_nation' as const,icon:'👟',title:"Top Scorer's Nationality",sub:'Which country will the Golden Boot winner come from?'},
-            ].map(b=>(
-              <div key={b.key} style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:14,padding:'16px 18px'}}>
-                <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',marginBottom:12}}>
-                  <div>
-                    <div style={{fontWeight:700,fontSize:14,color:'var(--text)',marginBottom:3}}>{b.icon} {b.title}</div>
-                    <div style={{fontSize:12,color:'var(--text-faint)',lineHeight:1.5}}>{b.sub}</div>
-                  </div>
-                  <span style={{background:'rgba(74,122,58,0.12)',border:'1px solid rgba(74,122,58,0.25)',color:'#2d5a1b',fontSize:11,fontWeight:700,padding:'3px 10px',borderRadius:100,flexShrink:0,marginLeft:12}}>+20 pts</span>
-                </div>
-                <select
-                  value={specialPick?.[b.key]??''}
-                  onChange={e=>!specialPick?.locked&&saveSpecialPick(b.key,e.target.value)}
-                  disabled={isPending||specialPick?.locked||savingSpecial}
-                  style={{width:'100%',background:'var(--bg-card-2)',border:'1px solid var(--border)',borderRadius:10,padding:'10px 12px',fontSize:13,fontWeight:500,color:specialPick?.[b.key]?'var(--text)':'var(--text-faint)',cursor:isPending||specialPick?.locked?'not-allowed':'pointer',fontFamily:'Inter Tight',opacity:isPending?0.5:1}}>
-                  <option value="">— Select a team —</option>
-                  {ALL_48.map(t=><option key={t} value={t}>{t}</option>)}
-                </select>
-                {specialPick?.[b.key]?(
-                  <div style={{background:'rgba(74,122,58,0.08)',border:'1px solid rgba(74,122,58,0.2)',borderRadius:8,padding:'8px 12px',marginTop:8,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-                    <span style={{fontSize:13,fontWeight:700,color:'#2d5a1b'}}>✓ {specialPick[b.key]}</span>
-                    {!specialPick.locked&&<span style={{fontSize:10,color:'var(--text-faint)'}}>changeable until June 11</span>}
-                  </div>
-                ):(
-                  <div style={{background:'var(--bg-elev)',border:'1px dashed var(--border)',borderRadius:8,padding:'8px 12px',marginTop:8,fontSize:12,color:'var(--text-faint)',textAlign:'center'}}>
-                    Not set yet — worth 20 pts!
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* ── LEADERBOARD ── */}
         <div style={{marginBottom:32}}>
           <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
             <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(36px,8vw,72px)',lineHeight:0.9,color:'var(--text)'}}>
-              The <span style={{color:'var(--beige-deep)'}}>leaderboard</span>
+              Top <span style={{color:'var(--beige-deep)'}}>5</span>
             </div>
-            <Link href="/leaderboard" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em',borderBottom:'1px solid var(--border)',paddingBottom:1}}>View all →</Link>
+            <Link href="/leaderboard" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em',borderBottom:'1px solid var(--border)',paddingBottom:1}}>Full leaderboard →</Link>
           </div>
           <div style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:16,overflow:'hidden'}}>
             <div style={{borderBottom:'1px solid var(--border)',background:'var(--bg-card-2)'}}>
@@ -474,37 +425,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-
-        {/* ── FIFA NEWS ── */}
-        <div style={{marginBottom:32}}>
-          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
-            <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(32px,7vw,60px)',lineHeight:0.9,color:'var(--text)'}}>
-              WC <span style={{color:'var(--beige-deep)'}}>news</span>
-            </div>
-            <a href="https://www.fifa.com" target="_blank" rel="noreferrer" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em',borderBottom:'1px solid var(--border)',paddingBottom:1}}>FIFA.com →</a>
-          </div>
-          <div style={{display:'flex',flexDirection:'column',gap:8}}>
-            {[
-              {tag:'Preview',  h:'Mexico vs South Africa: The opening match of the biggest World Cup in history', t:'3h ago', feature:true},
-              {tag:'Official', h:'Record 5.8 million tickets sold — WC 2026 set to be the most-watched sporting event ever', t:'6h ago'},
-              {tag:'Team News',h:'France confirm Mbappé in starting XI for opener against Senegal', t:'8h ago'},
-              {tag:'Stadiums', h:'A guide to all 16 World Cup venues — from MetLife to Estadio Azteca', t:'1d ago'},
-            ].map((n,i)=>(
-              <a key={i} href="https://www.fifa.com" target="_blank" rel="noreferrer"
-                style={{background:n.feature?'var(--bg-elev)':'var(--bg-card)',border:'1px solid var(--border)',borderRadius:12,padding:'14px 16px',textDecoration:'none',color:'var(--text)',display:'flex',gap:10,alignItems:'flex-start',transition:'border-color 0.15s'}}
-                onMouseEnter={e=>(e.currentTarget as HTMLAnchorElement).style.borderColor='var(--border-strong)'}
-                onMouseLeave={e=>(e.currentTarget as HTMLAnchorElement).style.borderColor='var(--border)'}>
-                <div style={{flex:1,minWidth:0}}>
-                  <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:5}}>
-                    <span style={{background:'var(--text)',color:'var(--bg)',fontSize:9,textTransform:'uppercase',letterSpacing:'0.1em',fontWeight:700,padding:'2px 7px',borderRadius:4}}>{n.tag}</span>
-                    <span style={{fontSize:11,color:'var(--text-faint)'}}>{n.t}</span>
-                  </div>
-                  <div style={{fontSize:13,fontWeight:600,lineHeight:1.4,color:'var(--text)'}}>{n.h}</div>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
 
         {/* ── MATCHES TO TIP ── */}
         <div style={{marginBottom:32}}>
@@ -570,6 +490,86 @@ export default function DashboardPage() {
                 </div>
               )
             })}
+          </div>
+        </div>
+
+        {/* ── BONUS PREDICTIONS ── */}
+        <div style={{marginBottom:32}}>
+          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
+            <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(32px,7vw,64px)',lineHeight:0.9,color:'var(--text)'}}>
+              Bonus <span style={{color:'var(--beige-deep)'}}>picks</span>
+            </div>
+            <div style={{display:'flex',alignItems:'center',gap:8}}>
+              {specialSaved&&<span style={{fontSize:12,fontWeight:700,color:'#2d5a1b'}}>✓ Saved!</span>}
+              <span style={{fontSize:11,color:'var(--warn)',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.08em'}}>
+                {specialPick?.locked?'🔒 Locked':'⏳ Locks June 11'}
+              </span>
+            </div>
+          </div>
+          <div style={{display:'flex',flexDirection:'column',gap:10}}>
+            {[
+              {key:'tournament_winner' as const,icon:'🏆',title:'Tournament Winner',sub:'Which country lifts the trophy at MetLife Stadium on July 19?'},
+              {key:'top_scorer_nation' as const,icon:'👟',title:"Top Scorer's Nationality",sub:'Which country will the Golden Boot winner come from?'},
+            ].map(b=>(
+              <div key={b.key} style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:14,padding:'16px 18px'}}>
+                <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',marginBottom:12}}>
+                  <div>
+                    <div style={{fontWeight:700,fontSize:14,color:'var(--text)',marginBottom:3}}>{b.icon} {b.title}</div>
+                    <div style={{fontSize:12,color:'var(--text-faint)',lineHeight:1.5}}>{b.sub}</div>
+                  </div>
+                  <span style={{background:'rgba(74,122,58,0.12)',border:'1px solid rgba(74,122,58,0.25)',color:'#2d5a1b',fontSize:11,fontWeight:700,padding:'3px 10px',borderRadius:100,flexShrink:0,marginLeft:12}}>+20 pts</span>
+                </div>
+                <select
+                  value={specialPick?.[b.key]??''}
+                  onChange={e=>!specialPick?.locked&&saveSpecialPick(b.key,e.target.value)}
+                  disabled={isPending||specialPick?.locked||savingSpecial}
+                  style={{width:'100%',background:'var(--bg-card-2)',border:'1px solid var(--border)',borderRadius:10,padding:'10px 12px',fontSize:13,fontWeight:500,color:specialPick?.[b.key]?'var(--text)':'var(--text-faint)',cursor:isPending||specialPick?.locked?'not-allowed':'pointer',fontFamily:'Inter Tight',opacity:isPending?0.5:1}}>
+                  <option value="">— Select a team —</option>
+                  {ALL_48.map(t=><option key={t} value={t}>{t}</option>)}
+                </select>
+                {specialPick?.[b.key]?(
+                  <div style={{background:'rgba(74,122,58,0.08)',border:'1px solid rgba(74,122,58,0.2)',borderRadius:8,padding:'8px 12px',marginTop:8,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+                    <span style={{fontSize:13,fontWeight:700,color:'#2d5a1b'}}>✓ {specialPick[b.key]}</span>
+                    {!specialPick.locked&&<span style={{fontSize:10,color:'var(--text-faint)'}}>changeable until June 11</span>}
+                  </div>
+                ):(
+                  <div style={{background:'var(--bg-elev)',border:'1px dashed var(--border)',borderRadius:8,padding:'8px 12px',marginTop:8,fontSize:12,color:'var(--text-faint)',textAlign:'center'}}>
+                    Not set yet — worth 20 pts!
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── FIFA NEWS ── */}
+        <div style={{marginBottom:32}}>
+          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
+            <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(32px,7vw,60px)',lineHeight:0.9,color:'var(--text)'}}>
+              WC <span style={{color:'var(--beige-deep)'}}>news</span>
+            </div>
+            <a href="https://www.fifa.com" target="_blank" rel="noreferrer" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em',borderBottom:'1px solid var(--border)',paddingBottom:1}}>FIFA.com →</a>
+          </div>
+          <div style={{display:'flex',flexDirection:'column',gap:8}}>
+            {[
+              {tag:'Preview',  h:'Mexico vs South Africa: The opening match of the biggest World Cup in history', t:'3h ago', feature:true},
+              {tag:'Official', h:'Record 5.8 million tickets sold — WC 2026 set to be the most-watched sporting event ever', t:'6h ago'},
+              {tag:'Team News',h:'France confirm Mbappé in starting XI for opener against Senegal', t:'8h ago'},
+              {tag:'Stadiums', h:'A guide to all 16 World Cup venues — from MetLife to Estadio Azteca', t:'1d ago'},
+            ].map((n,i)=>(
+              <a key={i} href="https://www.fifa.com" target="_blank" rel="noreferrer"
+                style={{background:n.feature?'var(--bg-elev)':'var(--bg-card)',border:'1px solid var(--border)',borderRadius:12,padding:'14px 16px',textDecoration:'none',color:'var(--text)',display:'flex',gap:10,alignItems:'flex-start',transition:'border-color 0.15s'}}
+                onMouseEnter={e=>(e.currentTarget as HTMLAnchorElement).style.borderColor='var(--border-strong)'}
+                onMouseLeave={e=>(e.currentTarget as HTMLAnchorElement).style.borderColor='var(--border)'}>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:5}}>
+                    <span style={{background:'var(--text)',color:'var(--bg)',fontSize:9,textTransform:'uppercase',letterSpacing:'0.1em',fontWeight:700,padding:'2px 7px',borderRadius:4}}>{n.tag}</span>
+                    <span style={{fontSize:11,color:'var(--text-faint)'}}>{n.t}</span>
+                  </div>
+                  <div style={{fontSize:13,fontWeight:600,lineHeight:1.4,color:'var(--text)'}}>{n.h}</div>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
 
