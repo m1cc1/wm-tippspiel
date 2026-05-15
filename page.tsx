@@ -178,6 +178,11 @@ export default function HomePage() {
                     )
                   })}
                 </div>
+              )}
+
+              {/* ── JOIN STEP 1: CODE ── */}
+              {modal==='join-code'&&(
+                <>
                   <form onSubmit={checkCode} style={{display:'flex',flexDirection:'column',gap:12}}>
                     <input type="text" value={code} onChange={e=>setCode(e.target.value)} placeholder="CODE" required
                       style={{width:'100%',background:'var(--bg-card-2)',border:'1px solid var(--border)',borderRadius:14,padding:'16px',fontSize:22,fontFamily:'JetBrains Mono',fontWeight:700,letterSpacing:'0.2em',textTransform:'uppercase',textAlign:'center',color:'var(--text)',outline:'none',boxSizing:'border-box'}}
