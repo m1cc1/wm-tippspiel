@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 const RSS_FEEDS = [
   'https://www.fifa.com/en/tournament-news/rss',
@@ -12,7 +10,7 @@ const RSS_FEEDS = [
   'https://www.skysports.com/rss/12040',
 ]
 
-const CACHE_TTL_MS = 2 * 60 * 60 * 1000 // 2 hours
+const CACHE_TTL_MS = 2 * 60 * 60 * 1000
 
 interface NewsItem {
   title: string
@@ -39,7 +37,22 @@ function parseRSS(xml: string, tag: string): NewsItem[] {
   return items.slice(0, 8)
 }
 
+function fallback(): NewsItem[] {
+  return [
+    { title: 'World Cup 2026 — the biggest tournament in history kicks off June 11 in Mexico City', link: 'https://www.fifa.com', tag: 'Preview', time: 'Coming soon', pubDate: Date.now() },
+    { title: 'Record 5.8 million tickets sold for World Cup 2026 across USA, Canada and Mexico', link: 'https://www.fifa.com', tag: 'Official', time: '2d ago', pubDate: Date.now() },
+    { title: 'All 48 nations confirmed for the expanded 2026 World Cup group stage', link: 'https://www.fifa.com', tag: 'Teams', time: '3d ago', pubDate: Date.now() },
+    { title: 'A guide to all 16 World Cup venues — from MetLife to Estadio Azteca', link: 'https://www.fifa.com', tag: 'Venues', time: '5d ago', pubDate: Date.now() },
+  ]
+}
+
 export async function GET() {
+  // Create client inside handler so env vars are available at runtime
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+
   try {
     // Check cache
     const { data: cached } = await supabase
@@ -79,13 +92,4 @@ export async function GET() {
   } catch {
     return NextResponse.json(fallback())
   }
-}
-
-function fallback(): NewsItem[] {
-  return [
-    { title: 'World Cup 2026 — the biggest tournament in history kicks off June 11 in Mexico City', link: 'https://www.fifa.com', tag: 'Preview', time: 'Coming soon', pubDate: Date.now() },
-    { title: 'Record 5.8 million tickets sold for World Cup 2026 across USA, Canada and Mexico', link: 'https://www.fifa.com', tag: 'Official', time: '2d ago', pubDate: Date.now() },
-    { title: 'All 48 nations confirmed for the expanded 2026 World Cup group stage', link: 'https://www.fifa.com', tag: 'Teams', time: '3d ago', pubDate: Date.now() },
-    { title: 'A guide to all 16 World Cup venues — from MetLife to Estadio Azteca', link: 'https://www.fifa.com', tag: 'Venues', time: '5d ago', pubDate: Date.now() },
-  ]
 }
