@@ -150,8 +150,10 @@ export default function DashboardPage() {
   const gamesFinished=(profile?.exact_count??0)+(profile?.tendency_count??0)+(leaderboard.length>0?1:0)
   const projectedRank=projectFinalRank(myRank,myPts,leaderboard,gamesFinished,104)
   const nav=[
+    {href:'/dashboard',label:'Dashboard'},
     {href:'/leaderboard',label:'Standings'},
     {href:'/games',label:'Matches'},
+    {href:'/games?bonus',label:'Bonus tips'},
     ...(isAdmin?[{href:'/admin',label:'Admin',warn:true}]:[]),
   ]
 
@@ -246,35 +248,6 @@ export default function DashboardPage() {
       )}
 
       <div className="page-wrap">
-
-        {/* ── MORNING BRIEFING TEASER ── */}
-        <div style={{background:'var(--text)',borderRadius:20,padding:'24px 28px',marginBottom:32,position:'relative',overflow:'hidden'}}>
-          <div style={{position:'absolute',top:'-40px',right:'-40px',width:200,height:200,background:'radial-gradient(circle,rgba(212,193,154,0.12) 0%,transparent 60%)',pointerEvents:'none'}}/>
-          <div style={{position:'absolute',top:16,right:20,fontSize:11,fontWeight:700,color:'rgba(245,240,230,0.25)',textTransform:'uppercase',letterSpacing:'0.12em'}}>Coming June 11</div>
-          <div style={{fontSize:11,fontWeight:700,color:'var(--highlight)',textTransform:'uppercase',letterSpacing:'0.15em',marginBottom:10}}>☀️ Morning Briefing</div>
-          <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(22px,5vw,32px)',color:'var(--bg)',lineHeight:1.1,marginBottom:12}}>
-            Your daily WC2026 update — ready every morning
-          </div>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:10,marginBottom:16}}>
-            {[
-              {icon:'⚽',label:"Yesterday's goals & results",sub:'Full match recap'},
-              {icon:'📊',label:"Leaderboard shake-up",sub:'Who gained / lost spots'},
-              {icon:'🔮',label:'Match of the day preview',sub:'AI win probability'},
-              {icon:'💡',label:'Tip recommendation',sub:'Based on form & stats'},
-            ].map(b=>(
-              <div key={b.label} style={{background:'rgba(245,240,230,0.05)',border:'1px solid rgba(245,240,230,0.1)',borderRadius:12,padding:'12px 14px',display:'flex',gap:10,alignItems:'flex-start',opacity:0.7}}>
-                <span style={{fontSize:18,flexShrink:0}}>{b.icon}</span>
-                <div>
-                  <div style={{fontSize:12,fontWeight:600,color:'var(--bg)',lineHeight:1.3}}>{b.label}</div>
-                  <div style={{fontSize:11,color:'var(--text-faint)',marginTop:2}}>{b.sub}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div style={{background:'rgba(212,193,154,0.12)',border:'1px solid rgba(212,193,154,0.2)',borderRadius:10,padding:'10px 14px',fontSize:12,color:'var(--highlight)'}}>
-            🔔 Briefing unlocks when the tournament starts on June 11 — check back every morning during the World Cup!
-          </div>
-        </div>
 
         {/* ── BIG RANK BLOCK ── */}
         <div style={{background:'var(--text)',borderRadius:20,padding:'28px 24px',marginBottom:32,position:'relative',overflow:'hidden'}}>
