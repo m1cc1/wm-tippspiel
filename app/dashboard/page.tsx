@@ -439,7 +439,7 @@ export default function DashboardPage() {
                 <div>#</div><div>Player</div><div>Pts</div><div style={{textAlign:'right'}}>Live</div>
               </div>
             </div>
-            {leaderboard.slice(0,6).map((e)=>{
+            {leaderboard.slice(0,5).map((e)=>{
               const rank=Number(e.rank)
               const isMe=e.id===profile?.id
               const isPend=e.status==='pending'
@@ -466,6 +466,70 @@ export default function DashboardPage() {
             <div style={{padding:'12px 20px',textAlign:'center',borderTop:'1px solid var(--border)',background:'var(--bg-card-2)'}}>
               <Link href="/leaderboard" style={{color:'var(--text)',textDecoration:'none',fontSize:12,fontWeight:700,textTransform:'uppercase',letterSpacing:'0.1em'}}>View all {leaderboard.length} players →</Link>
             </div>
+          </div>
+        </div>
+
+
+        {/* ── MORNING BRIEFING ── */}
+        <div style={{marginBottom:32}}>
+          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
+            <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(32px,7vw,60px)',lineHeight:0.9,color:'var(--text)'}}>
+              ☀️ Morning <span style={{color:'var(--beige-deep)'}}>briefing</span>
+            </div>
+            <span style={{fontSize:11,color:'var(--text-faint)',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.08em'}}>Updated daily · June 11</span>
+          </div>
+          <div style={{display:'flex',flexDirection:'column',gap:8}}>
+            {[
+              {label:'Yesterday's results',icon:'⚽',value:'France 2–1 Senegal · Brazil 3–0 Scotland · Germany 1–1 Sweden',live:true},
+              {label:'Leaderboard shake-up',icon:'📊',value:'Marco R. moved up 2 spots after France win · you gained 1 place · Lisa B. dropped to 5th',live:true},
+              {label:'Today's matches',icon:'🗓',value:'USA vs Paraguay · 01:00 ZRH · Netherlands vs Iran · 19:00 ZRH · Spain vs Austria · 02:00 ZRH',live:true},
+              {label:'Tip of the day',icon:'💡',value:'France to win vs Senegal is the crowd favourite (62%) — but Morocco at 3–1 odds is the bold call.',live:false},
+            ].map(b=>(
+              <div key={b.label} style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:12,padding:'12px 16px',display:'flex',gap:12,alignItems:'flex-start'}}>
+                <span style={{fontSize:18,flexShrink:0,marginTop:1}}>{b.icon}</span>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontSize:10,fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:3,display:'flex',alignItems:'center',gap:6}}>
+                    {b.label}
+                    {b.live&&<span style={{width:5,height:5,background:'var(--warn)',borderRadius:'50%',display:'inline-block',animation:'pulsewarn 2s infinite'}}/>}
+                  </div>
+                  <div style={{fontSize:13,color:'var(--text)',lineHeight:1.5}}>{b.value}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{background:'rgba(139,122,94,0.1)',border:'1px solid rgba(139,122,94,0.2)',borderRadius:12,padding:'10px 16px',fontSize:12,color:'var(--beige-deep)',marginTop:8}}>
+            🔔 Full briefing unlocks when the tournament starts on June 11 — check back every morning!
+          </div>
+        </div>
+
+        {/* ── FIFA NEWS ── */}
+        <div style={{marginBottom:32}}>
+          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:8}}>
+            <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(32px,7vw,60px)',lineHeight:0.9,color:'var(--text)'}}>
+              WC <span style={{color:'var(--beige-deep)'}}>news</span>
+            </div>
+            <a href="https://www.fifa.com" target="_blank" rel="noreferrer" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em',borderBottom:'1px solid var(--border)',paddingBottom:1}}>FIFA.com →</a>
+          </div>
+          <div style={{display:'flex',flexDirection:'column',gap:8}}>
+            {[
+              {tag:'Preview',  h:'Mexico vs South Africa: The opening match of the biggest World Cup in history', t:'3h ago', feature:true},
+              {tag:'Official', h:'Record 5.8 million tickets sold — WC 2026 set to be the most-watched sporting event ever', t:'6h ago'},
+              {tag:'Team News',h:'France confirm Mbappé in starting XI for opener against Senegal', t:'8h ago'},
+              {tag:'Stadiums', h:'A guide to all 16 World Cup venues — from MetLife to Estadio Azteca', t:'1d ago'},
+            ].map((n,i)=>(
+              <a key={i} href="https://www.fifa.com" target="_blank" rel="noreferrer"
+                style={{background:n.feature?'var(--bg-elev)':'var(--bg-card)',border:'1px solid var(--border)',borderRadius:12,padding:'14px 16px',textDecoration:'none',color:'var(--text)',display:'flex',gap:10,alignItems:'flex-start',transition:'border-color 0.15s'}}
+                onMouseEnter={e=>(e.currentTarget as HTMLAnchorElement).style.borderColor='var(--border-strong)'}
+                onMouseLeave={e=>(e.currentTarget as HTMLAnchorElement).style.borderColor='var(--border)'}>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:5}}>
+                    <span style={{background:'var(--text)',color:'var(--bg)',fontSize:9,textTransform:'uppercase',letterSpacing:'0.1em',fontWeight:700,padding:'2px 7px',borderRadius:4}}>{n.tag}</span>
+                    <span style={{fontSize:11,color:'var(--text-faint)'}}>{n.t}</span>
+                  </div>
+                  <div style={{fontSize:13,fontWeight:600,lineHeight:1.4,color:'var(--text)'}}>{n.h}</div>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
 

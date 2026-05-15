@@ -12,14 +12,13 @@ export default function Navbar({ userEmail, displayName }: { userEmail?: string 
   const supabase = createBrowserClient()
   const [menuOpen, setMenuOpen] = useState(false)
   const isAdmin = userEmail === ADMIN_EMAIL
-
-  // First name only for greeting
   const firstName = displayName ? displayName.split(' ')[0] : null
 
   const nav = [
     { href: '/dashboard',   label: 'Dashboard' },
     { href: '/leaderboard', label: 'Standings' },
     { href: '/games',       label: 'Matches' },
+    { href: '/games?bonus', label: 'Bonus tips' },
     ...(isAdmin ? [{ href: '/admin', label: 'Admin', warn: true }] : []),
   ]
 
@@ -33,26 +32,24 @@ export default function Navbar({ userEmail, displayName }: { userEmail?: string 
     <>
       <nav style={{position:'sticky',top:0,zIndex:50,backdropFilter:'blur(20px)',background:'rgba(245,240,230,0.92)',borderBottom:'1px solid var(--border)'}}>
         <div style={{maxWidth:1400,margin:'0 auto',padding:'0 20px',height:56,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
-
-          {/* Logo */}
           <Link href="/dashboard" style={{textDecoration:'none',color:'var(--text)',flexShrink:0,display:'flex',flexDirection:'column',gap:1}}>
             <div style={{fontFamily:'Bebas Neue',fontSize:24,letterSpacing:'0.04em',lineHeight:1}}>WC2026</div>
-            <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase'}}>Betting game by <span style={{fontWeight:300,letterSpacing:'-0.02em',textTransform:'none',fontSize:10}}>m1c1</span></div>
+            <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase'}}>
+              Betting game by <span style={{fontWeight:300,letterSpacing:'-0.02em',textTransform:'none',fontSize:10}}>m1c1</span>
+            </div>
           </Link>
 
-          {/* Desktop nav links */}
+          {/* Desktop nav */}
           <div style={{display:'flex',gap:2}} className="hide-mobile">
             {nav.map(n => (
               <Link key={n.href} href={n.href}
-                style={{fontSize:12,fontWeight:600,color:n.warn?'var(--warn)':pathname===n.href?'var(--text)':'var(--text-dim)',textDecoration:'none',padding:'7px 12px',borderRadius:100,letterSpacing:'0.05em',textTransform:'uppercase',background:pathname===n.href?'var(--bg-elev)':'transparent',transition:'all 0.2s'}}>
+                style={{fontSize:12,fontWeight:600,color:n.warn?'var(--warn)':pathname===n.href||pathname+window?.location?.search===n.href?'var(--text)':'var(--text-dim)',textDecoration:'none',padding:'7px 12px',borderRadius:100,letterSpacing:'0.05em',textTransform:'uppercase',background:pathname===n.href?'var(--bg-elev)':'transparent',transition:'all 0.2s',whiteSpace:'nowrap'}}>
                 {n.label}
               </Link>
             ))}
           </div>
 
-          {/* Right side */}
           <div style={{display:'flex',alignItems:'center',gap:10,flexShrink:0}}>
-            {/* Greeting + sign out — desktop */}
             <div className="hide-mobile" style={{display:'flex',alignItems:'center',gap:10}}>
               {firstName && (
                 <div style={{fontSize:13,fontWeight:600,color:'var(--text-dim)'}}>
@@ -66,17 +63,13 @@ export default function Navbar({ userEmail, displayName }: { userEmail?: string 
                 Sign out
               </button>
             </div>
-
-            {/* Hamburger — mobile */}
-            <button onClick={()=>setMenuOpen(!menuOpen)}
-              style={{background:'var(--bg-elev)',border:'1px solid var(--border)',borderRadius:10,padding:'8px 10px',cursor:'pointer',fontSize:16,lineHeight:1,color:'var(--text)'}}
-              className="show-mobile">
-              {menuOpen ? '✕' : '☰'}
+            <button onClick={()=>setMenuOpen(!menuOpen)} className="show-mobile"
+              style={{background:'var(--bg-elev)',border:'1px solid var(--border)',borderRadius:10,padding:'8px 10px',cursor:'pointer',fontSize:16,lineHeight:1,color:'var(--text)'}}>
+              {menuOpen?'✕':'☰'}
             </button>
           </div>
         </div>
 
-        {/* Mobile menu */}
         {menuOpen && (
           <div style={{background:'var(--bg)',borderTop:'1px solid var(--border)',padding:'12px 20px 20px',display:'flex',flexDirection:'column',gap:4}}>
             {nav.map(n=>(
