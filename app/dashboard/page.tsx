@@ -155,10 +155,6 @@ export default function DashboardPage() {
     ...(isAdmin?[{href:'/admin',label:'Admin',warn:true}]:[]),
   ]
 
-  const COMMON_STYLE = {
-    navBtn: {fontSize:12,fontWeight:600 as const,color:'var(--text-dim)',textDecoration:'none',padding:'7px 12px',borderRadius:100,letterSpacing:'0.05em',textTransform:'uppercase' as const}
-  }
-
   return (
     <div style={{background:'var(--bg)',minHeight:'100vh'}}>
       {toast&&<div style={{position:'fixed',bottom:20,left:'50%',transform:'translateX(-50%)',zIndex:200,background:'var(--text)',color:'var(--bg)',padding:'12px 20px',borderRadius:100,fontSize:13,fontWeight:600,boxShadow:'0 8px 24px rgba(26,24,20,0.2)',whiteSpace:'nowrap',maxWidth:'90vw',textAlign:'center'}}>{toast}</div>}
@@ -172,7 +168,7 @@ export default function DashboardPage() {
           </Link>
           <div style={{display:'flex',gap:2}} className="hide-mobile">
             {nav.map(n=>(
-              <Link key={n.href} href={n.href} style={{...COMMON_STYLE.navBtn,color:n.warn?'var(--warn)':'var(--text-dim)'}}>
+              <Link key={n.href} href={n.href} style={{fontSize:12,fontWeight:600,color:n.warn?'var(--warn)':'var(--text-dim)',textDecoration:'none',padding:'7px 12px',borderRadius:100,letterSpacing:'0.05em',textTransform:'uppercase' as any}}>
                 {n.label}
               </Link>
             ))}
