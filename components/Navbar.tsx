@@ -37,7 +37,7 @@ export default function Navbar({ userEmail, displayName }: { userEmail?: string 
           {/* Logo */}
           <Link href="/dashboard" style={{textDecoration:'none',color:'var(--text)',flexShrink:0,display:'flex',flexDirection:'column',gap:1}}>
             <div style={{fontFamily:'Bebas Neue',fontSize:24,letterSpacing:'0.04em',lineHeight:1}}>WC2026</div>
-            <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase'}}>Betting game by M11</div>
+            <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase'}}>Betting game by <span style={{fontWeight:300,letterSpacing:'-0.02em',textTransform:'none',fontSize:10}}>m1c1</span></div>
           </Link>
 
           {/* Desktop nav links */}

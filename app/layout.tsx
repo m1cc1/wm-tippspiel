@@ -2,10 +2,10 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'micci · World Cup 2026',
+  title: 'm1c1 · World Cup 2026',
   description: 'The World Cup 2026 prediction game. Predict every match, climb the live leaderboard, win the prize pool.',
   manifest: '/manifest.json',
-  appleWebApp: { capable: true, statusBarStyle: 'default', title: 'micci WC26' },
+  appleWebApp: { capable: true, statusBarStyle: 'default', title: 'm1c1 WC26' },
 }
 export const viewport: Viewport = {
   themeColor: '#f5f0e6',

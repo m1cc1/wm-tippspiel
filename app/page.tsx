@@ -116,7 +116,7 @@ export default function HomePage() {
                 <>
                   <div style={{textAlign:'center',marginBottom:20}}>
                     <div style={{fontFamily:'Bebas Neue',fontSize:28,color:'var(--text)',marginBottom:6}}>WC2026</div>
-        <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase'}}>Betting game by M11</div>
+        <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase'}}>Betting game by <span style={{fontWeight:300,letterSpacing:'-0.02em',textTransform:'none',fontSize:10}}>m1c1</span></div>
                     <div style={{fontSize:14,color:'var(--text-dim)'}}>Private game — enter your invite code to join.</div>
                   </div>
                   <form onSubmit={checkCode} style={{display:'flex',flexDirection:'column',gap:12}}>
@@ -208,7 +208,7 @@ export default function HomePage() {
                   <Link href="/dashboard" onClick={closeModal} style={{display:'block',width:'100%',padding:'15px',background:'var(--text)',color:'var(--bg)',border:'none',borderRadius:14,fontWeight:700,fontSize:15,textAlign:'center',textDecoration:'none'}}>
                     Go to dashboard →
                   </Link>
-                  <div style={{textAlign:'center',fontSize:12,color:'var(--text-faint)',marginTop:10}}>Questions? tippspiel@micci.ch</div>
+                  <div style={{textAlign:'center',fontSize:12,color:'var(--text-faint)',marginTop:10}}>Questions? tippspiel@m1c1.ch</div>
                 </>
               )}
             </div>
@@ -221,7 +221,7 @@ export default function HomePage() {
         <div style={{maxWidth:1400,margin:'0 auto',padding:'0 20px',height:54,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
           <div style={{flexShrink:0}}>
             <div style={{fontFamily:'Bebas Neue',fontSize:24,letterSpacing:'0.04em',lineHeight:1}}>WC2026</div>
-            <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',marginTop:2}}>Betting game by M11</div>
+            <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',marginTop:2}}>Betting game by <span style={{fontWeight:300,letterSpacing:'-0.02em',textTransform:'none',fontSize:10}}>m1c1</span></div>
           </div>
           <div style={{display:'flex',alignItems:'center',gap:8}}>
             <select value={tz} onChange={e=>setTz(Number(e.target.value))}
@@ -534,7 +534,7 @@ export default function HomePage() {
       {/* FOOTER */}
       <footer style={{borderTop:'1px solid var(--border)',padding:'28px 20px',display:'flex',flexDirection:'column',alignItems:'center',gap:12,fontSize:12,color:'var(--text-faint)',textAlign:'center'}}>
         <div style={{fontFamily:'Bebas Neue',fontSize:20,color:'var(--text)'}}>WC2026</div>
-        <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase'}}>Betting game by M11</div>
+        <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase'}}>Betting game by <span style={{fontWeight:300,letterSpacing:'-0.02em',textTransform:'none',fontSize:10}}>m1c1</span></div>
         <div style={{display:'flex',gap:20,flexWrap:'wrap',justifyContent:'center'}}>
           {['About','Rules','Privacy'].map(l=><a key={l} href="#" style={{color:'var(--text-faint)',textDecoration:'none'}}>{l}</a>)}
           <a href="https://www.fifa.com" target="_blank" rel="noreferrer" style={{color:'var(--text-faint)',textDecoration:'none'}}>FIFA.com</a>

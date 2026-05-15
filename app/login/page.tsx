@@ -28,7 +28,7 @@ export default function LoginPage() {
         <div style={{maxWidth:1400,margin:'0 auto',padding:'0 20px',height:54,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
           <Link href="/" style={{textDecoration:'none',color:'var(--text)'}}>
             <div style={{fontFamily:'Bebas Neue',fontSize:22,letterSpacing:'0.04em',lineHeight:1}}>WC2026</div>
-            <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',marginTop:2}}>Betting game by M11</div>
+            <div style={{fontSize:9,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',marginTop:2}}>Betting game by <span style={{fontWeight:300,letterSpacing:'-0.02em',textTransform:'none',fontSize:10}}>m1c1</span></div>
           </Link>
           <Link href="/" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em'}}>← Back</Link>
         </div>
