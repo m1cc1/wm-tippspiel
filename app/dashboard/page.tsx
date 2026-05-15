@@ -139,7 +139,7 @@ export default function DashboardPage() {
   const myDelta=myEntry?.delta??0
   const above=myRank&&myRank>1?leaderboard.find(e=>Number(e.rank)===myRank-1):null
   const ptsBehind=above?(above.total_points+above.delta)-(myPts+myDelta):0
-  const pool=totalActive*20
+  const pool=totalActive*25
   const prizes=[Math.round(pool*0.6),Math.round(pool*0.25),Math.round(pool*0.15)]
   const isAdmin=userEmail===ADMIN_EMAIL
   const isPending=profile?.status==='pending'
@@ -240,7 +240,7 @@ export default function DashboardPage() {
           <span style={{fontSize:18,flexShrink:0}}>⏳</span>
           <div>
             <strong style={{color:'#92730a',fontSize:13}}>Payment pending</strong>
-            <div style={{fontSize:12,color:'#a07820',marginTop:2}}>Send CHF 20 via Twint to <strong>+41 79 425 64 77</strong> · message: <code style={{fontFamily:'JetBrains Mono',fontWeight:700,background:'#fef3c7',padding:'1px 5px',borderRadius:4}}>WC2026</code></div>
+            <div style={{fontSize:12,color:'#a07820',marginTop:2}}>Send CHF 25 via Twint to <strong>+41 79 425 64 77</strong> · message: <code style={{fontFamily:'JetBrains Mono',fontWeight:700,background:'#fef3c7',padding:'1px 5px',borderRadius:4}}>WC2026</code></div>
           </div>
         </div>
       )}

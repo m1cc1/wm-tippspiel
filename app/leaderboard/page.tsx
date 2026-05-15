@@ -62,7 +62,7 @@ export default function LeaderboardPage() {
     if (me) setDisplayName(me.display_name)
   },[entries,currentUserId])
 
-  const pool = participantCount * 20
+  const pool = participantCount * 25
   const prizes = [Math.round(pool*SPLITS[0]),Math.round(pool*SPLITS[1]),Math.round(pool*SPLITS[2])]
   const activeEntries = entries.filter(e => e.status === 'active')
   const pendingEntries = entries.filter(e => e.status === 'pending')
@@ -105,7 +105,7 @@ export default function LeaderboardPage() {
           <div style={{flex:1,minWidth:160}}>
             <div style={{fontSize:10,fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'0.15em',marginBottom:6}}>💰 Prize Pool</div>
             <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(40px,8vw,64px)',lineHeight:0.9,background:'linear-gradient(180deg,#f5f0e6 0%,#b8a47e 100%)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>CHF {pool}</div>
-            <div style={{fontSize:12,color:'var(--text-faint)',marginTop:4}}>{participantCount} players × CHF 20 · via Twint · July 19</div>
+            <div style={{fontSize:12,color:'var(--text-faint)',marginTop:4}}>{participantCount} players × CHF 25 · via Twint · July 19</div>
           </div>
           <div style={{display:'flex',gap:10}}>
             {prizes.map((p,i)=>(

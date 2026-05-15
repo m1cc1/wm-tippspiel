@@ -20,7 +20,7 @@ export default function AdminPage() {
     const list=data??[]
     setUsers(list)
     const active=list.filter(u=>u.status==='active').length
-    setStats({total:list.length,active,pending:list.filter(u=>u.status==='pending').length,pool:active*20})
+    setStats({total:list.length,active,pending:list.filter(u=>u.status==='pending').length,pool:active*25})
     setLoading(false)
   }
 
@@ -79,7 +79,7 @@ export default function AdminPage() {
           <div style={{flex:1}}>
             <div style={{fontSize:11,fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'0.15em',marginBottom:6}}>Current Prize Pool</div>
             <div style={{fontFamily:'Bebas Neue',fontSize:56,lineHeight:0.9,color:'var(--highlight)'}}>CHF {stats.pool}</div>
-            <div style={{fontSize:13,color:'var(--text-faint)',marginTop:4}}>{stats.active} paid × CHF 20</div>
+            <div style={{fontSize:13,color:'var(--text-faint)',marginTop:4}}>{stats.active} paid × CHF 25</div>
           </div>
           {prizes.map((p,i)=>(
             <div key={i} style={{background:'rgba(245,240,230,0.06)',border:'1px solid rgba(245,240,230,0.12)',borderRadius:14,padding:'18px 24px',textAlign:'center'}}>

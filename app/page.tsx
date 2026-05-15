@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createBrowserClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 
@@ -64,6 +64,17 @@ export default function HomePage() {
   const [loginErr,setLoginErr]=useState('')
 
   const [loading,setLoading]=useState(false)
+  const [playerCount,setPlayerCount]=useState<number>(0)
+
+  useEffect(()=>{
+    supabase.from('profiles').select('*',{count:'exact',head:true}).eq('status','active').then(({count})=>{
+      setPlayerCount(count??0)
+    })
+  },[])
+  const pool = playerCount * 25
+  const prizes = [Math.round(pool*0.6),Math.round(pool*0.25),Math.round(pool*0.15)]
+
+
 
   function showToast(msg:string){setToast(msg);setTimeout(()=>setToast(''),2800)}
   function openJoin(){setModal('join-code');setCode('');setCodeErr('');setFirstName('');setLastName('');setEmail('');setEmailC('');setPassword('');setRegErr('')}
@@ -145,7 +156,7 @@ export default function HomePage() {
                       {loading?'Signing in…':'Sign in →'}
                     </button>
                     <div style={{textAlign:'center',fontSize:13,color:'var(--text-faint)'}}>
-                      No account? <button type="button" onClick={openJoin} style={{color:'var(--text)',fontWeight:700,background:'none',border:'none',cursor:'pointer',fontSize:13}}>Join for CHF 20</button>
+                      No account? <button type="button" onClick={openJoin} style={{color:'var(--text)',fontWeight:700,background:'none',border:'none',cursor:'pointer',fontSize:13}}>Join for CHF 25</button>
                     </div>
                   </form>
                 </>
@@ -242,17 +253,17 @@ export default function HomePage() {
                   <div style={{textAlign:'center',marginBottom:16}}>
                     <div style={{fontSize:36,marginBottom:8}}>🎉</div>
                     <div style={{fontFamily:'Bebas Neue',fontSize:26,color:'var(--text)'}}>Almost there</div>
-                    <div style={{fontSize:13,color:'var(--text-dim)',marginTop:4}}>Hi <strong>{firstName} {lastName.charAt(0).toUpperCase()}.</strong> — pay CHF 20 to activate.</div>
+                    <div style={{fontSize:13,color:'var(--text-dim)',marginTop:4}}>Hi <strong>{firstName} {lastName.charAt(0).toUpperCase()}.</strong> — pay CHF 25 to activate.</div>
                   </div>
                   <div style={{textAlign:'center',marginBottom:14}}>
-                    <div style={{fontFamily:'Bebas Neue',fontSize:52,color:'var(--text)',lineHeight:1}}>CHF 20</div>
+                    <div style={{fontFamily:'Bebas Neue',fontSize:52,color:'var(--text)',lineHeight:1}}>CHF 25</div>
                     <div style={{fontSize:11,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'0.1em'}}>One-time · Non-refundable</div>
                   </div>
                   <div style={{background:'var(--bg-elev)',border:'1px solid var(--border)',borderRadius:16,padding:18,marginBottom:14}}>
                     {[
                       <>Open <strong>Twint</strong> → tap <strong>"Pay"</strong> → enter number</>,
                       <><button onClick={()=>{navigator.clipboard.writeText('+41794256477');showToast('📋 Copied!')}} style={{fontFamily:'JetBrains Mono',fontWeight:700,fontSize:17,background:'var(--bg-card)',border:'1px solid var(--border-strong)',borderRadius:8,padding:'4px 12px',cursor:'pointer',color:'var(--text)'}}>+41 79 425 64 77</button><span style={{fontSize:12,color:'var(--text-faint)',marginLeft:8}}>tap to copy</span></>,
-                      <>Amount: <strong>CHF 20</strong> · Message: <code style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:6,padding:'2px 8px',fontFamily:'JetBrains Mono',fontWeight:700,fontSize:13}}>WC2026</code></>,
+                      <>Amount: <strong>CHF 25</strong> · Message: <code style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:6,padding:'2px 8px',fontFamily:'JetBrains Mono',fontWeight:700,fontSize:13}}>WC2026</code></>,
                       <>Account activated <strong>within 24h</strong></>,
                     ].map((s,i)=>(
                       <div key={i} style={{display:'flex',alignItems:'flex-start',gap:10,marginBottom:i<3?12:0,fontSize:13,color:'var(--text-dim)'}}>
@@ -294,7 +305,7 @@ export default function HomePage() {
             </button>
             <button onClick={openJoin} style={{display:'flex',alignItems:'center',gap:6,background:'var(--text)',color:'var(--bg)',border:'none',padding:'8px 16px',borderRadius:100,fontWeight:700,fontSize:12,cursor:'pointer',whiteSpace:'nowrap'}}>
               <span style={{width:5,height:5,background:'var(--highlight)',borderRadius:'50%'}}/>
-              Join · CHF 20
+              Join · CHF 25
             </button>
           </div>
         </div>
@@ -331,7 +342,7 @@ export default function HomePage() {
           </p>
           <div style={{display:'flex',gap:10,flexWrap:'wrap'}}>
             <button onClick={openJoin} style={{display:'flex',alignItems:'center',gap:6,background:'var(--text)',color:'var(--bg)',border:'none',padding:'14px 24px',borderRadius:100,fontWeight:700,fontSize:14,cursor:'pointer'}}>
-              Join for CHF 20 →
+              Join for CHF 25 →
             </button>
             <button onClick={openLogin} style={{display:'flex',alignItems:'center',padding:'14px 24px',borderRadius:100,border:'1px solid var(--border-strong)',color:'var(--text-dim)',fontWeight:600,fontSize:14,background:'transparent',cursor:'pointer'}}>
               Sign in
@@ -341,24 +352,22 @@ export default function HomePage() {
 
         {/* FEATURES */}
         <div style={{marginBottom:48}}>
-          <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(36px,6vw,64px)',lineHeight:0.9,color:'var(--text)',marginBottom:20}}>
+          <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(36px,6vw,64px)',lineHeight:0.9,color:'var(--text)',marginBottom:8}}>
             What makes this <span style={{color:'var(--beige-deep)'}}>different</span>
           </div>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:10}}>
+          <div style={{fontSize:13,color:'var(--text-dim)',marginBottom:20,lineHeight:1.5}}>
+            This isn't just another prediction game. Three things set it apart:
+          </div>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:12}} className="features-grid">
             {[
-              {icon:'⚡',title:'Live leaderboard',desc:'Points update the instant a goal is scored. Watch your rank shift in real time — no refresh needed.'},
-              {icon:'☀️',title:'Morning briefing',desc:"Every match day: yesterday's goals, who gained spots, and a preview of today's games — ready with your coffee."},
-              {icon:'📊',title:'Deep statistics',desc:'Accuracy rate, pts per game pace, projected final rank. Know exactly where you stand and why.'},
-              {icon:'🎯',title:'Granular scoring',desc:'5 pts for the right winner, 3 for goal difference, 1 per correct team score. Exact score = 10 pts max.'},
-              {icon:'🏆',title:'Bonus predictions',desc:'Pick the tournament winner and Golden Boot nationality before June 11. Worth 20 pts each.'},
-              {icon:'💰',title:'Real prize pool',desc:'CHF 20 entry. 60% to 1st, 25% to 2nd, 15% to 3rd. Grows with every new player. Paid via Twint.'},
+              {icon:'⚡',title:'Live leaderboard',desc:'Points update the instant a goal is scored. Watch your rank move in real time.'},
+              {icon:'📊',title:'Statistics',desc:'Accuracy rate, pts per game, projected final rank. Always know exactly where you stand.'},
+              {icon:'☀️',title:'Morning briefing',desc:"Every match day morning: results, standings shake-up, and today's key games."},
             ].map(f=>(
-              <div key={f.title} style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:14,padding:'16px 18px',display:'flex',gap:12,alignItems:'flex-start'}}>
-                <span style={{fontSize:22,flexShrink:0,lineHeight:1,marginTop:2}}>{f.icon}</span>
-                <div>
-                  <div style={{fontWeight:700,fontSize:13,color:'var(--text)',marginBottom:3}}>{f.title}</div>
-                  <div style={{fontSize:12,color:'var(--text-dim)',lineHeight:1.55}}>{f.desc}</div>
-                </div>
+              <div key={f.title} style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:14,padding:'20px',display:'flex',flexDirection:'column',gap:10}}>
+                <span style={{fontSize:28,lineHeight:1}}>{f.icon}</span>
+                <div style={{fontWeight:700,fontSize:14,color:'var(--text)'}}>{f.title}</div>
+                <div style={{fontSize:12,color:'var(--text-dim)',lineHeight:1.6}}>{f.desc}</div>
               </div>
             ))}
           </div>
@@ -392,14 +401,26 @@ export default function HomePage() {
           </div>
           <div style={{background:'var(--text)',borderRadius:20,padding:'24px',position:'relative',overflow:'hidden'}}>
             <div style={{position:'absolute',top:'-60px',right:'-60px',width:240,height:240,background:'radial-gradient(circle,rgba(212,193,154,0.15) 0%,transparent 60%)',pointerEvents:'none'}}/>
-            <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(56px,14vw,96px)',lineHeight:0.9,background:'linear-gradient(180deg,#f5f0e6 0%,#b8a47e 100%)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',marginBottom:6}}>CHF ???</div>
-            <div style={{fontSize:13,color:'var(--text-faint)',marginBottom:20}}><span style={{color:'var(--highlight)',fontWeight:600}}>Grows +CHF 20 per player</span> · paid via Twint · July 19</div>
+            {/* Player count badge */}
+            <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:12}}>
+              <span style={{background:'rgba(212,193,154,0.15)',border:'1px solid rgba(212,193,154,0.3)',color:'var(--highlight)',fontSize:12,fontWeight:700,padding:'4px 12px',borderRadius:100}}>
+                {playerCount} player{playerCount!==1?'s':''} registered
+              </span>
+            </div>
+            <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(56px,14vw,96px)',lineHeight:0.9,background:'linear-gradient(180deg,#f5f0e6 0%,#b8a47e 100%)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',marginBottom:6}}>
+              CHF {pool}
+            </div>
+            <div style={{fontSize:13,color:'var(--text-faint)',marginBottom:20}}><span style={{color:'var(--highlight)',fontWeight:600}}>+CHF 25 per new player</span> · 60/25/15% split · paid via Twint after the final</div>
             <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:10}}>
-              {[['1ST','var(--bg)','60%'],['2ND','var(--highlight)','25%'],['3RD','var(--beige-mid)','15%']].map(([p,c,pct])=>(
-                <div key={String(p)} style={{background:'rgba(245,240,230,0.06)',border:'1px solid rgba(245,240,230,0.12)',borderRadius:12,padding:'14px',textAlign:'center'}}>
-                  <div style={{fontFamily:'Bebas Neue',fontSize:20,marginBottom:2,color:c}}>{p}</div>
-                  <div style={{fontFamily:'JetBrains Mono',fontWeight:700,fontSize:18,color:'var(--bg)',marginBottom:2}}>{pct}</div>
-                  <div style={{fontSize:11,color:'var(--text-faint)'}}>of pool</div>
+              {[
+                {p:'1ST',c:'var(--bg)',pct:'60%',amt:prizes[0]},
+                {p:'2ND',c:'var(--highlight)',pct:'25%',amt:prizes[1]},
+                {p:'3RD',c:'var(--beige-mid)',pct:'15%',amt:prizes[2]},
+              ].map(s=>(
+                <div key={s.p} style={{background:'rgba(245,240,230,0.06)',border:'1px solid rgba(245,240,230,0.12)',borderRadius:12,padding:'14px',textAlign:'center'}}>
+                  <div style={{fontFamily:'Bebas Neue',fontSize:20,marginBottom:2,color:s.c}}>{s.p}</div>
+                  <div style={{fontFamily:'JetBrains Mono',fontWeight:700,fontSize:18,color:'var(--bg)',marginBottom:2}}>CHF {s.amt}</div>
+                  <div style={{fontSize:11,color:'var(--text-faint)'}}>{s.pct} of pool</div>
                 </div>
               ))}
             </div>
@@ -527,7 +548,7 @@ export default function HomePage() {
         @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.85)}}
         @keyframes pulsewarn{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(154,74,42,0.5)}50%{opacity:0.9;box-shadow:0 0 0 8px transparent}}
         @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-        @media(max-width:768px){.hide-mobile{display:none!important}}
+        @media(max-width:768px){.hide-mobile{display:none!important}.features-grid{grid-template-columns:1fr!important}}
       `}</style>
     </div>
   )

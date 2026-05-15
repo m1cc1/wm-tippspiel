@@ -197,7 +197,7 @@ export default function GamesPage() {
 
         {!isActive && (
           <div style={{background:'#fffbf0',border:'2px solid #f0dfa0',borderRadius:14,padding:'14px 20px',fontSize:13,color:'#92730a',marginBottom:24}}>
-            <strong>⏳ Account pending</strong> — send CHF 20 via Twint to <strong>+41 79 425 64 77</strong> · message: <code style={{fontFamily:'JetBrains Mono',fontWeight:700,background:'#fef3c7',padding:'1px 5px',borderRadius:4}}>WC2026</code>
+            <strong>⏳ Account pending</strong> — send CHF 25 via Twint to <strong>+41 79 425 64 77</strong> · message: <code style={{fontFamily:'JetBrains Mono',fontWeight:700,background:'#fef3c7',padding:'1px 5px',borderRadius:4}}>WC2026</code>
           </div>
         )}
 
