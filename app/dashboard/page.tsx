@@ -560,7 +560,7 @@ export default function DashboardPage() {
               {tag:'Stadiums', title:'A guide to all 16 World Cup venues — from MetLife to Estadio Azteca', time:'1d ago', link:'https://www.fifa.com'},
             ]).map((n,i)=>(
               <a key={i} href={n.link||"https://www.fifa.com"} target="_blank" rel="noreferrer"
-                style={{background:n.feature?'var(--bg-elev)':'var(--bg-card)',border:'1px solid var(--border)',borderRadius:12,padding:'14px 16px',textDecoration:'none',color:'var(--text)',display:'flex',gap:10,alignItems:'flex-start',transition:'border-color 0.15s'}}
+                style={{background:i===0?'var(--bg-elev)':'var(--bg-card)',border:'1px solid var(--border)',borderRadius:12,padding:'14px 16px',textDecoration:'none',color:'var(--text)',display:'flex',gap:10,alignItems:'flex-start',transition:'border-color 0.15s'}}
                 onMouseEnter={e=>(e.currentTarget as HTMLAnchorElement).style.borderColor='var(--border-strong)'}
                 onMouseLeave={e=>(e.currentTarget as HTMLAnchorElement).style.borderColor='var(--border)'}>
                 <div style={{flex:1,minWidth:0}}>
