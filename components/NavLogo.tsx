@@ -34,7 +34,7 @@ function LogoContent() {
           src="/m1c1-logo.png"
           alt="m1c1"
           style={{
-            height: 11,
+            height: 7,
             width: 'auto',
             display: 'block',
             opacity: 1,

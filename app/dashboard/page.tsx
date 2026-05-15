@@ -166,7 +166,7 @@ export default function DashboardPage() {
             <div style={{fontFamily:"'Bebas Neue', sans-serif",fontSize:22,letterSpacing:'0.05em',lineHeight:1,color:'var(--text)'}}>World Cup 2026</div>
             <div style={{display:'flex',alignItems:'center',gap:6,marginTop:3,lineHeight:1}}>
               <span style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',whiteSpace:'nowrap'}}>prediction game by</span>
-              <img src="/m1c1-logo.png" alt="m1c1" style={{height:11,width:'auto',display:'block'}}/>
+              <img src="/m1c1-logo.png" alt="m1c1" style={{height:7,width:'auto',display:'block'}}/>
             </div>
           </Link>
           <div style={{display:'flex',gap:2}} className="hide-mobile">
@@ -222,7 +222,7 @@ export default function DashboardPage() {
       </nav>
 
       {/* TICKER */}
-      <div style={{borderBottom:'1px solid var(--border)',padding:'11px 0',overflow:'hidden',display:'flex',alignItems:'center',gap:12}}>
+      <div style={{borderBottom:'1px solid var(--border)',padding:'11px 0',overflow:'hidden',display:'flex',alignItems:'center',gap:12,position:'sticky',top:56,zIndex:49,backdropFilter:'blur(20px)',background:'rgba(245,240,230,0.92)'}}>
         <div style={{display:'flex',alignItems:'center',gap:8,flexShrink:0,paddingLeft:20,fontSize:11,fontWeight:700,textTransform:'uppercase',letterSpacing:'0.12em'}}>
           <div style={{width:7,height:7,background:'var(--warn)',borderRadius:'50%',animation:'pulsewarn 1.5s infinite'}}/>
           <span style={{color:'var(--warn)'}}>LIVE</span>
@@ -622,7 +622,7 @@ export default function DashboardPage() {
       </div>
 
       <footer style={{borderTop:'1px solid var(--border)',padding:'24px 20px',display:'flex',flexDirection:'column',alignItems:'center',gap:8,fontSize:12,color:'var(--text-faint)',textAlign:'center'}}>
-        <div style={{fontSize:18,fontWeight:300,letterSpacing:'0.05em',color:'var(--text)',fontFamily:'Inter Tight, sans-serif'}}>m1c1</div>
+        <img src="/m1c1-logo.png" alt="m1c1" style={{height:22,width:'auto',display:'block',margin:'0 auto'}}/>
         <div style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase'}}>World Cup 2026</div>
         <div>CHF {pool} pool · {totalActive} players</div>
       </footer>
