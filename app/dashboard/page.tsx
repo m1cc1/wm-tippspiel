@@ -258,7 +258,7 @@ export default function DashboardPage() {
           <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:10,marginBottom:16}}>
             {[
               {icon:'⚽',label:"Yesterday's goals & results",sub:'Full match recap'},
-              {icon:'📊',label:'Leaderboard shake-up',sub:'Who gained / lost spots'},
+              {icon:'📊',label:"Leaderboard shake-up",sub:'Who gained / lost spots'},
               {icon:'🔮',label:'Match of the day preview',sub:'AI win probability'},
               {icon:'💡',label:'Tip recommendation',sub:'Based on form & stats'},
             ].map(b=>(
@@ -476,10 +476,10 @@ export default function DashboardPage() {
           </div>
           <div style={{display:'flex',flexDirection:'column',gap:8}}>
             {[
-              {label:'Yesterday's results',icon:'⚽',value:'France 2–1 Senegal · Brazil 3–0 Scotland · Germany 1–1 Sweden',live:true},
-              {label:'Leaderboard shake-up',icon:'📊',value:'Marco R. moved up 2 spots after France win · you gained 1 place · Lisa B. dropped to 5th',live:true},
-              {label:'Today's matches',icon:'🗓',value:'USA vs Paraguay · 01:00 ZRH · Netherlands vs Iran · 19:00 ZRH · Spain vs Austria · 02:00 ZRH',live:true},
-              {label:'Tip of the day',icon:'💡',value:'France to win vs Senegal is the crowd favourite (62%) — but Morocco at 3–1 odds is the bold call.',live:false},
+              {label:"Yesterday's results",icon:'⚽',value:'France 2–1 Senegal · Brazil 3–0 Scotland · Germany 1–1 Sweden',live:true},
+              {label:"Leaderboard shake-up",icon:'📊',value:'Marco R. moved up 2 spots after France win · you gained 1 place · Lisa B. dropped to 5th',live:true},
+              {label:"Today's matches",icon:'🗓',value:'USA vs Paraguay · 01:00 ZRH · Netherlands vs Iran · 19:00 ZRH · Spain vs Austria · 02:00 ZRH',live:true},
+              {label:"Tip of the day",icon:'💡',value:'France to win vs Senegal is the crowd favourite (62%) — but Morocco at 3–1 odds is the bold call.',live:false},
             ].map(b=>(
               <div key={b.label} style={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:12,padding:'12px 16px',display:'flex',gap:12,alignItems:'flex-start'}}>
                 <span style={{fontSize:18,flexShrink:0,marginTop:1}}>{b.icon}</span>
