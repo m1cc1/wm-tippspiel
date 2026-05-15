@@ -432,7 +432,7 @@ export default function DashboardPage() {
             <div style={{fontFamily:'Bebas Neue',fontSize:'clamp(36px,8vw,72px)',lineHeight:0.9,color:'var(--text)'}}>
               Tip the <span style={{color:'var(--beige-deep)'}}>matches</span>
             </div>
-            <Link href="/games" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em',borderBottom:'1px solid var(--border)',paddingBottom:1}}>All 104 →</Link>
+            <Link href="/games" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em',borderBottom:'1px solid var(--border)',paddingBottom:1}}>All 104 matches →</Link>
           </div>
           <div style={{display:'flex',flexDirection:'column',gap:10}}>
             {games.filter(g=>g.status!=='finished').slice(0,5).map((game)=>{
@@ -504,6 +504,7 @@ export default function DashboardPage() {
               <span style={{fontSize:11,color:'var(--warn)',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.08em'}}>
                 {specialPick?.locked?'🔒 Locked':'⏳ Locks June 11'}
               </span>
+              <Link href="/games" style={{fontSize:12,fontWeight:600,color:'var(--text-dim)',textDecoration:'none',textTransform:'uppercase',letterSpacing:'0.08em',borderBottom:'1px solid var(--border)',paddingBottom:1}}>All bonus tips →</Link>
             </div>
           </div>
           <div style={{display:'flex',flexDirection:'column',gap:10}}>
