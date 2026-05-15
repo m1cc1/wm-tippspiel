@@ -291,9 +291,9 @@ export default function HomePage() {
         <div style={{maxWidth:1400,margin:'0 auto',padding:'0 20px',height:54,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
           <div style={{flexShrink:0,display:'flex',flexDirection:'column',gap:3}}>
             <div style={{fontFamily:"'Bebas Neue', sans-serif",fontSize:22,letterSpacing:'0.05em',lineHeight:1,color:'var(--text)'}}>World Cup 2026</div>
-            <div style={{display:'flex',alignItems:'center',gap:5,lineHeight:1}}>
+            <div style={{display:'flex',alignItems:'center',gap:6,marginTop:3,lineHeight:1}}>
               <span style={{fontSize:8,fontWeight:600,color:'var(--text-faint)',letterSpacing:'0.12em',textTransform:'uppercase',whiteSpace:'nowrap'}}>prediction game by</span>
-              <span style={{fontSize:17,fontWeight:300,letterSpacing:'0.06em',fontFamily:"'Nunito','DM Sans','Inter Tight',sans-serif",color:'var(--text)',lineHeight:1}}>m1c1</span>
+              <img src="/m1c1-logo.png" alt="m1c1" style={{height:13,width:'auto',display:'block'}}/>
             </div>
           </div>
           <div style={{display:'flex',alignItems:'center',gap:8}}>
