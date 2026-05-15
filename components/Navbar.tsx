@@ -43,7 +43,7 @@ export default function Navbar({ userEmail, displayName }: { userEmail?: string 
           <div style={{display:'flex',gap:2}} className="hide-mobile">
             {nav.map(n => (
               <Link key={n.href} href={n.href}
-                style={{fontSize:12,fontWeight:600,color:n.warn?'var(--warn)':pathname===n.href||pathname+window?.location?.search===n.href?'var(--text)':'var(--text-dim)',textDecoration:'none',padding:'7px 12px',borderRadius:100,letterSpacing:'0.05em',textTransform:'uppercase',background:pathname===n.href?'var(--bg-elev)':'transparent',transition:'all 0.2s',whiteSpace:'nowrap'}}>
+                style={{fontSize:12,fontWeight:600,color:n.warn?'var(--warn)':pathname===n.href?'var(--text)':'var(--text-dim)',textDecoration:'none',padding:'7px 12px',borderRadius:100,letterSpacing:'0.05em',textTransform:'uppercase',background:pathname===n.href?'var(--bg-elev)':'transparent',transition:'all 0.2s',whiteSpace:'nowrap'}}>
                 {n.label}
               </Link>
             ))}
